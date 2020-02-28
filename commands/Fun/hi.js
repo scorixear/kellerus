@@ -1,4 +1,5 @@
 import Command from './../command.js';
+import permHandler from '../../misc/permissionHandler.js';
 
 export default class Hi extends Command {
 
@@ -9,6 +10,11 @@ export default class Hi extends Command {
     }
 
     executeCommand(args, msg) {
+        console.log(permHandler);
+        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
+        if(hasPermission === false) {
+            return;
+        }
         msg.reply('Hi Friend');
     }
 }

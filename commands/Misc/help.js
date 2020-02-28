@@ -1,5 +1,6 @@
 import cmdHandler from '../../misc/commandHandler.js';
 import msgHandler from '../../misc/messageHandler.js';
+import permHandler from '../../misc/permissionHandler.js';
 import config from '../../config.js';
 import Command from './../command.js';
 
@@ -12,7 +13,10 @@ export default class Help extends Command {
     }
 
     executeCommand(args, msg) {
-        console.log(args);
+        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
+        if (hasPermission === false) {
+            return;
+        }
         if (args && args.length > 0) {
             let command = cmdHandler.commands.find(v => v.command == args[0]);
             if (command) {

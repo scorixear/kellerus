@@ -7,7 +7,16 @@ commandFiles.forEach((folder) => {
     if(folder !== 'command.js') {
         Fs.readdirSync(`./commands/${folder}/`).forEach(file => {
             let command = require(`./../commands/${folder}/${file}`);
-            commands.push(Reflect.construct(command.default, [folder]));
+            console.log(command);
+            if(command.commands) {
+                for(let cmd of command.commands)
+                {
+                    commands.push(Reflect.construct(cmd, [folder]));
+                }
+            }
+            else {
+                commands.push(Reflect.construct(command.default, [folder]));
+            }
         });
     }
 });

@@ -4,9 +4,10 @@ export default class Command {
             throw new TypeError('Cannot construct Abstract instances directly');
         }
         this.category = category;
+        this.permissions = new Array();
     }
     category;
-    permissions = [];
+    permissions;
     command;
     usage;
     executeCommand(args, msg) {

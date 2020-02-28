@@ -11,6 +11,10 @@ export default class Info extends Command {
     }
 
     executeCommand(args, msg) {
+        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
+        if(hasPermission === false) {
+            return;
+        }
         let categories = new Array();
         categories[0] = {
             title: 'Version',

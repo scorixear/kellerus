@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 
 
-function sendRichText(channel, title, categories, color, author, description, thumbnail, image, footer, timestamp, url) {
+function sendRichText(channel, title, categories, color, image, author, description, thumbnail, footer, timestamp, url) {
     let richText = new Discord.RichEmbed()
         .setTitle(title);
     categories.forEach((category) => {
@@ -20,8 +20,11 @@ function sendRichText(channel, title, categories, color, author, description, th
         richText.setDescription(description);
     if (thumbnail)
         richText.setThumbnail(thumbnail);
-    if (image)
-        richText.setImage(image);
+    if (image) {
+        richText.attachFile(`./assets/${image}`);
+        richText.setImage(`attachment://${image}`);
+    }
+        
     if (footer)
         richText.setFooter(footer);
     if (timestamp)
@@ -29,8 +32,7 @@ function sendRichText(channel, title, categories, color, author, description, th
     if (url)
         richText.setURL(url);
 
-    channel.send(richText);
-
+    return channel.send(richText);
 }
 
 export default {
