@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/scorixear/kellerus/issues"
   },
-  "homepage": "https://github.com/scorixear/kellerus#readme"
+  "homepage": "https://github.com/scorixear/kellerus#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
 }
