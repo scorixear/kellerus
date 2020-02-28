@@ -4,7 +4,7 @@
   "description": "General Discord-Bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start" : "nodemon --exec babel-node index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,16 @@
   },
   "homepage": "https://github.com/scorixear/kellerus#readme",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "discord.js": "^11.5.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.6",
+    "@babel/register": "^7.8.6",
+    "nodemon": "^2.0.2"
   }
 }

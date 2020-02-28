@@ -1,19 +1,16 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js'
+import Config from './config.js'
+import CmdHandler from './misc/commandHandler.js'
+
 const client = new Discord.Client();
-const config = require('./config.js');
-const token = config.token;
+const token = Config.token;
 
 
 client.on('ready', () => {
     console.log('Kellerus is online!')
 })
 
-client.on('message', msg=>{
-    if(msg.content === "Hi")
-    {
-        msg.reply('Hi Friend');
-    }    
-})
+client.on('message', CmdHandler? CmdHandler.parseCommand : ()=>{});
 
 client.login(token);
 
