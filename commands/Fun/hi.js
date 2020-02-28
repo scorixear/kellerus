@@ -10,7 +10,6 @@ export default class Hi extends Command {
     }
 
     executeCommand(args, msg) {
-        console.log(permHandler);
         let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
         if(hasPermission === false) {
             return;

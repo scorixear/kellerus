@@ -1,4 +1,5 @@
 import Command from './../command.js';
+import permHandler from '../../misc/permissionHandler.js';
 
 export default class Ping extends Command {
 

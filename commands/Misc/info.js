@@ -1,4 +1,5 @@
 import msgHandler from '../../misc/messageHandler.js'
+import permHandler from '../../misc/permissionHandler.js';
 import config from '../../config.js'
 import Command from './../command.js';
 

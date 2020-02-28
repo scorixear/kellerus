@@ -1,4 +1,5 @@
 import Command from './../command.js';
+import permHandler from '../../misc/permissionHandler.js';
 
 export default class Ban extends Command {
 
@@ -10,7 +11,7 @@ export default class Ban extends Command {
     }
 
     executeCommand(args, msg) {
-        let hasPermission = Command.prototype.executeCommand.call(this, args, msg);
+        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
         if(hasPermission === false) {
             return;
         }
