@@ -2,30 +2,30 @@ import Config from './../config.js'
 import Fs from 'fs'
 
 const commands = Fs.readdirSync('./commands/');
+const commandDir = new Map();
+commands.forEach((command)=>{
+    commandDir.set(command, require(`./../commands/${command}`))
+})
+    
 
 function parseCommand(msg) {
-    if(msg.content[0] !== Config.prefix)
+    if(msg.content[0] !== Config.prefix) return;
+    
+    let args = msg.content.substring(Config.prefix.length).split(" ");
+    let module = commandDir.get(args[0]+".js");
+    if(!module || !module.executeCommand)
     {
+        msg.channel.send(`Command not defined. Type ${Config.prefix}help for a list of available commands.`)
         return;
     }
-    let args = msg.content.substring(Config.prefix.length).split(" ");
-    let cmd = commands.find(c => c === args[0]+".js");
-    if(cmd)
-    {
-        import(`./../commands/${cmd}`).then((requiredCmd)=>{
-            try {
-            
-                requiredCmd.executeCommand(args.splice(0,1), msg);
-            }
-            catch (err)
-            {
-                msg.channel.send(`Command not defined. Type ${Config.prefix}help for a list of available commands.`)
-            }
-        })
+    try {
+        module.executeCommand(args.slice(1), msg);
     }
-    else {
+    catch (err) {
+        console.log(err)
         msg.channel.send(`Command not defined. Type ${Config.prefix}help for a list of available commands.`)
     }
+    
     return;
     switch(args[0]){
         case 'ban':
