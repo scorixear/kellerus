@@ -3,34 +3,36 @@ import Discord from 'discord.js';
 
 function sendRichText(channel, title, categories, color, author, description, thumbnail, image, footer, timestamp, url) {
     let richText = new Discord.RichEmbed()
-    .setTitle(title);
+        .setTitle(title);
     categories.forEach((category) => {
-        if(category.title)
+        if (category.title)
             richText.addField(category.title, category.text || '', category.inline || false);
         else
             richText.addBlankField(category.inline || false);
     })
-       
-    
-    if(color)
+
+
+    if (color)
         richText.setColor(color);
-    if(author)
+    if (author)
         richText.setAuthor(author);
-    if(description)
+    if (description)
         richText.setDescription(description);
-    if(thumbnail)
+    if (thumbnail)
         richText.setThumbnail(thumbnail);
-    if(image)
+    if (image)
         richText.setImage(image);
-    if(footer)
+    if (footer)
         richText.setFooter(footer);
-    if(timestamp)
+    if (timestamp)
         richText.setTimestamp(timestamp);
-    if(url)
+    if (url)
         richText.setURL(url);
 
     channel.send(richText);
 
 }
 
-export default {sendRichText};
+export default {
+    sendRichText
+};

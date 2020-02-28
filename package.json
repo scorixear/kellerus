@@ -4,7 +4,7 @@
   "description": "General Discord-Bot",
   "main": "index.js",
   "scripts": {
-    "start" : "nodemon --exec babel-node index.js"
+    "start": "nodemon --exec babel-node index.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.6",
     "@babel/node": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.6",
     "@babel/register": "^7.8.6",
     "nodemon": "^2.0.2"

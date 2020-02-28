@@ -1,7 +1,14 @@
-function executeCommand(args, msg) {
-    throw new Error("not implemented");
+import Command from './../command.js';
+
+export default class Ban extends Command {
+
+    constructor(category) {
+        super(category);
+        this.usage = 'ban <user> [reason]';
+        this.command = 'ban';
+    }
+
+    executeCommand(args, msg) {
+        throw new Error("not implemented");
+    }
 }
-
-let category;
-
-module.exports = {executeCommand, command: 'ban', usage: 'ban <user> [reason]', category};
