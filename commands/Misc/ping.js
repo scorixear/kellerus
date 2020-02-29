@@ -1,5 +1,7 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
+import msgHandler from '../../misc/messageHandler.js';
+import discordHandler from '../../misc/discordHandler.js';
 
 export default class Ping extends Command {
 
@@ -11,9 +13,7 @@ export default class Ping extends Command {
 
     executeCommand(args, msg) {
         let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) {
-            return;
-        }
-        throw new Error("not implemented");
+        if(hasPermission === false) return;
+        msgHandler.sendRichText_Default({channel: msg.channel, title: 'Pong', description: `${discordHandler.client.ping}ms`});
     }
 }

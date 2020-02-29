@@ -6,16 +6,18 @@ const commands = new Array();
 commandFiles.forEach((folder) => {
     if(folder !== 'command.js') {
         Fs.readdirSync(`./commands/${folder}/`).forEach(file => {
-            let command = require(`./../commands/${folder}/${file}`);
-            console.log(command);
-            if(command.commands) {
-                for(let cmd of command.commands)
-                {
-                    commands.push(Reflect.construct(cmd, [folder]));
+            if(file.endsWith('.js')) {
+                let command = require(`./../commands/${folder}/${file}`);
+                console.log(command);
+                if(command.commands) {
+                    for(let cmd of command.commands)
+                    {
+                        commands.push(Reflect.construct(cmd, [folder]));
+                    }
                 }
-            }
-            else {
-                commands.push(Reflect.construct(command.default, [folder]));
+                else {
+                    commands.push(Reflect.construct(command.default, [folder]));
+                }
             }
         });
     }

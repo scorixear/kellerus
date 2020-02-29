@@ -1,17 +1,33 @@
 import Discord from 'discord.js';
 
 
+function sendRichText_Default({
+    channel,
+    title,
+    categories,
+    color,
+    image,
+    author,
+    description,
+    thumbnail,
+    footer,
+    timestamp,
+    url
+}) {
+    return sendRichText(channel, title, categories, color, image, author, description, thumbnail, footer, timestamp, url);
+}
+
 function sendRichText(channel, title, categories, color, image, author, description, thumbnail, footer, timestamp, url) {
     let richText = new Discord.RichEmbed()
         .setTitle(title);
-    categories.forEach((category) => {
-        if (category.title)
-            richText.addField(category.title, category.text || '', category.inline || false);
-        else
-            richText.addBlankField(category.inline || false);
-    })
-
-
+    if (categories) {
+        categories.forEach((category) => {
+            if (category.title)
+                richText.addField(category.title, category.text || '', category.inline || false);
+            else
+                richText.addBlankField(category.inline || false);
+        })
+    }
     if (color)
         richText.setColor(color);
     if (author)
@@ -24,7 +40,7 @@ function sendRichText(channel, title, categories, color, image, author, descript
         richText.attachFile(`./assets/${image}`);
         richText.setImage(`attachment://${image}`);
     }
-        
+
     if (footer)
         richText.setFooter(footer);
     if (timestamp)
@@ -36,5 +52,6 @@ function sendRichText(channel, title, categories, color, image, author, descript
 }
 
 export default {
-    sendRichText
+    sendRichText,
+    sendRichText_Default
 };
