@@ -20,6 +20,13 @@ export default class Help extends Command {
         if (args && args.length > 0) {
             let command = cmdHandler.commands.find(v => v.command == args[0]);
             if (command) {
+                if(permHandler.checkPermissionSilent(command.permissions, msg) === false) {
+                    msgHandler.sendRichText(msg.channel, 'Help Info', [{
+                        title: 'Info',
+                        text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
+                    }]);
+                    return;
+                }
                 msgHandler.sendRichText(msg.channel, 'Help Info', [{
                         title: 'Command',
                         text: `\`${config.prefix}${command.command}\``
@@ -40,10 +47,12 @@ export default class Help extends Command {
 
         let categories = new Map();
         cmdHandler.commands.forEach(cmd => {
-            if (categories.has(cmd.category)) {
-                categories.get(cmd.category).push(cmd.command);
-            } else {
-                categories.set(cmd.category, new Array(cmd.command));
+            if(permHandler.checkPermissionSilent(cmd.permissions, msg)) {
+                if (categories.has(cmd.category)) {
+                    categories.get(cmd.category).push(cmd.command);
+                } else {
+                    categories.set(cmd.category, new Array(cmd.command));
+                }
             }
         });
         let embededCategories = new Array({

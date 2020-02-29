@@ -1,4 +1,5 @@
-import Config from './../config.js';
+import config from './../config.js';
+import msgHandler from './../misc/messageHandler.js'
 import Fs from 'fs';
 
 const commandFiles = Fs.readdirSync('./src/commands/');
@@ -24,20 +25,26 @@ commandFiles.forEach((folder) => {
 });
 
 function parseCommand(msg) {
-    if (msg.content[0] !== Config.prefix) return;
+    if (msg.content[0] !== config.prefix) return;
 
-    let args = msg.content.substring(Config.prefix.length).split(" ");
+    let args = msg.content.substring(config.prefix.length).split(" ");
     
     let module = commands.find(c => c.command.toLowerCase() == args[0].toLowerCase());
     if (!module || !module.executeCommand) {
-        msg.channel.send(`Command not defined. Type ${Config.prefix}help for a list of available commands.`);
+        msgHandler.sendRichText(msg.channel, 'Error', [{
+            title: 'Message',
+            text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
+        }]);
         return;
     }
     try {
         module.executeCommand(args.slice(1), msg);
     } catch (err) {
         console.log(err);
-        msg.channel.send(`Command not defined. Type ${Config.prefix}help for a list of available commands.`);
+        msgHandler.sendRichText(msg.channel, 'Error', [{
+            title: 'Message',
+            text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
+        }]);
     }
 }
 
