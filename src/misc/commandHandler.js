@@ -1,11 +1,11 @@
 import Config from './../config.js';
 import Fs from 'fs';
 
-const commandFiles = Fs.readdirSync('./commands/');
+const commandFiles = Fs.readdirSync('./src/commands/');
 const commands = new Array();
 commandFiles.forEach((folder) => {
     if(folder !== 'command.js') {
-        Fs.readdirSync(`./commands/${folder}/`).forEach(file => {
+        Fs.readdirSync(`./src/commands/${folder}/`).forEach(file => {
             if(file.endsWith('.js')) {
                 let command = require(`./../commands/${folder}/${file}`);
                 console.log(command);

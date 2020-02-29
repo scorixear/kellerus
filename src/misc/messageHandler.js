@@ -37,7 +37,7 @@ function sendRichText(channel, title, categories, color, image, author, descript
     if (thumbnail)
         richText.setThumbnail(thumbnail);
     if (image) {
-        richText.attachFile(`./assets/${image}`);
+        richText.attachFile(`./src/assets/${image}`);
         richText.setImage(`attachment://${image}`);
     }
 
