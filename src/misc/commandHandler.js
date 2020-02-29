@@ -28,7 +28,7 @@ function parseCommand(msg) {
 
     let args = msg.content.substring(Config.prefix.length).split(" ");
     
-    let module = commands.find(c => c.command == args[0]);
+    let module = commands.find(c => c.command.toLowerCase() == args[0].toLowerCase());
     if (!module || !module.executeCommand) {
         msg.channel.send(`Command not defined. Type ${Config.prefix}help for a list of available commands.`);
         return;
