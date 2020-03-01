@@ -1,6 +1,8 @@
 const token = 'your_token';
 const discord_url = 'https://discordapp.com/oauth2/authorize?client_id=client_id&scope=bot&permissions=2146958807';
 
+const youtube_api_key = 'your_key';
+
 const repository = 'https://github.com/scorixear/kellerus';
 
 const bot_prefix = '!';
@@ -21,5 +23,6 @@ module.exports = {
     dbuser: dbuser,
     dbpassword: dbpassword,
     dbport: dbport,
-    dbDataBase: dbDataBase
+    dbDataBase: dbDataBase,
+    youtube_api_key: youtube_api_key
 };
