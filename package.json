@@ -1,6 +1,6 @@
 {
   "name": "kellerus",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "General Discord-Bot",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/scorixear/kellerus#readme",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "mariadb": "^2.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
