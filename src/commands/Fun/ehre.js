@@ -24,6 +24,16 @@ export default class Ehre extends Command {
             targetuser = msg.guild.member(msg.author);
         }
 
+        if(!targetuser){
+            msgHandler.sendRichText_Default({
+                channel: msg.channel,
+                title: 'Error',
+                description: 'User not found',
+                color: 0xCC0000
+            });
+            return;
+        }
+
         sqlHandler.addHonorCount(targetuser.user).then((cnt)=>{
             msgHandler.sendRichText_Default({channel: msg.channel, title: 'Ehre', description: `${targetuser} war \`${cnt}\` mal ehrenvoll.`, color:0x00CC00});
         });
