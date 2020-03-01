@@ -16,10 +16,7 @@ async function InitDB() {
         console.log('Start DB Connection');
         conn = await pool.getConnection();
         console.log('DB Connection established');
-        const ret = await conn.query('CREATE TABLE IF NOT EXISTS `honor` (`user_id` VARCHAR(255), `val` INT, PRIMARY KEY (`user_id`))').catch(err => {
-            console.log(err);
-        });
-        console.log(ret);
+        const ret = await conn.query('CREATE TABLE IF NOT EXISTS `honor` (`user_id` VARCHAR(255), `val` INT, PRIMARY KEY (`user_id`))');
     } catch (err) {
         throw err;
     } finally {
@@ -33,10 +30,9 @@ async function getHonorCount(user) {
     try {
         conn = await pool.getConnection();
         const rows = await conn.query(`SELECT \`val\` FROM honor WHERE \`user_id\` = "${user.id}"`);
-        console.log(rows);
-        honorCount = rows.val;
+        honorCount = rows[0].val;
     } catch (err) {
-        throw err;
+        honorCount = 0;
     } finally {
         if (conn) await conn.end();
     }
@@ -58,9 +54,8 @@ async function addHonorCount(user) {
             rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${user.id}", 1)`);
         }
     } catch (err) {
-        console.log(err);
         honorCount = 1;
-        let rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${user.id}", 1)`);
+        await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${user.id}", 1)`);
     } finally {
         if (conn) await conn.end();
     }
