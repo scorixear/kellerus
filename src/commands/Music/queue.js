@@ -48,7 +48,6 @@ export default class Queue extends Command {
                     if(queuelist.title){
                         queuelist = queuelist.title;
                     }
-                    console.log(queuelist);
                     msgHandler.sendRichText_Default({channel: msg.channel, title: 'Queue List', description: '- `'+String(queuelist)+'`'});
                 }
                 return;

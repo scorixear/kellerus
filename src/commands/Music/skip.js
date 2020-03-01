@@ -28,12 +28,11 @@ export default class Skip extends Command {
 
             if (msg.guild.voiceConnection) {
                 musicPlayer.Stop(msg);
-                //musicPlayer.Play(msg.guild.voiceConnection, msg);
             }
             msgHandler.sendRichText_Default({
                 channel: msg.channel,
                 title: 'Queue',
-                description: `Title ${oldTitle.title} skipped`
+                description: `Title \`${oldTitle.title}\` skipped`
             });
         }
     }
