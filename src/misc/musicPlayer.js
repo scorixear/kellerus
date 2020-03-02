@@ -26,7 +26,7 @@ async function Play(connection, voiceChannel, serverid, msgChannel) {
             text: 'Currently playing:'
         }, {
             title: 'Title',
-            text: queue[index].title,
+            text: `\`${queue[index].title}\``,
             inline: true
         }, {
             title: 'Url',
@@ -84,8 +84,7 @@ function YoutubeSearch(searchKeywords, msg) {
                 } else {
                     for (var item of body.items) {
                         if (item.id.kind === 'youtube#video') {
-                            let url = QueueYtAudioStream(item.id.videoId, item.snippet.title, msg);
-                            resolve(url);
+                            QueueYtAudioStream(item.id.videoId, item.snippet.title, msg).then(url => resolve(url));
                             break;
                         }
                     }
@@ -99,21 +98,23 @@ function YoutubeSearch(searchKeywords, msg) {
 }
 
 
-function QueueYtAudioStream(videoId, title, msg) {
+async function QueueYtAudioStream(videoId, title, msg) {
     var streamUrl = `https://www.youtube.com/watch?v=${videoId}`;
     if (!servers[msg.guild.id]) {
         servers[msg.guild.id] = {
             queueIndex: 0
         }
     }
-    sqlHandler.addQueue(title, streamUrl, msg.guild.id).then(success => {
-        if (success) {
-            return title;
-        } else {
-            return '$$$$ignore' + title
-        }
-    })
-    sqlHandler.getQueue(msg.guild.id).then(q => queue = q);
+    let success = await sqlHandler.addQueue(title, streamUrl, msg.guild.id);
+    
+    if(success) {
+        queue = await sqlHandler.getQueue(msg.guild.id);
+        return title;
+    } else {
+        return '$$$$ignore' + title
+    }
+
+    
 }
 export default {
     Play,

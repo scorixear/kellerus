@@ -64,7 +64,7 @@ async function addHonorCount(user) {
 
 async function createQueue(serverid, conn) {
     try {
-        await conn.query(`CREATE TABLE \`ServerQueue_${serverid}\` (\`title\` VARCHAR(255), \`url\` VARCHAR(255), PRIMARY KEY (\`title\`))`);
+        await conn.query(`CREATE TABLE \`ServerQueue_${serverid}\` (\`ID\` INT UNSIGNED AUTO_INCREMENT, \`url\` VARCHAR(255), \`title\` VARCHAR(255), PRIMARY KEY (\`ID\`))`);
     } catch (err) {
         throw err;
     } finally {
@@ -110,8 +110,13 @@ async function addQueue(title, url, serverid) {
     let success;
     try {
         conn = await pool.getConnection();
-        await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES ("${title}","${url}")`);
-        success = true;
+        let rows = await conn.query(`SELECT title FROM ServerQueue_${serverid} WHERE url="${url}"`);
+        if(rows && rows.length > 0){
+            success = false;
+        } else {
+            await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES ("${title}","${url}")`);
+            success = true;
+        }
     } catch (err) {
         try {
           await createQueue(serverid, conn);
