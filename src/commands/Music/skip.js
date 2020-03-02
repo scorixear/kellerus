@@ -22,19 +22,11 @@ export default class Skip extends Command {
                 queueIndex: 0
             };
         }
-        let server = servers[msg.guild.id];
         sqlHandler.getQueue(msg.guild.id).then(queue => {
             if (queue.length > 0) {
-                let oldTitle = queue[server.queueIndex];
-    
                 if (msg.guild.voiceConnection) {
                     musicPlayer.Stop(msg);
                 }
-                msgHandler.sendRichText_Default({
-                    channel: msg.channel,
-                    title: 'Queue',
-                    description: `Title \`${oldTitle.title}\` skipped!`
-                });
             }
         });
         

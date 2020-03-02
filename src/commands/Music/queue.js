@@ -13,7 +13,7 @@ export default class Queue extends Command {
         this.command = 'queue';
     }
 
-    executeCommand(args, msg) {
+    async executeCommand(args, msg) {
         let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
         if (hasPermission === false) {
             return;
@@ -33,7 +33,6 @@ export default class Queue extends Command {
                             title: 'Queue',
                             description: 'Queue cleared'
                         });
-                        sqlHandler.getQueue(msg.guild.id).then(q=>musicPlayer.queue = q);
                     } else {
                         msgHandler.sendRichText_Default({
                             channel: msg.channel,
@@ -51,8 +50,8 @@ export default class Queue extends Command {
                         queueIndex: 0
                     };
                 }
-
-                if (musicPlayer.queue.length === 0) {
+                let queue = await musicPlayer.updateQueue(msg.guild.id);
+                if (queue.length === 0) {
                     msgHandler.sendRichText_Default({
                         channel: msg.channel,
                         title: 'Queue List',
@@ -60,11 +59,11 @@ export default class Queue extends Command {
                     });
                 } else {
                     let queuelist ='';
-                    for(let i = 0;i<musicPlayer.queue.length;i++) {
+                    for(let i = 0;i<queue.length;i++) {
                         if(i=== servers[msg.guild.id].queueIndex) {
-                            queuelist = `--> \`${musicPlayer.queue[i].title}\`\n`;
+                            queuelist += `--> \`${queue[i].title}\`\n`;
                         } else {
-                            queuelist = `- \`${musicPlayer.queue[i].title}\`\n`;
+                            queuelist += `- \`${queue[i].title}\`\n`;
                         }
                     }
                     msgHandler.sendRichText_Default({
@@ -91,7 +90,6 @@ export default class Queue extends Command {
                             title: 'Queue',
                             description: `Title \`${args[0]}\` added.`
                         });
-                        sqlHandler.getQueue(msg.guild.id).then(q=>musicPlayer.queue = q);
                     } else {
                         msgHandler.sendRichText_Default({
                             channel: msg.channel,

@@ -4,20 +4,18 @@ import request from 'superagent';
 import messageHandler from './messageHandler.js';
 import sqlHandler from './sqlHandler.js';
 
-
-let queue = [];
-
 async function Play(connection, voiceChannel, serverid, msgChannel) {
     if (!servers[serverid]) {
         servers[serverid] = {
             queueIndex: 0
         }
     }
-    queue = await sqlHandler.getQueue(serverid);
+    let queue = await updateQueue(serverid);
     let server = servers[serverid];
     let index = server.queueIndex;
     if (index >= queue.length) {
         index = 0;
+        server.queueIndex = 0;
     }
 
     if (queue.length > 0) {
@@ -38,6 +36,7 @@ async function Play(connection, voiceChannel, serverid, msgChannel) {
         }));
         server.dispatcher.on('end', () => {
             server.queueIndex++;
+            console.log(server.queueIndex);
             server.dispatcher = null;
             if (voiceChannel.members.size <= 1 && connection) {
                 connection.disconnect();
@@ -108,7 +107,6 @@ async function QueueYtAudioStream(videoId, title, msg) {
     let success = await sqlHandler.addQueue(title, streamUrl, msg.guild.id);
     
     if(success) {
-        queue = await sqlHandler.getQueue(msg.guild.id);
         return title;
     } else {
         return '$$$$ignore' + title
@@ -116,9 +114,14 @@ async function QueueYtAudioStream(videoId, title, msg) {
 
     
 }
+
+async function updateQueue(serverid) {
+    return await sqlHandler.getQueue(serverid);
+}
+
 export default {
     Play,
     Stop,
     YoutubeSearch,
-    queue
+    updateQueue
 };
