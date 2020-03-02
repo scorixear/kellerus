@@ -1,27 +1,68 @@
 import YTDL from 'ytdl-core';
 import config from './../config.js';
 import request from 'superagent';
+import messageHandler from './messageHandler.js';
+import sqlHandler from './sqlHandler.js';
 
-function Play(connection, msg) {
-    if (!servers[msg.guild.id]) {
-        servers[msg.guild.id] = {
-            queue: []
+
+let queue = [];
+
+async function Play(connection, voiceChannel, serverid, msgChannel) {
+    if (!servers[serverid]) {
+        servers[serverid] = {
+            queueIndex: 0
         }
     }
-    let server = servers[msg.guild.id];
-    if (server.queue && server.queue.length > 0) {
-        server.dispatcher = connection.playStream(YTDL(server.queue[0].url, {
+    queue = await sqlHandler.getQueue(serverid);
+    let server = servers[serverid];
+    let index = server.queueIndex;
+    if (index >= queue.length) {
+        index = 0;
+    }
+
+    if (queue.length > 0) {
+        messageHandler.sendRichText(msgChannel, 'Playing', [{
+            title: 'Description',
+            text: 'Currently playing:'
+        }, {
+            title: 'Title',
+            text: queue[index].title,
+            inline: true
+        }, {
+            title: 'Url',
+            text: queue[index].url,
+            inline: true
+        }]);
+        server.dispatcher = connection.playStream(YTDL(queue[index].url, {
             filter: "audioonly"
         }));
         server.dispatcher.on('end', () => {
-            server.queue.push(server.queue.shift());
+            server.queueIndex++;
             server.dispatcher = null;
-            Play(connection, msg);
+            if (voiceChannel.members.size <= 1 && connection) {
+                connection.disconnect();
+                messageHandler.sendRichText_Default({
+                    channel: msgChannel,
+                    title: 'Disconnected',
+                    description: 'Left channel because nobody was listening :('
+                });
+            } else {
+                Play(connection, voiceChannel, serverid, msgChannel);
+            }
         });
-        server.dispatcher.on('error', (err)=> {
+        server.dispatcher.on('error', (err) => {
             console.log(err);
-        })
+        });
+    } else {
+        connection.disconnect();
+        messageHandler.sendRichText_Default({
+            channel: msgChannel,
+            title: 'Queue',
+            description: 'Queue empty! Disconnecting.',
+            color: 0xcc0000
+        });
     }
+
 
 }
 
@@ -62,20 +103,21 @@ function QueueYtAudioStream(videoId, title, msg) {
     var streamUrl = `https://www.youtube.com/watch?v=${videoId}`;
     if (!servers[msg.guild.id]) {
         servers[msg.guild.id] = {
-            queue: []
+            queueIndex: 0
         }
     }
-    let server = servers[msg.guild.id];
-    let found = server.queue.find(q => q.title === title)
-    if (!found) {
-        server.queue.push({title:title, url:streamUrl});
-        return title;
-    } else {
-        return '$$$$ignore'+title
-    }
+    sqlHandler.addQueue(title, streamUrl, msg.guild.id).then(success => {
+        if (success) {
+            return title;
+        } else {
+            return '$$$$ignore' + title
+        }
+    })
+    sqlHandler.getQueue(msg.guild.id).then(q => queue = q);
 }
 export default {
     Play,
     Stop,
-    YoutubeSearch
+    YoutubeSearch,
+    queue
 };

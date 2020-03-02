@@ -7,7 +7,8 @@ const pool = mariadb.createPool({
     password: config.dbpassword,
     port: config.dbport,
     database: config.dbDataBase,
-    multipleStatements: true
+    multipleStatements: true,
+    connectionLimit: 5
 });
 
 async function InitDB() {
@@ -48,8 +49,7 @@ async function addHonorCount(user) {
         if (rows && rows[0]) {
             honorCount = rows[0].val + 1;
             rows = await conn.query(`UPDATE honor SET val = ${honorCount} WHERE \`user_id\` = "${user.id}"`);
-        }
-        else {
+        } else {
             honorCount = 1;
             rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${user.id}", 1)`);
         }
@@ -62,4 +62,95 @@ async function addHonorCount(user) {
     return honorCount;
 }
 
-export default {InitDB, getHonorCount, addHonorCount};
+async function createQueue(serverid, conn) {
+    try {
+        await conn.query(`CREATE TABLE \`ServerQueue_${serverid}\` (\`title\` VARCHAR(255), \`url\` VARCHAR(255), PRIMARY KEY (\`title\`))`);
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) await conn.end();
+    }
+}
+
+async function getQueue(serverid) {
+    let conn;
+    let queue = [];
+    try {
+        conn = await pool.getConnection();
+        let rows = await conn.query(`SELECT title, url FROM ServerQueue_${serverid}`);
+        if (rows) {
+            for (let row of rows) {
+                queue.push({
+                    title: row.title,
+                    url: row.url
+                });
+            }
+        } else {
+            try {
+                await createQueue(serverid, conn);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    } catch (err) {
+        try {
+            await createQueue(serverid, conn);
+        } catch (err) {
+            console.log(err);
+        }
+    } finally {
+        if (conn) await conn.end();
+    }
+    return queue;
+}
+
+
+async function addQueue(title, url, serverid) {
+    let conn;
+    let success;
+    try {
+        conn = await pool.getConnection();
+        await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES ("${title}","${url}")`);
+        success = true;
+    } catch (err) {
+        try {
+          await createQueue(serverid, conn);
+          await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES ("${title}","${url}")`);
+          success = true;
+        } catch(err) {
+            success = false;
+        }
+    } finally {
+        if (conn) await conn.end();
+    }
+    return success;
+}
+
+async function clearQueue(serverid) {
+    let conn;
+    let success;
+    try {
+        conn = await pool.getConnection();
+        await conn.query(`DELETE FROM ServerQueue_${serverid}`);
+        success = true;
+    } catch (err) {
+        try {
+            await createQueue(serverid, conn);
+            success = true;
+          } catch(err) {
+              success = false;
+          }
+    } finally {
+        if (conn) await conn.end();
+    }
+    return success;
+}
+
+export default {
+    InitDB,
+    getHonorCount,
+    addHonorCount,
+    getQueue,
+    addQueue,
+    clearQueue
+};

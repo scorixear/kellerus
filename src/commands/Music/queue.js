@@ -3,6 +3,7 @@ import permHandler from '../../misc/permissionHandler.js';
 import config from '../../config.js'
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
+import sqlHandler from '../../misc/sqlHandler.js';
 
 export default class Queue extends Command {
 
@@ -22,59 +23,83 @@ export default class Queue extends Command {
             if (args[0] === 'clear' && args.length === 1) {
                 if (!servers[msg.guild.id]) {
                     servers[msg.guild.id] = {
-                        queue: []
+                        queueIndex: 0
                     };
                 }
-                servers[msg.guild.id].queue = [];
-                msgHandler.sendRichText_Default({
-                    channel: msg.channel,
-                    title: 'Queue',
-                    description: 'Queue cleared'
+                sqlHandler.clearQueue(msg.guild.id).then(success => {
+                    if (success) {
+                        msgHandler.sendRichText_Default({
+                            channel: msg.channel,
+                            title: 'Queue',
+                            description: 'Queue cleared'
+                        });
+                        sqlHandler.getQueue(msg.guild.id).then(q=>musicPlayer.queue = q);
+                    } else {
+                        msgHandler.sendRichText_Default({
+                            channel: msg.channel,
+                            title: 'Queue',
+                            description: 'Queue could not be cleared.',
+                            color: 0xcc0000
+                        });
+                    }
                 });
                 return;
             }
-            if(args[0] === 'list' && args.length === 1) {
+            if (args[0] === 'list' && args.length === 1) {
                 if (!servers[msg.guild.id]) {
                     servers[msg.guild.id] = {
-                        queue: []
+                        queueIndex: 0
                     };
                 }
-                let queue = servers[msg.guild.id].queue;
-                if(queue.length === 0) {
-                    msgHandler.sendRichText_Default({channel: msg.channel, title: 'Queue List', description: 'Empty Queue'});
-                }
-                else {
-                    let queuelist = queue.reduce((acc, val) => acc.title + "`\n- `" + val.title);
-                    if(queuelist.title){
-                        queuelist = queuelist.title;
+
+                if (musicPlayer.queue.length === 0) {
+                    msgHandler.sendRichText_Default({
+                        channel: msg.channel,
+                        title: 'Queue List',
+                        description: 'Empty Queue'
+                    });
+                } else {
+                    let queuelist ='';
+                    for(let i = 0;i<musicPlayer.queue.length;i++) {
+                        if(i=== servers[msg.guild.id].queueIndex) {
+                            queuelist = `--> \`${musicPlayer.queue[i].title}\`\n`;
+                        } else {
+                            queuelist = `- \`${musicPlayer.queue[i].title}\`\n`;
+                        }
                     }
-                    msgHandler.sendRichText_Default({channel: msg.channel, title: 'Queue List', description: '- `'+String(queuelist)+'`'});
+                    msgHandler.sendRichText_Default({
+                        channel: msg.channel,
+                        title: 'Queue List',
+                        description: queuelist
+                    });
                 }
+
                 return;
             }
 
             if (!servers[msg.guild.id]) {
                 servers[msg.guild.id] = {
-                    queue: []
+                    queueIndex: 0
                 };
             }
 
             if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
-                if (!servers[msg.guild.id].queueö.find(q=>q.title === args[0])) {
-                    servers[msg.guild.id].queue.push({title:args[0],url:args[0]});
-                    msgHandler.sendRichText_Default({
-                        channel: msg.channel,
-                        title: 'Queue',
-                        description: `Title \`${args[0]}\` added.`
-                    });
-                } else {
-                    msgHandler.sendRichText_Default({
-                        channel: msg.channel,
-                        title: 'Queue',
-                        description: `Title \`${args[0]}\` already in the queue.`
-                    });
-                }
-
+                sqlHandler.addQueue(args[0], args[0], msg.guild.id).then(success => {
+                    if (success) {
+                        msgHandler.sendRichText_Default({
+                            channel: msg.channel,
+                            title: 'Queue',
+                            description: `Title \`${args[0]}\` added.`
+                        });
+                        sqlHandler.getQueue(msg.guild.id).then(q=>musicPlayer.queue = q);
+                    } else {
+                        msgHandler.sendRichText_Default({
+                            channel: msg.channel,
+                            title: 'Queue',
+                            description: `Title \`${args[0]}\` already in the queue.`
+                        });
+                    }
+                });
             } else {
                 musicPlayer.YoutubeSearch(args, msg).then(title => {
                     if (title.startsWith('$$$$ignore')) {

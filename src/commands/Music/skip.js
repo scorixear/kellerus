@@ -2,6 +2,7 @@ import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
+import sqlHandler from '../../misc/sqlHandler.js';
 
 export default class Skip extends Command {
 
@@ -18,22 +19,24 @@ export default class Skip extends Command {
         }
         if (!servers[msg.guild.id]) {
             servers[msg.guild.id] = {
-                queue: []
+                queueIndex: 0
             };
         }
         let server = servers[msg.guild.id];
-
-        if (server.queue.length > 0) {
-            let oldTitle = server.queue[0];
-
-            if (msg.guild.voiceConnection) {
-                musicPlayer.Stop(msg);
+        sqlHandler.getQueue(msg.guild.id).then(queue => {
+            if (queue.length > 0) {
+                let oldTitle = queue[server.queueIndex];
+    
+                if (msg.guild.voiceConnection) {
+                    musicPlayer.Stop(msg);
+                }
+                msgHandler.sendRichText_Default({
+                    channel: msg.channel,
+                    title: 'Queue',
+                    description: `Title \`${oldTitle.title}\` skipped!`
+                });
             }
-            msgHandler.sendRichText_Default({
-                channel: msg.channel,
-                title: 'Queue',
-                description: `Title \`${oldTitle.title}\` skipped`
-            });
-        }
+        });
+        
     }
 }

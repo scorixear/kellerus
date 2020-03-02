@@ -20,12 +20,22 @@ export default class Join extends Command {
         if (msg.member.voiceChannel) {
             if (!msg.guild.voiceConnection) {
                 msg.member.voiceChannel.join().then(connection => {
-                    musicPlayer.Play(msg.guild.voiceConnection, msg);
-                    msgHandler.sendRichText_Default({
-                        channel: msg.channel,
-                        title: 'Joined',
-                        description: 'Successfully Joined!'
-                    });
+                    musicPlayer.Play(msg.guild.voiceConnection, msg.member.voiceChannel, msg.guild.id, msg.channel);
+                });
+                msgHandler.sendRichText_Default({
+                    channel: msg.channel,
+                    title: 'Joined',
+                    description: 'Successfully Joined!'
+                });
+            } else {
+                msg.guild.voiceConnection.disconnect();
+                msg.member.voiceChannel.join().then(connection => {
+                    musicPlayer.Play(msg.guild.voiceConnection, msg.member.voiceChannel, msg.guild.id, msg.channel);
+                });
+                msgHandler.sendRichText_Default({
+                    channel: msg.channel,
+                    title: 'Joined',
+                    description: 'Joined other channel!'
                 });
             }
         } else {
