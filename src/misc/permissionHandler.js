@@ -3,7 +3,7 @@ import config from './../config.js'
 
 function checkPermissions(permissions, msg, command) {
     let user = msg.member;
-    if (user.highestRole.hasPermission(permissions) == false) {
+    if (user.hasPermission(permissions) == false) {
         msgHandler.sendRichText(msg.channel, "Error", [{
             title: 'Message',
             text: `Invalid permissions to use \`${config.prefix}${command}\`!`

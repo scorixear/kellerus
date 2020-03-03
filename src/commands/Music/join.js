@@ -17,27 +17,16 @@ export default class Join extends Command {
             return;
         }
 
-        if (msg.member.voiceChannel) {
-            if (!msg.guild.voiceConnection) {
-                msg.member.voiceChannel.join().then(connection => {
-                    musicPlayer.Play(msg.guild.voiceConnection, msg.member.voiceChannel, msg.guild.id, msg.channel);
+        if (msg.member.voice.channel) {
+                msg.member.voice.channel.join().then(connection => {
+                    musicPlayer.Play(connection, msg.member.voice.channel, msg.guild.id, msg.channel);
                 });
                 msgHandler.sendRichText_Default({
                     channel: msg.channel,
                     title: 'Joined',
                     description: 'Successfully Joined!'
                 });
-            } else {
-                msg.guild.voiceConnection.disconnect();
-                msg.member.voiceChannel.join().then(connection => {
-                    musicPlayer.Play(msg.guild.voiceConnection, msg.member.voiceChannel, msg.guild.id, msg.channel);
-                });
-                msgHandler.sendRichText_Default({
-                    channel: msg.channel,
-                    title: 'Joined',
-                    description: 'Joined other channel!'
-                });
-            }
+
         } else {
             msgHandler.sendRichText_Default({
                 channel: msg.channel,

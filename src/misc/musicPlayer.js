@@ -4,6 +4,7 @@ import request from 'superagent';
 import messageHandler from './messageHandler.js';
 import sqlHandler from './sqlHandler.js';
 
+let disableMessage = false;
 async function Play(connection, voiceChannel, serverid, msgChannel) {
     if (!servers[serverid]) {
         servers[serverid] = {
@@ -19,24 +20,33 @@ async function Play(connection, voiceChannel, serverid, msgChannel) {
     }
 
     if (queue.length > 0) {
-        messageHandler.sendRichText(msgChannel, 'Playing', [{
-            title: 'Description',
-            text: 'Currently playing:'
-        }, {
-            title: 'Title',
-            text: `\`${queue[index].title}\``,
-            inline: true
-        }, {
-            title: 'Url',
-            text: queue[index].url,
-            inline: true
-        }]);
-        server.dispatcher = connection.playStream(YTDL(queue[index].url, {
-            filter: "audioonly"
-        }));
-        server.dispatcher.on('end', () => {
+        if(disableMessage === false) {
+            messageHandler.sendRichText(msgChannel, 'Playing', [{
+                title: 'Description',
+                text: 'Currently playing:'
+            }, {
+                title: 'Title',
+                text: `\`${queue[index].title}\``,
+                inline: true
+            }, {
+                title: 'Url',
+                text: queue[index].url,
+                inline: true
+            }]);
+        } else {
+            disableMessage =false;
+        }
+        server.dispatcher = connection.play(
+            YTDL(queue[index].url, {
+              filter: "audioonly",
+              quality: "highestaudio",
+              format: "mp3",
+              highWaterMark: 1<<25
+              }, {highWaterMark: 1})
+         );
+        server.dispatcher.on('finish', () => {
+            console.log("End");
             server.queueIndex++;
-            console.log(server.queueIndex);
             server.dispatcher = null;
             if (voiceChannel.members.size <= 1 && connection) {
                 connection.disconnect();
@@ -123,5 +133,6 @@ export default {
     Play,
     Stop,
     YoutubeSearch,
-    updateQueue
+    updateQueue,
+    disableMessage
 };
