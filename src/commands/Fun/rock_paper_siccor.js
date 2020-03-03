@@ -14,6 +14,8 @@ class Rock extends Command {
         super(category);
         this.command = 'rock';
         this.usage = 'rock';
+        this.description = 'Plays `rock` against the bot.';
+        this.example = 'rock'
         this.permissions = [];
     }
 

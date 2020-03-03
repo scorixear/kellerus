@@ -9,6 +9,8 @@ export default class Clear extends Command {
         super(category);
         this.usage = 'clear <Message Amount>';
         this.command = 'clear';
+        this.description = 'Deletes recent messages from the current channel.';
+        this.example = 'clear 20';
         this.permissions = ['MANAGE_MESSAGES'];
     }
 

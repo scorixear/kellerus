@@ -15,7 +15,7 @@ function checkPermissions(permissions, msg, command) {
 
 function checkPermissionSilent(permissions, msg) {
     let user = msg.member;
-    return user.highestRole.hasPermission(permissions);
+    return user.hasPermission(permissions);
 }
 
 export default {checkPermissions, checkPermissionSilent};

@@ -9,6 +9,9 @@ export default class Join extends Command {
         super(category);
         this.usage = 'join';
         this.command = 'join';
+        this.description = 'Lets the bot join a voice channel or swap to another channel. The bot will start playing a title from the queue.';
+        this.example = 'join';
+        this.permissions = ['MOVE_MEMBERS'];
     }
 
     executeCommand(args, msg) {

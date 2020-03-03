@@ -18,8 +18,11 @@ function sendRichText_Default({
 }
 
 function sendRichText(channel, title, categories, color, image, author, description, thumbnail, footer, timestamp, url) {
-    let richText = new Discord.MessageEmbed()
-        .setTitle(title);
+    let richText = new Discord.MessageEmbed();
+    if(title){
+        richText.setTitle(title);
+    }
+       
     if (categories) {
         categories.forEach((category) => {
             if (category.title)

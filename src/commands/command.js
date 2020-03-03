@@ -10,6 +10,8 @@ export default class Command {
     permissions;
     command;
     usage;
+    description;
+    example;
     executeCommand(args, msg) {
 
     };

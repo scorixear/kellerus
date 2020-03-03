@@ -9,6 +9,9 @@ export default class Leave extends Command {
         super(category);
         this.usage = 'leave';
         this.command = 'leave';
+        this.description = 'Kicks the bot from the voice channel.';
+        this.example = 'leave';
+        this.permissions = ['MOVE_MEMBERS'];
     }
 
     executeCommand(args, msg) {

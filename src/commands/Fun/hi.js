@@ -10,6 +10,8 @@ export default class Hi extends Command {
         super(category);
         this.usage = 'hi';
         this.command = 'hi';
+        this.description = 'Says Hi to the Bot!';
+        this.example = 'hi\nhi @Kellerus';
     }
 
     executeCommand(args, msg) {

@@ -9,6 +9,8 @@ export default class Ping extends Command {
         super(category);
         this.usage = 'ping';
         this.command = 'ping';
+        this.description = 'Tests the Ping of the bot.';
+        this.example = 'ping';
     }
 
     executeCommand(args, msg) {

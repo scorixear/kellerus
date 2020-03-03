@@ -8,6 +8,8 @@ export default class Kick extends Command {
         super(category);
         this.usage = 'kick <user> [Reason]';
         this.command = 'kick';
+        this.description = 'Kicks a user from the server with an optional reason.';
+        this.example = 'kick @kellerus\n kick @kellerus he is a bot';
         this.permissions = ['KICK_MEMBERS'];
     }
 

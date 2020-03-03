@@ -9,6 +9,8 @@ export default class Ehre extends Command {
         super(category);
         this.usage = 'ehre';
         this.command = 'ehre';
+        this.description = 'Awards `Ehre` points to users, that did something honorable.';
+        this.example = 'ehre @kellerus';
     }
 
     executeCommand(args, msg) {
@@ -21,7 +23,8 @@ export default class Ehre extends Command {
             targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
         }
         else {
-            targetuser = msg.guild.member(msg.author);
+            msgHandler.sendRichText_Default({channel: msg.channel, title: 'Error', description: 'You must mention a user!', color: 0xcc0000});
+            return;
         }
 
         if(!targetuser){
@@ -31,6 +34,11 @@ export default class Ehre extends Command {
                 description: 'User not found',
                 color: 0xCC0000
             });
+            return;
+        }
+
+        if(targetuser === msg.guild.member(msg.author)){
+            msgHandler.sendRichText_Default({channel: msg.channel, title: 'Error', description: 'You cannot award yourself `Ehre`!', color: 0xcc0000});
             return;
         }
 

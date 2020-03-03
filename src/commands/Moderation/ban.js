@@ -9,6 +9,8 @@ export default class Ban extends Command {
         super(category);
         this.usage = 'ban <user> [reason]';
         this.command = 'ban';
+        this.description = 'Bans a player with an optional reason.';
+        this.example = 'ban @kellerus\nban @kellerus he is a bot';
         this.permissions = ['BAN_MEMBERS'];
     }
 

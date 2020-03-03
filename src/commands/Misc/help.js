@@ -10,6 +10,8 @@ export default class Help extends Command {
         super(category);
         this.usage = 'help [command]';
         this.command = 'help';
+        this.description = 'Returns a list of commands, you are able to use or informations about a specific command!';
+        this.example = 'help\nhelp hi';
     }
 
     executeCommand(args, msg) {
@@ -20,22 +22,35 @@ export default class Help extends Command {
         if (args && args.length > 0) {
             let command = cmdHandler.commands.find(v => v.command == args[0]);
             if (command) {
-                if(permHandler.checkPermissionSilent(command.permissions, msg) === false) {
+                if (permHandler.checkPermissionSilent(command.permissions, msg) === false) {
                     msgHandler.sendRichText(msg.channel, 'Help Info', [{
                         title: 'Info',
                         text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
                     }]);
                     return;
                 }
-                msgHandler.sendRichText(msg.channel, 'Help Info', [{
-                        title: 'Command',
-                        text: `\`${config.prefix}${command.command}\``
-                    },
-                    {
-                        title: 'Usage',
-                        text: `\`${config.prefix}${command.usage}\``
-                    }
-                ]);
+                let example = '\`\`\`' + config.prefix + command.example.split('\n').reduce((acc, val) => acc + '\`\`\`\n\`\`\`' + config.prefix + val) + '\`\`\`';
+                msgHandler.sendRichText_Default({
+                    channel: msg.channel,
+                    categories: [{
+                            title: 'Command',
+                            text: `\`${config.prefix}${command.command}\``,
+                            inline: false
+                        },
+                        {
+                            title: 'Description',
+                            text: command.description,
+                        },
+                        {
+                            title: 'Usage',
+                            text: `\`\`\`${config.prefix}${command.usage}\`\`\``
+                        },
+                        {
+                            title: 'Example',
+                            text: example
+                        }
+                    ]
+                });
             } else {
                 msgHandler.sendRichText(msg.channel, 'Help Info', [{
                     title: 'Info',
@@ -47,7 +62,7 @@ export default class Help extends Command {
 
         let categories = new Map();
         cmdHandler.commands.forEach(cmd => {
-            if(permHandler.checkPermissionSilent(cmd.permissions, msg)) {
+            if (permHandler.checkPermissionSilent(cmd.permissions, msg)) {
                 if (categories.has(cmd.category)) {
                     categories.get(cmd.category).push(cmd.command);
                 } else {

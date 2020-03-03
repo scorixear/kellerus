@@ -9,6 +9,8 @@ export default class Info extends Command {
         super(category);
         this.usage = 'info';
         this.command = 'info';
+        this.description = 'Prints informations about the bot.';
+        this.example = 'info';
     }
 
     executeCommand(args, msg) {

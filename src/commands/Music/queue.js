@@ -11,6 +11,9 @@ export default class Queue extends Command {
         super(category);
         this.usage = 'queue <link/clear/list/search params>';
         this.command = 'queue';
+        this.permissions = ['MOVE_MEMBERS'];
+        this.description = 'Queues a song, lists all songs in the queue or clears the queue.\nSongs can be queued by entering the youtube url or a specific search string.';
+        this.example = 'queue list\nqueue clear\nqueue Song_Title\nqueue https://www.youtube.com/watch?v=video_id';
     }
 
     async executeCommand(args, msg) {

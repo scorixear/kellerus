@@ -9,6 +9,8 @@ export default class Nick extends Command {
         super(category);
         this.usage = 'nick <user> <nick> [Reason]';
         this.command = 'nick';
+        this.description = 'Nicks a user.';
+        this.example = 'nick @kellerus Bot';
         this.permissions = ['MANAGE_NICKNAMES', 'CHANGE_NICKNAME'];
     }
 
