@@ -18,7 +18,6 @@ export default class Leave extends Command {
         }
 
         if (msg.guild.voice.connection) {
-            musicPlayer.disableMessage = true;
             msg.guild.voice.connection.disconnect();
         } else {
             msgHandler.sendRichText_Default({
