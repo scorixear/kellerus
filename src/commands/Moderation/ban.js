@@ -20,7 +20,7 @@ export default class Ban extends Command {
             return;
         }
         if (!args || args.length == 0) {
-            msgHandler.sendRichText(msg.channel, 'Ban Info', [{
+            msgHandler.sendRichText(msg, 'Ban Info', [{
                 title: 'Usage',
                 text: `\`${config.prefix}${this.usage}\``
             }]);
@@ -31,7 +31,7 @@ export default class Ban extends Command {
         let user = msg.guild.member(msg.author);
         if (!targetuser) {
             msgHandler.sendRichText_Default({
-                channel: msg.channel,
+                msg: msg,
                 title: 'Error',
                 description: 'User not found',
                 color: 0xCC0000
@@ -39,7 +39,7 @@ export default class Ban extends Command {
             return;
         }
         if (targetuser.highestRole <= user.highestRole || msg.guild.ownerID == targetuser.id || targetuser.user.bot) {
-            msgHandler.sendRichText(msg.channel, 'Error', [{
+            msgHandler.sendRichText(msg, 'Error', [{
                 title: 'Invalid permissions',
                 text: 'You cannot ban this user!'
             }], 0xCC0000);
@@ -84,9 +84,9 @@ export default class Ban extends Command {
             title: 'User',
             text: args[0]
         });
-        msgHandler.sendRichText(targetuser.user, 'Banned', usercategories).then(m => {
+        msgHandler.sendRichText_Explicit(msg.guild, targetuser.user, msg.author, 'Banned', usercategories).then(m => {
             targetuser.ban(reason).then(member => {
-                msgHandler.sendRichText(msg.channel, 'Banned', categories)
+                msgHandler.sendRichText(msg, 'Banned', categories)
             });
         });
 

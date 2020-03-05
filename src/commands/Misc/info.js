@@ -33,6 +33,6 @@ export default class Info extends Command {
             title: 'Author',
             text: 'Paul Keller'
         };
-        msgHandler.sendRichText(msg.channel, 'Bot Info', categories, 0xF1C40F)
+        msgHandler.sendRichText(msg, 'Bot Info', categories, 0xF1C40F)
     }
 }

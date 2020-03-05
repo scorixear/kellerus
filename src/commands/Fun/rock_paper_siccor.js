@@ -23,20 +23,20 @@ class Rock extends Command {
         let answer;
         switch (GetAnswer()) {
             case 0:
-                answer  = responses.tie[Math.floor(Math.random()*responses.tie.length)];
-                msgHandler.sendRichText(msg.channel, 'Rock', [], undefined, 'rock.png').then(_=>msg.reply(answer));
+                answer = responses.tie[Math.floor(Math.random() * responses.tie.length)];
+                msgHandler.sendRichText(msg, 'Rock', [], undefined, 'rock.png').then(_ => msg.reply(answer));
                 break;
             case 1:
-                answer  = responses.win[Math.floor(Math.random()*responses.win.length)];
-                msgHandler.sendRichText(msg.channel, 'Paper', [], undefined, 'paper.png').then(_=>msg.reply(answer));
+                answer = responses.win[Math.floor(Math.random() * responses.win.length)];
+                msgHandler.sendRichText(msg, 'Paper', [], undefined, 'paper.png').then(_ => msg.reply(answer));
                 break;
             case 2:
-                answer  = responses.loose[Math.floor(Math.random()*responses.loose.length)];
-                msgHandler.sendRichText(msg.channel, 'Scissor', [], undefined, 'scissors.png').then(_=>msg.reply(answer));
+                answer = responses.loose[Math.floor(Math.random() * responses.loose.length)];
+                msgHandler.sendRichText(msg, 'Scissor', [], undefined, 'scissors.png').then(_ => msg.reply(answer));
                 break;
             case 3:
-                answer  = responses.spock[Math.floor(Math.random()*responses.spock.length)];
-                msgHandler.sendRichText(msg.channel, 'SPOCK', [], undefined, 'spock.png').then(_=>msg.reply(answer));
+                answer = responses.spock[Math.floor(Math.random() * responses.spock.length)];
+                msgHandler.sendRichText(msg, 'SPOCK', [], undefined, 'spock.png').then(_ => msg.reply(answer));
         }
     }
 }
@@ -53,20 +53,20 @@ class Paper extends Command {
         let answer;
         switch (GetAnswer()) {
             case 0:
-                answer  = responses.loose[Math.floor(Math.random()*responses.loose.length)];
-                msgHandler.sendRichText(msg.channel, 'Rock', [], undefined, 'rock.png').then(_=>msg.reply(answer));
+                answer = responses.loose[Math.floor(Math.random() * responses.loose.length)];
+                msgHandler.sendRichText(msg, 'Rock', [], undefined, 'rock.png').then(_ => msg.reply(answer));
                 break;
             case 1:
-                answer  = responses.tie[Math.floor(Math.random()*responses.tie.length)];
-                msgHandler.sendRichText(msg.channel, 'Paper', [], undefined, 'paper.png').then(_=>msg.reply(answer));
+                answer = responses.tie[Math.floor(Math.random() * responses.tie.length)];
+                msgHandler.sendRichText(msg, 'Paper', [], undefined, 'paper.png').then(_ => msg.reply(answer));
                 break;
             case 2:
-                answer  = responses.win[Math.floor(Math.random()*responses.win.length)];
-                msgHandler.sendRichText(msg.channel, 'Scissor', [], undefined, 'scissors.png').then(_=>msg.reply(answer));
+                answer = responses.win[Math.floor(Math.random() * responses.win.length)];
+                msgHandler.sendRichText(msg, 'Scissor', [], undefined, 'scissors.png').then(_ => msg.reply(answer));
                 break;
             case 3:
-                answer  = responses.spock[Math.floor(Math.random()*responses.spock.length)];
-                msgHandler.sendRichText(msg.channel, 'SPOCK', [], undefined, 'spock.png').then(_=>msg.reply(answer));
+                answer = responses.spock[Math.floor(Math.random() * responses.spock.length)];
+                msgHandler.sendRichText(msg, 'SPOCK', [], undefined, 'spock.png').then(_ => msg.reply(answer));
         }
     }
 }
@@ -83,20 +83,20 @@ class Scissor extends Command {
         let answer;
         switch (GetAnswer()) {
             case 0:
-                answer  = responses.win[Math.floor(Math.random()*responses.win.length)];
-                msgHandler.sendRichText(msg.channel, 'Rock', [], undefined, 'rock.png').then(_=>msg.reply(answer));
+                answer = responses.win[Math.floor(Math.random() * responses.win.length)];
+                msgHandler.sendRichText(msg, 'Rock', [], undefined, 'rock.png').then(_ => msg.reply(answer));
                 break;
             case 1:
-                answer  = responses.loose[Math.floor(Math.random()*responses.loose.length)];
-                msgHandler.sendRichText(msg.channel, 'Paper', [], undefined, 'paper.png').then(_=>msg.reply(answer));
+                answer = responses.loose[Math.floor(Math.random() * responses.loose.length)];
+                msgHandler.sendRichText(msg, 'Paper', [], undefined, 'paper.png').then(_ => msg.reply(answer));
                 break;
             case 2:
-                answer  = responses.tie[Math.floor(Math.random()*responses.tie.length)];
-                msgHandler.sendRichText(msg.channel, 'Scissor', [], undefined, 'scissors.png').then(_=>msg.reply(answer));
+                answer = responses.tie[Math.floor(Math.random() * responses.tie.length)];
+                msgHandler.sendRichText(msg, 'Scissor', [], undefined, 'scissors.png').then(_ => msg.reply(answer));
                 break;
             case 3:
-                answer  = responses.spock[Math.floor(Math.random()*responses.spock.length)];
-                msgHandler.sendRichText(msg.channel, 'SPOCK', [], undefined, 'spock.png').then(_=>msg.reply(answer));
+                answer = responses.spock[Math.floor(Math.random() * responses.spock.length)];
+                msgHandler.sendRichText(msg, 'SPOCK', [], undefined, 'spock.png').then(_ => msg.reply(answer));
         }
     }
 }

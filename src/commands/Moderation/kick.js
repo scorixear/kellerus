@@ -19,7 +19,7 @@ export default class Kick extends Command {
             return;
         }
         if (!args || args.length == 0) {
-            msgHandler.sendRichText(msg.channel, 'Kick Info', [{
+            msgHandler.sendRichText(msg, 'Kick Info', [{
                 title: 'Usage',
                 text: `\`${config.prefix}${this.usage}\``
             }]);
@@ -31,7 +31,7 @@ export default class Kick extends Command {
 
         if (!targetuser) {
             msgHandler.sendRichText_Default({
-                channel: msg.channel,
+                msg: msg,
                 title: 'Error',
                 description: 'User not found',
                 color: 0xCC0000
@@ -40,7 +40,7 @@ export default class Kick extends Command {
         }
 
         if (targetuser.highestRole <= user.highestRole || msg.guild.ownerID == targetuser.id || targetuser.user.bot) {
-            msgHandler.sendRichText(msg.channel, 'Error', [{
+            msgHandler.sendRichText(msg, 'Error', [{
                 title: 'Invalid permissions',
                 text: 'You cannot kick this user!'
             }], 0xCC0000);
@@ -69,9 +69,9 @@ export default class Kick extends Command {
             title: 'User',
             text: args[0]
         });
-        msgHandler.sendRichText(targetuser.user, 'Kicked', usercategories).then(m => {
+        msgHandler.sendRichText_Explicit(msg.guild, targetuser.user, msg.author, 'Kicked', usercategories).then(m => {
             targetuser.kick(reason).then(member => {
-                msgHandler.sendRichText(msg.channel, 'Kicked', categories);
+                msgHandler.sendRichText(msg, 'Kicked', categories);
             });
         });
 

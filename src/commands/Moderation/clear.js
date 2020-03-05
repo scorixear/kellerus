@@ -19,7 +19,7 @@ export default class Clear extends Command {
         if(hasPermission === false) {
             return;
         }
-        if (!args[0]) return msgHandler.sendRichText(msg.channel, 'Error', [{title: 'Message', text:`Invalid usage! \`${Config.prefix}${this.usage}\``}]);
+        if (!args[0]) return msgHandler.sendRichText(msg, 'Error', [{title: 'Message', text:`Invalid usage! \`${Config.prefix}${this.usage}\``}]);
         msg.channel.bulkDelete(parseInt(args[0]) + 1);
         msg.channel.send(`<@${msg.author.id}> cleared the chat`);
     }

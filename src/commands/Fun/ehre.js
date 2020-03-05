@@ -15,21 +15,25 @@ export default class Ehre extends Command {
 
     executeCommand(args, msg) {
         let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) {
+        if (hasPermission === false) {
             return;
         }
         let targetuser;
-        if(args && args.length >=1) {
+        if (args && args.length >= 1) {
             targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
-        }
-        else {
-            msgHandler.sendRichText_Default({channel: msg.channel, title: 'Error', description: 'You must mention a user!', color: 0xcc0000});
+        } else {
+            msgHandler.sendRichText_Default({
+                msg: msg,
+                title: 'Error',
+                description: 'You must mention a user!',
+                color: 0xcc0000
+            });
             return;
         }
 
-        if(!targetuser){
+        if (!targetuser) {
             msgHandler.sendRichText_Default({
-                channel: msg.channel,
+                msg: msg,
                 title: 'Error',
                 description: 'User not found',
                 color: 0xCC0000
@@ -37,15 +41,25 @@ export default class Ehre extends Command {
             return;
         }
 
-        if(targetuser === msg.guild.member(msg.author)){
-            msgHandler.sendRichText_Default({channel: msg.channel, title: 'Error', description: 'You cannot award yourself `Ehre`!', color: 0xcc0000});
+        if (targetuser === msg.guild.member(msg.author)) {
+            msgHandler.sendRichText_Default({
+                msg: msg,
+                title: 'Error',
+                description: 'You cannot award yourself `Ehre`!',
+                color: 0xcc0000
+            });
             return;
         }
 
-        sqlHandler.addHonorCount(targetuser.user).then((cnt)=>{
-            msgHandler.sendRichText_Default({channel: msg.channel, title: 'Ehre', description: `${targetuser} war \`${cnt}\` mal ehrenvoll.`, color:0x00CC00});
+        sqlHandler.addHonorCount(targetuser.user).then((cnt) => {
+            msgHandler.sendRichText_Default({
+                msg: msg,
+                title: 'Ehre',
+                description: `${targetuser} war \`${cnt}\` mal ehrenvoll.`,
+                color: 0x00CC00
+            });
         });
-        
-        
+
+
     }
 }

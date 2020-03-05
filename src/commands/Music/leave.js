@@ -24,7 +24,7 @@ export default class Leave extends Command {
             msg.guild.voice.connection.disconnect();
         } else {
             msgHandler.sendRichText_Default({
-                channel: msg.channel,
+                msg: msg,
                 title: 'Error',
                 description: 'I must be in a voice channel to be banished!',
                 color: 0xCC0000

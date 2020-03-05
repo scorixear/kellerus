@@ -19,7 +19,7 @@ export default class Nick extends Command {
         if (hasPermission === false) {
             return;
         }
-        if (!args || args.length < 2) return msgHandler.sendRichText(msg.channel, 'Error', [{
+        if (!args || args.length < 2) return msgHandler.sendRichText(msg, 'Error', [{
             title: 'Message',
             text: `Invalid usage! \`${Config.prefix}${this.usage}\``
         }]);
@@ -29,7 +29,7 @@ export default class Nick extends Command {
 
         if (!targetuser) {
             msgHandler.sendRichText_Default({
-                channel: msg.channel,
+                msg: msg,
                 title: 'Error',
                 description: 'User not found',
                 color: 0xCC0000
@@ -53,10 +53,10 @@ export default class Nick extends Command {
         }
 
         targetuser.setNickname(args[1], reason).then(member => {
-            msgHandler.sendRichText(msg.channel, 'Nickname changed', categories);
+            msgHandler.sendRichText(msg, 'Nickname changed', categories);
         }).catch(err => {
             console.log(err);
-            msgHandler.sendRichText(msg.channel, 'Error', [{
+            msgHandler.sendRichText(msg, 'Error', [{
                 title: 'Invalid permissions',
                 text: 'You cannot nick this user!'
             }], 0xCC0000);

@@ -25,14 +25,14 @@ export default class Join extends Command {
                     musicPlayer.Play(connection, msg.member.voice.channel, msg.guild.id, msg.channel);
                 });
                 msgHandler.sendRichText_Default({
-                    channel: msg.channel,
+                    msg: msg,
                     title: 'Joined',
                     description: 'Successfully Joined!'
                 });
 
         } else {
             msgHandler.sendRichText_Default({
-                channel: msg.channel,
+                msg: msg,
                 title: 'Error',
                 description: 'You must be in a voice channel to summon me!',
                 color: 0xCC0000

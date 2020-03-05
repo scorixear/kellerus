@@ -31,7 +31,7 @@ function parseCommand(msg) {
     
     let module = commands.find(c => c.command.toLowerCase() == args[0].toLowerCase());
     if (!module || !module.executeCommand) {
-        msgHandler.sendRichText(msg.channel, 'Error', [{
+        msgHandler.sendRichText(msg, 'Error', [{
             title: 'Message',
             text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
         }]);
@@ -41,7 +41,7 @@ function parseCommand(msg) {
         module.executeCommand(args.slice(1), msg);
     } catch (err) {
         console.log(err);
-        msgHandler.sendRichText(msg.channel, 'Error', [{
+        msgHandler.sendRichText(msg, 'Error', [{
             title: 'Message',
             text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
         }]);

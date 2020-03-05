@@ -23,7 +23,7 @@ export default class Help extends Command {
             let command = cmdHandler.commands.find(v => v.command == args[0]);
             if (command) {
                 if (permHandler.checkPermissionSilent(command.permissions, msg) === false) {
-                    msgHandler.sendRichText(msg.channel, 'Help Info', [{
+                    msgHandler.sendRichText(msg, 'Help Info', [{
                         title: 'Info',
                         text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
                     }]);
@@ -31,7 +31,7 @@ export default class Help extends Command {
                 }
                 let example = '\`\`\`' + config.prefix + command.example.split('\n').reduce((acc, val) => acc + '\`\`\`\n\`\`\`' + config.prefix + val) + '\`\`\`';
                 msgHandler.sendRichText_Default({
-                    channel: msg.channel,
+                    msg: msg,
                     categories: [{
                             title: 'Command',
                             text: `\`${config.prefix}${command.command}\``,
@@ -52,7 +52,7 @@ export default class Help extends Command {
                     ]
                 });
             } else {
-                msgHandler.sendRichText(msg.channel, 'Help Info', [{
+                msgHandler.sendRichText(msg, 'Help Info', [{
                     title: 'Info',
                     text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`
                 }]);
@@ -82,6 +82,6 @@ export default class Help extends Command {
                 inline: true
             });
         });
-        msgHandler.sendRichText(msg.channel, 'Help Info', embededCategories, 0x616161);
+        msgHandler.sendRichText(msg, 'Help Info', embededCategories, 0x616161);
     }
 }

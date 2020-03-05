@@ -2,22 +2,36 @@ import Discord from 'discord.js';
 
 
 function sendRichText_Default({
-    channel,
+    msg,
     title,
     categories,
     color,
     image,
-    author,
     description,
     thumbnail,
-    footer,
-    timestamp,
     url
 }) {
-    return sendRichText(channel, title, categories, color, image, author, description, thumbnail, footer, timestamp, url);
+    return sendRichText(msg, title, categories, color, image, description, thumbnail, url);
 }
 
-function sendRichText(channel, title, categories, color, image, author, description, thumbnail, footer, timestamp, url) {
+function sendRichText_Default_Explicit({
+    guild,
+    channel,
+    author,
+    title,
+    categories,
+    color,
+    image,
+    description,
+    thumbnail,
+    url
+}) {
+    return sendRichText_Explicit(guild, channel, author, title, categories, color, image, description, thumbnail, url);
+}
+
+
+
+function sendRichText_Explicit(guild, channel, author, title, categories, color, image, description, thumbnail, url) {
     let richText = new Discord.MessageEmbed();
     if(title){
         richText.setTitle(title);
@@ -33,8 +47,6 @@ function sendRichText(channel, title, categories, color, image, author, descript
     }
     if (color)
         richText.setColor(color);
-    if (author)
-        richText.setAuthor(author);
     if (description)
         richText.setDescription(description);
     if (thumbnail)
@@ -44,17 +56,23 @@ function sendRichText(channel, title, categories, color, image, author, descript
         richText.setImage(`attachment://${image}`);
     }
 
-    if (footer)
-        richText.setFooter(footer);
-    if (timestamp)
-        richText.setTimestamp(timestamp);
+    if(guild && author){
+        richText.setFooter(guild.member(author).nickname, author.avatarURL());
+    }
+    
+    richText.setTimestamp(new Date());
     if (url)
         richText.setURL(url);
 
     return channel.send(richText);
 }
 
+function sendRichText(msg, title, categories, color, image, description, thumbnail, url) {
+  sendRichText_Explicit(msg.guild, msg.channel, msg.author, title, categories, color, image, description, thumbnail, url);
+}
+
 export default {
     sendRichText,
+    sendRichText_Explicit,
     sendRichText_Default
 };

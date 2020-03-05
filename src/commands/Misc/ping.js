@@ -15,7 +15,11 @@ export default class Ping extends Command {
 
     executeCommand(args, msg) {
         let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) return;
-        msgHandler.sendRichText_Default({channel: msg.channel, title: 'Pong', description: `${discordHandler.client.ping}ms`});
+        if (hasPermission === false) return;
+        msgHandler.sendRichText_Default({
+            msg: msg,
+            title: 'Pong',
+            description: `${discordHandler.client.ping}ms`
+        });
     }
 }
