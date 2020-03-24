@@ -30,7 +30,7 @@ async function getHonorCount(user) {
     let honorCount;
     try {
         conn = await pool.getConnection();
-        const rows = await conn.query(`SELECT \`val\` FROM honor WHERE \`user_id\` = "${conn.escape(user.id)}"`);
+        const rows = await conn.query(`SELECT \`val\` FROM honor WHERE \`user_id\` = ${conn.escape(user.id)}`);
         honorCount = rows[0].val;
     } catch (err) {
         honorCount = 0;
@@ -45,17 +45,17 @@ async function addHonorCount(user) {
     let honorCount;
     try {
         conn = await pool.getConnection();
-        let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = "${conn.escape(user.id)}"`);
+        let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = ${conn.escape(user.id)}`);
         if (rows && rows[0]) {
             honorCount = rows[0].val + 1;
-            rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = "${conn.escape(user.id)}"`);
+            rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`);
         } else {
             honorCount = 1;
-            rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${conn.escape(user.id)}", 1)`);
+            rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES (${conn.escape(user.id)}, 1)`);
         }
     } catch (err) {
         honorCount = 1;
-        await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${conn.escape(user.id)}", 1)`);
+        await conn.query(`INSERT INTO honor (user_id, val) VALUES (${conn.escape(user.id)}, 1)`);
     } finally {
         if (conn) await conn.end();
     }
@@ -111,17 +111,17 @@ async function addQueue(title, url, serverid) {
     try {
         conn = await pool.getConnection();
         conn.escape
-        let rows = await conn.query(`SELECT title FROM ServerQueue_${conn.escape(serverid)} WHERE url="${conn.escape(url)}"`);
+        let rows = await conn.query(`SELECT title FROM ServerQueue_${conn.escape(serverid)} WHERE url=${conn.escape(url)}`);
         if(rows && rows.length > 0){
             success = false;
         } else {
-            await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES ("${conn.escape(title)}","${conn.escape(url)}")`);
+            await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
             success = true;
         }
     } catch (err) {
         try {
           await createQueue(serverid, conn);
-          await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES ("${conn.escape(title)}","${conn.escape(url)}")`);
+          await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
           success = true;
         } catch(err) {
             success = false;
