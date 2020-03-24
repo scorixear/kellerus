@@ -64,7 +64,7 @@ async function addHonorCount(user) {
 
 async function createQueue(serverid, conn) {
     try {
-        await conn.query(`CREATE TABLE \`ServerQueue_${conn.escape(serverid)}\` (\`ID\` INT UNSIGNED AUTO_INCREMENT, \`url\` VARCHAR(255), \`title\` VARCHAR(255), PRIMARY KEY (\`ID\`))`);
+        await conn.query(`CREATE TABLE \`ServerQueue_${serverid}\` (\`ID\` INT UNSIGNED AUTO_INCREMENT, \`url\` VARCHAR(255), \`title\` VARCHAR(255), PRIMARY KEY (\`ID\`))`);
     } catch (err) {
         throw err;
     } finally {
@@ -77,7 +77,7 @@ async function getQueue(serverid) {
     let queue = [];
     try {
         conn = await pool.getConnection();
-        let rows = await conn.query(`SELECT title, url FROM ServerQueue_${conn.escape(serverid)}`);
+        let rows = await conn.query(`SELECT title, url FROM ServerQueue_${serverid}`);
         if (rows) {
             for (let row of rows) {
                 queue.push({
@@ -111,17 +111,17 @@ async function addQueue(title, url, serverid) {
     try {
         conn = await pool.getConnection();
         conn.escape
-        let rows = await conn.query(`SELECT title FROM ServerQueue_${conn.escape(serverid)} WHERE url=${conn.escape(url)}`);
+        let rows = await conn.query(`SELECT title FROM ServerQueue_${serverid} WHERE url=${conn.escape(url)}`);
         if(rows && rows.length > 0){
             success = false;
         } else {
-            await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
+            await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
             success = true;
         }
     } catch (err) {
         try {
           await createQueue(serverid, conn);
-          await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
+          await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
           success = true;
         } catch(err) {
             success = false;
@@ -137,7 +137,7 @@ async function clearQueue(serverid) {
     let success;
     try {
         conn = await pool.getConnection();
-        await conn.query(`DELETE FROM ServerQueue_${conn.escape(serverid)}`);
+        await conn.query(`DELETE FROM ServerQueue_${serverid}`);
         success = true;
     } catch (err) {
         try {
