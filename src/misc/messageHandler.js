@@ -68,7 +68,7 @@ function sendRichText_Explicit(guild, channel, author, title, categories, color,
 }
 
 function sendRichText(msg, title, categories, color, image, description, thumbnail, url) {
-  sendRichText_Explicit(msg.guild, msg.channel, msg.author, title, categories, color, image, description, thumbnail, url);
+  return sendRichText_Explicit(msg.guild, msg.channel, msg.author, title, categories, color, image, description, thumbnail, url);
 }
 
 export default {
