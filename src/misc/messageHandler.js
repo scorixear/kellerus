@@ -52,7 +52,7 @@ function sendRichText_Explicit(guild, channel, author, title, categories, color,
     if (thumbnail)
         richText.setThumbnail(thumbnail);
     if (image) {
-        richText.attachFile(`./src/assets/${image}`);
+        richText.attachFiles([`./src/assets/${image}`]);
         richText.setImage(`attachment://${image}`);
     }
 
