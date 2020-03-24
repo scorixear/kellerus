@@ -25,7 +25,8 @@ export default class Nick extends Command {
         }]);
 
         let reason;
-        let targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+        let targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member.get(args[0]));
+        const {nickname: oldNickname} = targetuser;
 
         if (!targetuser) {
             msgHandler.sendRichText_Default({
@@ -42,7 +43,7 @@ export default class Nick extends Command {
             text: targetuser
         }, {
             title: 'Nickname',
-            text: args[1]
+            text: `${oldNickname || targetuser.displayName} > ${args[1]}`
         }];
         if (args.length > 2) {
             reason = args.slice(2).join(' ')
@@ -53,10 +54,10 @@ export default class Nick extends Command {
         }
 
         targetuser.setNickname(args[1], reason).then(member => {
-            msgHandler.sendRichText(msg, 'Nickname changed', categories);
+            msgHandler.sendRichText(msg, 'Nickname changed 👀', categories);
         }).catch(err => {
             console.log(err);
-            msgHandler.sendRichText(msg, 'Error', [{
+            msgHandler.sendRichText(msg, 'Error 😫', [{
                 title: 'Invalid permissions',
                 text: 'You cannot nick this user!'
             }], 0xCC0000);
