@@ -19,7 +19,7 @@ export default class Ping extends Command {
         msgHandler.sendRichText_Default({
             msg: msg,
             title: 'Pong',
-            description: `${discordHandler.client.ping}ms`
+            description: `${discordHandler.client.ws.ping}ms`
         });
     }
 }
