@@ -30,7 +30,7 @@ async function getHonorCount(user) {
     let honorCount;
     try {
         conn = await pool.getConnection();
-        const rows = await conn.query(`SELECT \`val\` FROM honor WHERE \`user_id\` = "${user.id}"`);
+        const rows = await conn.query(`SELECT \`val\` FROM honor WHERE \`user_id\` = "${conn.escape(user.id)}"`);
         honorCount = rows[0].val;
     } catch (err) {
         honorCount = 0;
@@ -45,17 +45,17 @@ async function addHonorCount(user) {
     let honorCount;
     try {
         conn = await pool.getConnection();
-        let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = "${user.id}"`);
+        let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = "${conn.escape(user.id)}"`);
         if (rows && rows[0]) {
             honorCount = rows[0].val + 1;
-            rows = await conn.query(`UPDATE honor SET val = ${honorCount} WHERE \`user_id\` = "${user.id}"`);
+            rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = "${conn.escape(user.id)}"`);
         } else {
             honorCount = 1;
-            rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${user.id}", 1)`);
+            rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${conn.escape(user.id)}", 1)`);
         }
     } catch (err) {
         honorCount = 1;
-        await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${user.id}", 1)`);
+        await conn.query(`INSERT INTO honor (user_id, val) VALUES ("${conn.escape(user.id)}", 1)`);
     } finally {
         if (conn) await conn.end();
     }
@@ -64,7 +64,7 @@ async function addHonorCount(user) {
 
 async function createQueue(serverid, conn) {
     try {
-        await conn.query(`CREATE TABLE \`ServerQueue_${serverid}\` (\`ID\` INT UNSIGNED AUTO_INCREMENT, \`url\` VARCHAR(255), \`title\` VARCHAR(255), PRIMARY KEY (\`ID\`))`);
+        await conn.query(`CREATE TABLE \`ServerQueue_${conn.escape(serverid)}\` (\`ID\` INT UNSIGNED AUTO_INCREMENT, \`url\` VARCHAR(255), \`title\` VARCHAR(255), PRIMARY KEY (\`ID\`))`);
     } catch (err) {
         throw err;
     } finally {
@@ -77,7 +77,7 @@ async function getQueue(serverid) {
     let queue = [];
     try {
         conn = await pool.getConnection();
-        let rows = await conn.query(`SELECT title, url FROM ServerQueue_${serverid}`);
+        let rows = await conn.query(`SELECT title, url FROM ServerQueue_${conn.escape(serverid)}`);
         if (rows) {
             for (let row of rows) {
                 queue.push({
@@ -110,17 +110,18 @@ async function addQueue(title, url, serverid) {
     let success;
     try {
         conn = await pool.getConnection();
-        let rows = await conn.query(`SELECT title FROM ServerQueue_${serverid} WHERE url="${url}"`);
+        conn.escape
+        let rows = await conn.query(`SELECT title FROM ServerQueue_${conn.escape(serverid)} WHERE url="${conn.escape(url)}"`);
         if(rows && rows.length > 0){
             success = false;
         } else {
-            await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES ("${title}","${url}")`);
+            await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES ("${conn.escape(title)}","${conn.escape(url)}")`);
             success = true;
         }
     } catch (err) {
         try {
           await createQueue(serverid, conn);
-          await conn.query(`INSERT INTO ServerQueue_${serverid} (title, url) VALUES ("${title}","${url}")`);
+          await conn.query(`INSERT INTO ServerQueue_${conn.escape(serverid)} (title, url) VALUES ("${conn.escape(title)}","${conn.escape(url)}")`);
           success = true;
         } catch(err) {
             success = false;
@@ -136,7 +137,7 @@ async function clearQueue(serverid) {
     let success;
     try {
         conn = await pool.getConnection();
-        await conn.query(`DELETE FROM ServerQueue_${serverid}`);
+        await conn.query(`DELETE FROM ServerQueue_${conn.escape(serverid)}`);
         success = true;
     } catch (err) {
         try {
