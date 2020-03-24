@@ -43,13 +43,14 @@ export default class Nick extends Command {
             text: targetuser
         }, {
             title: 'Nickname',
-            text: `${oldNickname || targetuser.displayName} > ${args[1]}`
+            text: `\`${oldNickname || targetuser.displayName}\` > \`${args[1]}\``
         }];
+
         if (args.length > 2) {
-            reason = args.slice(2).join(' ')
+            reason = args.slice(2).join(' ');
             categories.push({
                 title: 'Reason',
-                text: reason
+                text: reason,
             });
         }
 
