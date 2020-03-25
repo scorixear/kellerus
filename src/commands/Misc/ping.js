@@ -14,8 +14,11 @@ export default class Ping extends Command {
     }
 
     executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if (hasPermission === false) return;
+        try {
+            super.executeCommand(args, msg);
+        } catch (err) {
+            return;
+        }
         msgHandler.sendRichText_Default({
             msg: msg,
             title: 'Pong',

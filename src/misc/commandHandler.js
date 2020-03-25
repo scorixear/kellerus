@@ -25,8 +25,9 @@ commandFiles.forEach((folder) => {
 });
 
 function parseCommand(msg) {
+    
     if (msg.content[0] !== config.prefix) return;
-
+    
     let args = msg.content.substring(config.prefix.length).split(" ");
     
     let module = commands.find(c => c.command.toLowerCase() == args[0].toLowerCase());

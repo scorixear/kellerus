@@ -1,3 +1,4 @@
+import permHandler from './../misc/permissionHandler.js';
 export default class Command {
     constructor(category) {
         if (new.target == Command) {
@@ -13,6 +14,9 @@ export default class Command {
     description;
     example;
     executeCommand(args, msg) {
-
+        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
+        if (hasPermission === false) {
+            throw new Error("Invalid");
+        }
     };
 }
