@@ -1,8 +1,13 @@
 # Private Files
 
 config.js
+
 #Webstorm
 *.idea
+
+#resources folder
+resources/
+resources/*
 
 # Logs
 logs
