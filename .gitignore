@@ -1,8 +1,10 @@
 # Private Files
 
 config.js
-#Webstorm
+
+# IDE
 *.idea
+/.vscode
 
 # Logs
 logs
