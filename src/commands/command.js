@@ -1,3 +1,4 @@
+import permHandler from './../misc/permissionHandler.js';
 export default class Command {
     constructor(category) {
         if (new.target == Command) {
