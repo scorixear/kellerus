@@ -1,21 +1,19 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
 export default class Cycle extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = 'cycle';
+    this.command = 'cycle';
+    this.description = 'Asks the bot, if he wants to play TheCycle!';
+    this.example = 'cycle';
+  }
 
-    constructor(category) {
-        super(category);
-        this.usage = 'cycle';
-        this.command = 'cycle';
-        this.description = 'Asks the bot, if he wants to play TheCycle!';
-        this.example = 'cycle';
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
     }
-
-    executeCommand(args, msg) {
-        try {
-            super.executeCommand(args, msg);
-        } catch (err) {
-            return;
-        }
-        msg.channel.send('Ja');
-    }
+    msg.channel.send('Ja');
+  }
 }
