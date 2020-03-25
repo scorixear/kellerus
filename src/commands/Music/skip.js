@@ -16,8 +16,9 @@ export default class Skip extends Command {
     }
 
     executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if (hasPermission === false) {
+        try {
+            super.executeCommand(args, msg);
+        } catch (err) {
             return;
         }
         if (!servers[msg.guild.id]) {
@@ -32,6 +33,6 @@ export default class Skip extends Command {
                 }
             }
         });
-        
+
     }
 }

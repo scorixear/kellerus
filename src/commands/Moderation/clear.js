@@ -15,11 +15,15 @@ export default class Clear extends Command {
     }
 
     executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) {
+        try {
+            super.executeCommand(args, msg);
+        } catch (err) {
             return;
         }
-        if (!args[0]) return msgHandler.sendRichText(msg, 'Error', [{title: 'Message', text:`Invalid usage! \`${Config.prefix}${this.usage}\``}]);
+        if (!args[0]) return msgHandler.sendRichText(msg, 'Error', [{
+            title: 'Message',
+            text: `Invalid usage! \`${Config.prefix}${this.usage}\``
+        }]);
         msg.channel.bulkDelete(parseInt(args[0]) + 1);
         msg.channel.send(`<@${msg.author.id}> cleared the chat`);
     }

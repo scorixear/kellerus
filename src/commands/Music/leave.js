@@ -15,8 +15,9 @@ export default class Leave extends Command {
     }
 
     executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if (hasPermission === false) {
+        try {
+            super.executeCommand(args, msg);
+        } catch (err) {
             return;
         }
 

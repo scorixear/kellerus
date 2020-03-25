@@ -17,10 +17,12 @@ export default class Queue extends Command {
     }
 
     async executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if (hasPermission === false) {
+        try {
+            super.executeCommand(args, msg);
+        } catch (err) {
             return;
         }
+
 
         if (args && args.length > 0) {
             if (args[0] === 'clear' && args.length === 1) {
@@ -61,9 +63,9 @@ export default class Queue extends Command {
                         description: 'Empty Queue'
                     });
                 } else {
-                    let queuelist ='';
-                    for(let i = 0;i<queue.length;i++) {
-                        if(i=== servers[msg.guild.id].queueIndex) {
+                    let queuelist = '';
+                    for (let i = 0; i < queue.length; i++) {
+                        if (i === servers[msg.guild.id].queueIndex) {
                             queuelist += `--> \`${queue[i].title}\`\n`;
                         } else {
                             queuelist += `- \`${queue[i].title}\`\n`;
