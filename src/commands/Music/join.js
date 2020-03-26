@@ -24,13 +24,13 @@ export default class Join extends Command {
       msg.member.voice.channel.join().then((connection) => {
         musicPlayer.play(connection, msg.member.voice.channel, msg.guild.id, msg.channel);
       });
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Joined',
         description: 'Successfully Joined!',
       });
     } else {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'You must be in a voice channel to summon me!',

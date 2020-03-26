@@ -17,7 +17,7 @@ export default class Ping extends Command {
     } catch (err) {
       return;
     }
-    msgHandler.sendRichText_Default({
+    msgHandler.sendRichTextDefault({
       msg: msg,
       title: 'Pong',
       description: `${discordHandler.client.ws.ping}ms`,

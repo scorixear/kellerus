@@ -29,7 +29,7 @@ export default class Nick extends Command {
     const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
 
     if (!targetuser) {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'User not found',

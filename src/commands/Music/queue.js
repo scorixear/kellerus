@@ -32,13 +32,13 @@ export default class Queue extends Command {
         }
         sqlHandler.clearQueue(msg.guild.id).then((success) => {
           if (success) {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: 'Queue cleared',
             });
           } else {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: 'Queue could not be cleared.',
@@ -56,7 +56,7 @@ export default class Queue extends Command {
         }
         const queue = await musicPlayer.updateQueue(msg.guild.id);
         if (queue.length === 0) {
-          msgHandler.sendRichText_Default({
+          msgHandler.sendRichTextDefault({
             msg: msg,
             title: 'Queue List',
             description: 'Empty Queue',
@@ -70,7 +70,7 @@ export default class Queue extends Command {
               queuelist += `- \`${queue[i].title}\`\n`;
             }
           }
-          msgHandler.sendRichText_Default({
+          msgHandler.sendRichTextDefault({
             msg: msg,
             title: 'Queue List',
             description: queuelist,
@@ -89,13 +89,13 @@ export default class Queue extends Command {
       if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
         sqlHandler.addQueue(args[0], args[0], msg.guild.id).then((success) => {
           if (success) {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: `Title \`${args[0]}\` added.`,
             });
           } else {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: `Title \`${args[0]}\` already in the queue.`,
@@ -105,13 +105,13 @@ export default class Queue extends Command {
       } else {
         musicPlayer.youtubeSearch(args, msg).then((title) => {
           if (title.startsWith('$$$$ignore')) {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: `Title \`${title.substring(10)}\` is already in the queue.`,
             });
           } else {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: `Title \`${title}\` added.`,
@@ -119,14 +119,14 @@ export default class Queue extends Command {
           }
         }).catch((err) => {
           if (err) {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
               description: `No Results found!`,
               color: 0xCC0000,
             });
           } else {
-            msgHandler.sendRichText_Default({
+            msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Error',
               description: `Unexpected Result while connection to the Youtube API.`,
@@ -136,7 +136,7 @@ export default class Queue extends Command {
         });
       }
     } else {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: `No title given! Use \`${config.prefix}${this.usage}\` to queue a title.`,

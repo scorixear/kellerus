@@ -30,7 +30,7 @@ export default class Kick extends Command {
     const user = msg.guild.member(msg.author);
 
     if (!targetuser) {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'User not found',
@@ -69,7 +69,7 @@ export default class Kick extends Command {
       title: 'User',
       text: args[0],
     });
-    msgHandler.sendRichText_Explicit(msg.guild, targetuser.user, msg.author, 'Kicked', usercategories).then((m) => {
+    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, 'Kicked', usercategories).then((m) => {
       targetuser.kick(reason).then((member) => {
         msgHandler.sendRichText(msg, 'Kicked', categories);
       });

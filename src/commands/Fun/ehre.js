@@ -21,7 +21,7 @@ export default class Ehre extends Command {
     if (args && args.length >= 1) {
       targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member(args[0]));
     } else {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'You must mention a user!',
@@ -31,7 +31,7 @@ export default class Ehre extends Command {
     }
 
     if (!targetuser) {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'User not found',
@@ -41,7 +41,7 @@ export default class Ehre extends Command {
     }
 
     if (targetuser === msg.guild.member(msg.author)) {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'You cannot award yourself `Ehre`!',
@@ -51,7 +51,7 @@ export default class Ehre extends Command {
     }
 
     sqlHandler.addHonorCount(targetuser.user).then((cnt) => {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Ehre',
         description: `${targetuser} war \`${cnt}\` mal ehrenvoll.`,

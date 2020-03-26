@@ -28,7 +28,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
         }, {highWaterMark: 1}),
     );
     server.dispatcher.on('start', () => {
-      messageHandler.sendRichText_Explicit(undefined, msgChannel, undefined, 'Playing', [{
+      messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined, 'Playing', [{
         title: 'Description',
         text: 'Currently playing:',
       }, {
@@ -46,7 +46,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
       server.dispatcher = null;
       if (voiceChannel.members.size <= 1 && connection) {
         connection.disconnect();
-        messageHandler.sendRichText_Default_Explicit({
+        messageHandler.sendRichTextDefaultExplicit({
           channel: msgChannel,
           title: 'Disconnected',
           description: 'Left channel because nobody was listening :(',
@@ -60,8 +60,8 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
     });
   } else {
     connection.disconnect();
-    messageHandler.sendRichText_Default({
-      msg: msg,
+    messageHandler.sendRichTextDefaultExplicit({
+      channel: msgChannel,
       title: 'Queue',
       description: 'Queue empty! Disconnecting.',
       color: 0xcc0000,

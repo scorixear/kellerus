@@ -31,7 +31,7 @@ export default class Help extends Command {
         }
         const example = '\`\`\`' + config.prefix +
             command.example.split('\n').reduce((acc, val) => acc + '\`\`\`\n\`\`\`' + config.prefix + val) + '\`\`\`';
-        msgHandler.sendRichText_Default({
+        msgHandler.sendRichTextDefault({
           msg: msg,
           categories: [{
             title: 'Command',

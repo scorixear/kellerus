@@ -17,6 +17,7 @@ module.exports = {
   'rules': {
     'require-jsdoc': 'off',
     'no-unused-vars': 'warn',
-    'max-len':['warn',{'code': 120}]
+    'max-len':['warn',{'code': 120}],
+    'linebreak-style': 'off'
   },
 };

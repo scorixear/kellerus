@@ -29,7 +29,7 @@ export default class Ban extends Command {
     const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
     const user = msg.guild.member(msg.author);
     if (!targetuser) {
-      msgHandler.sendRichText_Default({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error',
         description: 'User not found',
@@ -83,7 +83,7 @@ export default class Ban extends Command {
       title: 'User',
       text: args[0],
     });
-    msgHandler.sendRichText_Explicit(msg.guild, targetuser.user, msg.author, 'Banned', usercategories).then((m) => {
+    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, 'Banned', usercategories).then((m) => {
       targetuser.ban(reason).then((member) => {
         msgHandler.sendRichText(msg, 'Banned', categories);
       });
