@@ -4,10 +4,26 @@ import request from 'superagent';
 import messageHandler from './messageHandler.js';
 import sqlHandler from './sqlHandler.js';
 
+async function setVolume(serverid, volume) {
+  if (!servers[serverid]) {
+    servers[serverid] = {
+      queueIndex: 0,
+      volume: volume,
+    };
+    return;
+  }
+  const server = servers[serverid];
+  if (!server.dispatcher) {
+    server.volume = volume;
+  }
+  server.dispatcher.setVolume(volume);
+}
+
 async function play(connection, voiceChannel, serverid, msgChannel) {
   if (!servers[serverid]) {
     servers[serverid] = {
       queueIndex: 0,
+      volume: 1,
     };
   }
   const queue = await updateQueue(serverid);
@@ -24,9 +40,11 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
           filter: 'audioonly',
           quality: 'highestaudio',
           format: 'mp3',
-          highWaterMark: 1<<25,
-        }, {highWaterMark: 1}),
-    );
+          highWaterMark: 1 << 25,
+        }, {
+          highWaterMark: 1,
+        }),
+        {volume: server.volume});
     server.dispatcher.on('start', () => {
       messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined, 'Playing', [{
         title: 'Description',
@@ -77,7 +95,7 @@ function stop(msg) {
 
 function youtubeSearch(searchKeywords, msg) {
   const requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
-  `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtubeApiKey}`;
+    `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtubeApiKey}`;
   return new Promise(function(resolve, reject) {
     request.get(requestUrl).end((error, response) => {
       if (!error && response.statusCode == 200) {
@@ -102,12 +120,12 @@ function youtubeSearch(searchKeywords, msg) {
   });
 }
 
-
 async function queueYtAudioStream(videoId, title, msg) {
   const streamUrl = `https://www.youtube.com/watch?v=${videoId}`;
   if (!servers[msg.guild.id]) {
     servers[msg.guild.id] = {
       queueIndex: 0,
+      volume: 1,
     };
   }
   const success = await sqlHandler.addQueue(title, streamUrl, msg.guild.id);
@@ -128,4 +146,5 @@ export default {
   stop,
   youtubeSearch,
   updateQueue,
+  setVolume: setVolume,
 };

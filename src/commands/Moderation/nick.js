@@ -1,7 +1,6 @@
 import Config from '../../config.js';
 import Command from './../command.js';
 import msgHandler from '../../misc/messageHandler.js';
-import permHandler from '../../misc/permissionHandler.js';
 
 export default class Nick extends Command {
   constructor(category) {
@@ -27,7 +26,7 @@ export default class Nick extends Command {
     }
 
     let reason;
-    let targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member.get(args[0]));
     const {nickname: oldNickname} = targetuser;
 
     if (!targetuser) {
@@ -40,20 +39,20 @@ export default class Nick extends Command {
       return;
     }
 
-    let categories = [{
-        title: 'User',
-        text: targetuser
+    const categories = [{
+      title: 'User',
+      text: targetuser,
     }, {
-        title: 'Nickname',
-        text: `\`${oldNickname || targetuser.displayName}\` > \`${args[1]}\``
+      title: 'Nickname',
+      text: `\`${oldNickname || targetuser.displayName}\` > \`${args[1]}\``,
     }];
 
     if (args.length > 2) {
-        reason = args.slice(2).join(' ');
-        categories.push({
-            title: 'Reason',
-            text: reason,
-        });
+      reason = args.slice(2).join(' ');
+      categories.push({
+        title: 'Reason',
+        text: reason,
+      });
     }
 
     targetuser.setNickname(args[1], reason).then((member) => {
