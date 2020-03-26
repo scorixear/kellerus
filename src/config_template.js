@@ -26,5 +26,5 @@ module.exports = {
   dbpassword: dbpassword,
   dbport: dbport,
   dbDataBase: dbDataBase,
-  youtube_api_key: youtubeApiKey,
+  youtubeApiKey: youtubeApiKey,
 };

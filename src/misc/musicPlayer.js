@@ -77,7 +77,7 @@ function stop(msg) {
 
 function youtubeSearch(searchKeywords, msg) {
   const requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
-  `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtube_api_key}`;
+  `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtubeApiKey}`;
   return new Promise(function(resolve, reject) {
     request.get(requestUrl).end((error, response) => {
       if (!error && response.statusCode == 200) {
