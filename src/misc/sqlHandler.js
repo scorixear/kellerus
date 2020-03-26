@@ -152,6 +152,55 @@ async function clearQueue(serverid) {
     return success;
 }
 
+async function createSoundEffect(serverid, {name, link}, {throwError = false}) {
+    let conn;
+    let success;
+    const response = {};
+    try {
+        conn = await pool.getConnection();
+        await conn.query(`DELETE FROM ServerQueue_${serverid}`);
+        success = true;
+    } catch (err) {
+        try {
+            await createQueue(serverid, conn);
+            success = true;
+        } catch(err) {
+            success = false;
+        }
+    } finally {
+        if (conn) await conn.end();
+    }
+    return success;
+}
+
+async function createSoundEffectTable(serverid) {
+    let conn;
+    let success;
+    try {
+        const tableName = config.db_tables.sound_effect.table_name(serverid);
+        conn = await pool.getConnection();
+        const resp = await conn.query(
+            "`CREATE TABLE IF NOT EXISTS `"+`${tableName}`+
+            " ( `id` INT NOT NULL AUTO_INCREMENT ,  " +
+            "`name` VARCHAR(16) NOT NULL UNIQUE ,  " +
+            "`link` VARCHAR(512) NOT NULL ,  " +
+            "`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,    " +
+            "PRIMARY KEY  (`id`));`");
+        console.log('createSoundEffectTable: '+resp);
+        success = true;
+    } catch (err) {
+        try {
+            await createQueue(serverid, conn);
+            success = true;
+        } catch(err) {
+            success = false;
+        }
+    } finally {
+        if (conn) await conn.end();
+    }
+    return success;
+}
+
 export default {
     InitDB,
     getHonorCount,
