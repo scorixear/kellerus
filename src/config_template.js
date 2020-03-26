@@ -26,5 +26,14 @@ module.exports = {
     dbpassword: dbpassword,
     dbport: dbport,
     dbDataBase: dbDataBase,
-    youtube_api_key: youtube_api_key
+    youtube_api_key: youtube_api_key,
+
+    // define rules for certain commands
+    commands: {
+        exampleCommandGround: {
+            exampleCommand: {
+                exampleConstant: 1000,
+            }
+        }
+    }
 };
