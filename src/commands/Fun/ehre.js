@@ -19,7 +19,7 @@ export default class Ehre extends Command {
     }
     let targetuser;
     if (args && args.length >= 1) {
-      targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+      targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member(args[0]));
     } else {
       msgHandler.sendRichText_Default({
         msg: msg,

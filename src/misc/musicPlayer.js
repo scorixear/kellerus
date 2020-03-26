@@ -69,13 +69,13 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
   }
 }
 
-function Stop(msg) {
+function stop(msg) {
   if (servers[msg.guild.id] && servers[msg.guild.id].dispatcher) {
     servers[msg.guild.id].dispatcher.end();
   }
 }
 
-function YoutubeSearch(searchKeywords, msg) {
+function youtubeSearch(searchKeywords, msg) {
   const requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
   `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtube_api_key}`;
   return new Promise(function(resolve, reject) {
@@ -124,8 +124,8 @@ async function updateQueue(serverid) {
 }
 
 export default {
-  play: play,
-  stop: Stop,
-  youtubeSearch: YoutubeSearch,
+  play,
+  stop,
+  youtubeSearch,
   updateQueue,
 };
