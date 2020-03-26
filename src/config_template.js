@@ -17,14 +17,23 @@ const dbport = '3306';
 const dbDataBase = 'kellerus';
 
 module.exports = {
-  token: token,
-  prefix: botPrefix,
-  repo: repository,
-  version: version,
-  dbhost: dbhost,
-  dbuser: dbuser,
-  dbpassword: dbpassword,
-  dbport: dbport,
-  dbDataBase: dbDataBase,
-  youtubeApiKey: youtubeApiKey,
+    token: token,
+    prefix: bot_prefix,
+    repo: repository,
+    version: version,
+    dbhost: dbhost,
+    dbuser: dbuser,
+    dbpassword: dbpassword,
+    dbport: dbport,
+    dbDataBase: dbDataBase,
+    youtube_api_key: youtube_api_key,
+
+    // define rules for certain commands
+    commands: {
+        exampleCommandGround: {
+            exampleCommand: {
+                exampleConstant: 1000,
+            }
+        }
+    }
 };

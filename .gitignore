@@ -6,6 +6,10 @@ config.js
 *.idea
 /.vscode
 
+#resources folder
+resources/
+resources/*
+
 # Logs
 logs
 *.log

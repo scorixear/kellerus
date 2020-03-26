@@ -26,7 +26,8 @@ export default class Nick extends Command {
     }
 
     let reason;
-    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member.get(args[0]));
+    const {nickname: oldNickname} = targetuser;
 
     if (!targetuser) {
       msgHandler.sendRichTextDefault({
@@ -43,8 +44,9 @@ export default class Nick extends Command {
       text: targetuser,
     }, {
       title: 'Nickname',
-      text: args[1],
+      text: `\`${oldNickname || targetuser.displayName}\` > \`${args[1]}\``,
     }];
+
     if (args.length > 2) {
       reason = args.slice(2).join(' ');
       categories.push({
