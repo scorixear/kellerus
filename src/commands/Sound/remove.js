@@ -53,6 +53,7 @@ export default class Remove extends Command {
         });
         return;
       } catch (err) {
+        console.error(err);
         msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: `\`Deletion failed\`\n
@@ -61,6 +62,7 @@ export default class Remove extends Command {
         return;
       }
     } catch (err) {
+      console.error(err);
       msgHandler.sendRichTextDefault({msg,
         title: 'Crap 😕',
         description: '`Unexpected Error`\n' +
