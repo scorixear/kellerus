@@ -23,7 +23,7 @@ export default class Play extends Command {
       if (hasPermission === false) {
         return;
       }
-      const title = args[0] + fileType;
+      const title = args[0] +'.'+fileType;
       voiceChannel = msg.member.voice.channel;
       const path = basedir + '/resources/soundeffects/' + title;
       const exists = fs.existsSync(path);

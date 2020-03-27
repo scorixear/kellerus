@@ -34,7 +34,7 @@ module.exports = {
   commands: {
     sound: {
       add: {
-        allowedFileType: 'mp3',
+        fileType: 'mp3',
         maxFileSize: 1024 * 1024 * 2,
         allowedChars: '/^[A-Za-z0-9#+_?]*$/',
       },

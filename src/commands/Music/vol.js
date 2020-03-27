@@ -16,7 +16,7 @@ export default class Vol extends Command {
     } catch (err) {
       return;
     }
-    if (args.length != 1 || parseInt(args[0]) === NaN) {
+    if (args.length != 1 || isNaN(args[0])) {
       messageHandler.sendRichTextDefault({
         msg: msg,
         title: 'Error 💥',

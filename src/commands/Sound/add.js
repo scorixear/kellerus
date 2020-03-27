@@ -61,8 +61,8 @@ export default class Add extends Command {
           description: `\`File is not in mp3 format\`\nmp4 and mp5 are forbidden, too`});
         return;
       }
-      const path = basedir+'/resources/soundeffects/'+title+fileType;
-      const exists = await fs.existsSync(path);
+      const path = basedir+`/resources/soundeffects/${title}.${fileType}`;
+      const exists = fs.existsSync(path);
       if (exists && overwrite !== 'overwrite') {
         msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
@@ -104,9 +104,8 @@ export default class Add extends Command {
       https.get(url, function(response) {
         response.pipe(file);
         file.on('finish', function() {
-          file.close().then(() => {
-            resolve(true);
-          }); // close() is async, call cb after close completes.
+          file.close();
+          resolve(true); // close() is async, call cb after close completes.
         });
       }).on('error', function(err) { // Handle errors
         fs.unlink(dest); // Delete the file async. (But we don't check the result)
