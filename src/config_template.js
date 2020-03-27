@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import fs from 'fs';
 
 const token = 'your_token';
@@ -17,23 +19,25 @@ const dbport = '3306';
 const dbDataBase = 'kellerus';
 
 module.exports = {
-    token: token,
-    prefix: bot_prefix,
-    repo: repository,
-    version: version,
-    dbhost: dbhost,
-    dbuser: dbuser,
-    dbpassword: dbpassword,
-    dbport: dbport,
-    dbDataBase: dbDataBase,
-    youtube_api_key: youtube_api_key,
+  token: token,
+  prefix: botPrefix,
+  repo: repository,
+  version: version,
+  dbhost: dbhost,
+  dbuser: dbuser,
+  dbpassword: dbpassword,
+  dbport: dbport,
+  dbDataBase: dbDataBase,
+  youtubeApiKey: youtubeApiKey,
 
-    // define rules for certain commands
-    commands: {
-        exampleCommandGround: {
-            exampleCommand: {
-                exampleConstant: 1000,
-            }
-        }
-    }
+  // defined rules for certain commands
+  commands: {
+    sound: {
+      add: {
+        allowedFileType: 'mp3',
+        maxFileSize: 1024 * 1024 * 2,
+        allowedChars: '/^[A-Za-z0-9#+_?]*$/',
+      },
+    },
+  },
 };
