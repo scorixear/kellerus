@@ -38,7 +38,7 @@ export default class Remove extends Command {
       }
 
       const path = basedir+'/resources/soundeffects/'+title+fileType;
-      const exists = await fs.exists(path);
+      const exists = await fs.existsSync(path);
       if (!exists) {
         msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
