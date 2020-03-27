@@ -54,7 +54,7 @@ export default class Add extends Command {
           description: `\`Filesize exceeds maximum\`\nQuoting a famous actress: "It's too big 😲"`});
         return;
       }
-      const fileType = '.'+name.split('.')[1];
+      const fileType = name.split('.')[1];
       if (!(allowedFileType === fileType)) {
         msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
