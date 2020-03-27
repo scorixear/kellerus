@@ -30,7 +30,7 @@ export default class Add extends Command {
       const overwrite = args[1];
 
       if (title == null || title.length < 3 || title.length > 20) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: '`Title invalid`\n'+
           'Gimme gimme gimme a title. Anything between three and twenty characters\n'+
@@ -41,7 +41,7 @@ export default class Add extends Command {
       // check if any attachment exists
       const attachment = msg.attachments.first();
       if (attachment == null) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: `\`No attachment found\`\nYou're not a Jedi, attachments are not forbidden`});
         return;
@@ -49,14 +49,14 @@ export default class Add extends Command {
 
       const {url, size, name} = attachment;
       if (size > maxFileSize) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: `\`Filesize exceeds maximum\`\nQuoting a famous actress: "It's too big 😲"`});
         return;
       }
       const fileType = '.'+name.split('.')[1];
       if (!(allowedFileType === fileType)) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: `\`File is not in mp3 format\`\nmp4 and mp5 are forbidden, too`});
         return;
@@ -64,7 +64,7 @@ export default class Add extends Command {
       const path = basedir+'/resources/soundeffects/'+title+fileType;
       const exists = await fs.existsSync(path);
       if (exists && overwrite !== 'overwrite') {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: '`This command already exists`\n'+
           'Try to save it under another command, '+
@@ -75,20 +75,20 @@ export default class Add extends Command {
       const added = await Add.download(url, path);
       console.log(added);
       if (added) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Command Added 🎉🎉',
           description: `Command \`${title}\` added :D`,
         });
         return;
       } else {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 💥',
           description: `Something went wrong :/`,
         });
         return;
       }
     } catch (err) {
-      msgHandler.sendRichText_Default({msg,
+      msgHandler.sendRichTextDefault({msg,
         title: 'Crap 😕',
         description: '`Unexpected Error`'+
         '\nLuca expected every possible error. But you ... you managed to find another one',

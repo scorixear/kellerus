@@ -29,7 +29,7 @@ export default class Remove extends Command {
       const title = args[0];
 
       if (title == null) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: '`Title invalid`\n' +
           'Gimme gimme gimme a title. Anything between three and twenty characters\n' +
@@ -38,22 +38,22 @@ export default class Remove extends Command {
       }
 
       const path = basedir+'/resources/soundeffects/'+title+fileType;
-      const exists = await fs.existsSync(path);
+      const exists = await fs.exists(path);
       if (!exists) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: `\`Command doesn't exists\``,
         });
         return;
       }
       try {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Removed 💥',
           description: `Command \`${title}\` removed`,
         });
         return;
       } catch (err) {
-        msgHandler.sendRichText_Default({msg,
+        msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
           description: `\`Deletion failed\`\n
           Something bad happened while deleting command. PAUUUUUL, helpppp!`,
@@ -61,7 +61,7 @@ export default class Remove extends Command {
         return;
       }
     } catch (err) {
-      msgHandler.sendRichText_Default({msg,
+      msgHandler.sendRichTextDefault({msg,
         title: 'Crap 😕',
         description: '`Unexpected Error`\n' +
         'Luca expected every possible error. But you ... you managed to find another one',

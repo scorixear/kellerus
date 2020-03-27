@@ -28,7 +28,7 @@ export default class Play extends Command {
       const path = basedir + '/resources/soundeffects/' + title;
       const exists = fs.existsSync(path);
       if (!exists) {
-        msgHandler.sendRichText_Default({
+        msgHandler.sendRichTextDefault({
           msg,
           title: 'Crap 💥',
           description: `404: Sound Command \`${args[0]}\` not found :/`,
