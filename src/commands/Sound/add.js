@@ -88,6 +88,7 @@ export default class Add extends Command {
         return;
       }
     } catch (err) {
+      console.err(err);
       msgHandler.sendRichTextDefault({msg,
         title: 'Crap 😕',
         description: '`Unexpected Error`'+
