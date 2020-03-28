@@ -1,9 +1,9 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
 import basedir from '../../../basedir';
-const https = require('https');
-const config = require('../../config');
-const fs = require('fs');
+import https from 'https';
+import config from '../../config';
+import fs from 'fs';
 import {downloadFromInfo} from 'ytdl-core';
 import msgHandler from '../../misc/messageHandler';
 

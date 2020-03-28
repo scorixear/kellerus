@@ -35,25 +35,37 @@ function parseCommand(msg) {
   if (!module || !module.executeCommand) {
     const stringCommands = commands.map((c)=>c.command);
     const possible = leveshteinDistance.findClosestMatch(stringCommand.toLowerCase(), stringCommands);
-    let message = `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`;
+    const message = `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`;
+    let commandList;
     if (possible && possible.length > 0) {
-      message += `\n\nDid you mean:`;
+      commandList = `Did you mean:`;
       for (let i = 0; i<possible.length; i++) {
         const emoji = emojiHandler.getGlobalDiscordEmoji(i.toString());
-        message += `\n${emoji}  \`${possible[i]}`;
+        commandList += `\n${emoji}  \`${possible[i]}`;
         reactEmojis.push(emoji);
         if (args.length > 0) {
-          message += ` ${args.join(' ')}`;
+          commandList += ` ${args.join(' ')}`;
         }
-        message += '`';
+        commandList += '`';
       }
-      message += `\n\nReact with the shown number to execute that command!`;
     }
 
-    msgHandler.sendRichText(msg, 'Error', [{
+    const categories = [{
       title: 'Message',
       text: message,
-    }]).then((m) => {
+    }];
+    if (commandList) {
+      categories.push({
+        title: 'Synonyms',
+        text: commandList,
+      });
+      categories.push({
+        title: 'Usage',
+        text: `React with the shown number to execute that command!`,
+      });
+    }
+
+    msgHandler.sendRichText(msg, 'Error', categories).then((m) => {
       reactEmojis.forEach((e)=>m.react(e));
       return m;
     }).then((m) => {
@@ -72,12 +84,12 @@ function parseCommand(msg) {
     console.log(err);
     msgHandler.sendRichText(msg, 'Error', [{
       title: 'Message',
-      text: `There was an Error executing the command ${stringCommand}.`,
+      text: `There was an Error executing the command \`${config.prefix}${stringCommand}\`.`,
     }]);
   }
 }
 
 export default {
   parseCommand,
-  commands: commands,
+  commands,
 };
