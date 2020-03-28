@@ -1,0 +1,211 @@
+{
+  "commands": {
+    "cycle": {
+      "description": "Asks the bot, if he wants to play TheCycle!"
+    },
+    "ehre": {
+      "description": "Awards `Ehre` points to users, that did something honorable.",
+      "error": {
+        "self_award": "You cannot award youself `Ehre`"
+      },
+      "success": "$0 was `$1` times honorable."
+    },
+    "hi": {
+      "description": "Says Hi to the Bot!",
+      "responses": ["Hi Friend", "O.O", ":3 hello", "you again 😅", ""]
+    },
+    "rock_paper_scissor": {
+      "labels":{
+        "rock": "Rock",
+        "paper": "Paper",
+        "scissor": "Scissor"
+      },
+      "description": "Plays `$0` against the bot.",
+      "responses": {
+        "win": ["YOU LOOSE", "Got you", "You'll never win this one", "Well that was easy", "I win", "Try harder", "Pure skill"],
+        "loose": ["I WIN... wait... lets replay that", "Got me", "That doesn't count", "this game is pure luck",
+          "Imagine what if the answer to all and everything wasn't 42. I mean, we live in a world that is so pure chaos and so deadly and still, here we are, breathing, thinking, loving (well at least you guys). And this on a sphere of dirt that is circling around a gas giant. Every step of this dirt thingi will kill you, almost immediatly. And still you are here. This world could be done in an instant, just a small meteorite (or astroid, forgott how they are called) could end all life. And there could be more life, more living thinking creatures. And what are you doing? Sitting and winning rock paper scissors against a computer. Ridiculus. Great. `[Note from the developer, the bot can't loose]`\n\n\n\n\n\nI HEARD THAT"
+        ],
+        "tie": ["TIE", "Both win", "All loose", "Lets do that again", "There is a theory, that Rock is always winning..."],
+        "spock": ["I WIN, HAHAHAH,  EASY", "Ehre", "Honor", "And nop, you can't play this. I win!"]
+      }
+    },
+    "help":{
+      "description": "Returns a list of commands, you are able to use or informations about a specific command!",
+      "error": {
+        "unknown":"This command is unknown. Use `$0help` for a list of commands."
+      },
+      "labels": {
+        "command": "Command"
+      },
+      "success":{
+        "type":"Type in `$0<$1> [args]` to use a $1!"
+      }
+    },
+    "info": {
+      "description": "Prints informations about the bot.",
+      "labels":{
+        "version": "Version",
+        "repository": "Repository",
+        "author": "Author"
+      }
+    },
+    "ping": {
+      "description": "Tests the Ping of the bot."
+    },
+    "ban": {
+      "description": "Bans a player with an optional reason.",
+      "error":{
+        "blocked": "You cannot ban this user!"
+      },
+      "success": "Banned"
+    },
+    "clear": {
+      "description": "Deletes recent messages from the current channel.",
+      "labels":{
+        "message_amount": "Message Amount"
+      },
+      "success": "<@$0> cleared the chat"
+    },
+    "kick": {
+      "description": "Kicks a user from the server with an optional reason.",
+      "error": {
+        "blocked": "You cannot kick this user!"
+      },
+      "success": "Kicked"
+    },
+    "nick": {
+      "description": "Nicks a user.",
+      "labels": {
+        "nickname": "Nickname"
+      },
+      "error":{
+        "blocked": "You cannot nick this user!"
+      },
+      "success": "Nickname changed"
+    },
+    "join": {
+      "description": "Lets the bot join a voice channel or swap to another channel.\nThe bot will start playing a title from the queue.",
+      "labels": {
+        "joined": "Joined"
+      },
+      "error": "You must be in a voice channel to summon me!",
+      "success": "Successfully Joined!"
+    },
+    "leave": {
+      "description": "Kicks the bot from the voice channel.",
+      "error" : "I must be in a voice channel to be banished!"
+    },
+    "queue": {
+      "description": "Queues a song, lists all songs in the queue or clears the queue.\nSongs can be queued by entering the youtube url or a specific search string.",
+      "example": "queue list\nqueue clear\nqueue Song_Title\nqueue https://www.youtube.com/watch?v=video_id",
+      "labels": {
+        "list": "Queue List"
+      },
+      "error": {
+        "clear": "Queue could not be cleared",
+        "added": "Title `$0` is already in the queue.",
+        "no_results": "No Results found!",
+        "unknown_error": "Unexpected Result while connecting to the Youtube API.",
+        "usage":"No title given! Use `$0$1` to queue a title."
+      },
+      "success": {
+        "clear": "Queue cleared",
+        "empty_queue": "Empty Queue",
+        "added": "Title `$0` added."
+      }
+    },
+    "skip": {
+      "description": "Skips to the next song in the queue."
+    },
+    "vol": {
+      "description": "Adjusts the volume of the bot",
+      "labels": {
+        "percent": "percentage",
+        "volume_set": "Volume set"
+      },
+      "error": {
+        "volume_param": "Volume can only between `0`% and `200`%"
+      },
+      "success": "Volume was set to $0%"
+    },
+    "add": {
+      "description":"Stored a SoundFile",
+      "labels": {
+        "append_soundfile": "Appended SoundFile",
+        "command_added": "Command Added 🎉🎉"
+      },
+      "error": {
+        "title_invalid": "`Title invalid`\nGimme gimme gimme a title. Anything between three and twenty characters\nMust match this regex `$0`",
+        "no_attachment": "`No attachment found`\nYou're not a Jedi, attachments are not forbidden",
+        "file_size": "`Filesize exceeds maximum`\nQuoting a famous actress: \"It's too big 😲\"",
+        "invalid_format": "`File is not in mp3 format`\nmp4 and mp5 are forbidden, too",
+        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0$1 $2 overwrite`",
+        "file_saving": "Something went wrong :/",
+        "generic_error": "`Unexpected Error`\nLuca expected every possible error. But you ... you managed to find another one"
+      },
+      "success": "Command `$0` added :D"
+    },
+    "play": {
+      "description":  "Plays a SoundFile",
+      "error": "404: Sound Command `$0` not found :/"
+    },
+    "remove": {
+      "description": "Removes a SoundFile",
+      "labels": {
+        "removed": "Removed 💥"
+      },
+      "error": {
+        "title_invalid": "`Title invalid`\nGimme gimme gimme a title. Anything between three and twenty characters\nMust match this regex `$0`",
+        "not_found": "`Title doesn't exist`",
+        "file_deletion": "`Deletion failed`\nSomething bad happened while deleting command. PAUUUUUL, helpppp!",
+        "generic_error": "`Unexpected Error`\nLuca expected every possible error. But you ... you managed to find another one"
+      },
+      "success": "Title `$0` removed"
+    }
+  },
+  "handlers": {
+    "command": {
+      "error": {
+        "unknown": "This command is unknown. Use `$0help` for a list of commands.",
+        "generic_error": "There was an Error executing the command `$0$1`."
+      }
+    },
+    "emoji": {
+      "labels": {
+        "did_you_mean": "Did you mean",
+        "synonyms": "Synonyms",
+        "usage": "React with the shown number to execute that command!"
+      }
+    },
+    "musicPlayer": {
+      "labels": {
+        "playing": "Playing",
+        "currently_playing": "Currently playing",
+        "disconnected": "Disconnected",
+        "disconnecting_emptyChannel": "Left channel because nobody was listening :(",
+        "disconnecting_emptyQueue": "Queue empty! Disconnecting."
+      }
+    },
+    "permissions": {
+      "error": "Invalid permissions to use `$0$1`!"
+    }
+  },
+  "general": {
+    "error": "Error",
+    "description": "Description",
+    "example": "Example",
+    "usage": "Usage",
+    "reason": "Reason",
+    "server": "Server",
+    "user": "User",
+    "message": "Message",
+    "title" :"title"
+  },
+  "error": {
+    "user_mention": "You must mention a user",
+    "user_not_found": "User not found",
+    "invalid_permissions": "Invalid permissions",
+    "invalid_usage" : "Invalid usage"
+  }
+}

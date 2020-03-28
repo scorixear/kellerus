@@ -1,14 +1,14 @@
 import Command from './../command.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
+import {dic as language} from '../../misc/languageHandler.js';
 
 export default class Join extends Command {
   constructor(category) {
     super(category);
     this.usage = 'join';
     this.command = 'join';
-    this.description = 'Lets the bot join a voice channel or swap to another channel. '+
-      'The bot will start playing a title from the queue.';
+    this.description = language.commands.join.description;
     this.example = 'join';
     this.permissions = ['MOVE_MEMBERS'];
   }
@@ -26,14 +26,14 @@ export default class Join extends Command {
       });
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Joined',
-        description: 'Successfully Joined!',
+        title: language.commands.join.labels.joined,
+        description: language.commands.join.success,
       });
     } else {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: 'You must be in a voice channel to summon me!',
+        title: language.general.error,
+        description: language.commands.join.error,
         color: 0xCC0000,
       });
     }

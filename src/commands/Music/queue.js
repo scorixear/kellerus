@@ -3,16 +3,16 @@ import config from '../../config.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
 import sqlHandler from '../../misc/sqlHandler.js';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
 export default class Queue extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'queue <link/clear/list/search params>';
+    this.usage = 'queue <clear/list/link/search params>';
     this.command = 'queue';
     this.permissions = ['MOVE_MEMBERS'];
-    this.description = 'Queues a song, lists all songs in the queue or clears the queue.\n' +
-    'Songs can be queued by entering the youtube url or a specific search string.';
-    this.example = 'queue list\nqueue clear\nqueue Song_Title\nqueue https://www.youtube.com/watch?v=video_id';
+    this.description = language.commands.queue.description;
+    this.example = language.commands.queue.example;
   }
 
   async executeCommand(args, msg) {
@@ -35,13 +35,13 @@ export default class Queue extends Command {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: 'Queue cleared',
+              description: language.commands.queue.success.clear,
             });
           } else {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: 'Queue could not be cleared.',
+              description: language.commands.queue.error.clear,
               color: 0xcc0000,
             });
           }
@@ -59,7 +59,7 @@ export default class Queue extends Command {
           msgHandler.sendRichTextDefault({
             msg: msg,
             title: 'Queue List',
-            description: 'Empty Queue',
+            description: language.commands.queue.success.empty_queue,
           });
         } else {
           let queuelist = '';
@@ -72,7 +72,7 @@ export default class Queue extends Command {
           }
           msgHandler.sendRichTextDefault({
             msg: msg,
-            title: 'Queue List',
+            title: language.commands.queue.labels.list,
             description: queuelist,
           });
         }
@@ -83,6 +83,7 @@ export default class Queue extends Command {
       if (!servers[msg.guild.id]) {
         servers[msg.guild.id] = {
           queueIndex: 0,
+          volumne: 1,
         };
       }
 
@@ -92,13 +93,13 @@ export default class Queue extends Command {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: `Title \`${args[0]}\` added.`,
+              description: replaceArgs(language.commands.queue.success.added, [args[0]]),
             });
           } else {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: `Title \`${args[0]}\` already in the queue.`,
+              description: replaceArgs(language.commands.queue.error.added, [args[0]]),
             });
           }
         });
@@ -108,13 +109,13 @@ export default class Queue extends Command {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: `Title \`${title.substring(10)}\` is already in the queue.`,
+              description: replaceArgs(language.commands.queue.error.added, [title.substring(10)]),
             });
           } else {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: `Title \`${title}\` added.`,
+              description: replaceArgs(language.commands.queue.success.added, [title]),
             });
           }
         }).catch((err) => {
@@ -122,14 +123,14 @@ export default class Queue extends Command {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: `No Results found!`,
+              description: language.commands.queue.error.no_results,
               color: 0xCC0000,
             });
           } else {
             msgHandler.sendRichTextDefault({
               msg: msg,
-              title: 'Error',
-              description: `Unexpected Result while connection to the Youtube API.`,
+              title: language.general.error,
+              description: language.commands.queue.error.unknown_error,
               color: 0xCC0000,
             });
           }
@@ -138,8 +139,8 @@ export default class Queue extends Command {
     } else {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: `No title given! Use \`${config.prefix}${this.usage}\` to queue a title.`,
+        title: language.general.usage,
+        description: replaceArgs(language.commands.queue.usage, [config.botPrefix, this.usage]),
         color: 0xCC0000,
       });
     }

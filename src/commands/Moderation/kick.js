@@ -1,13 +1,13 @@
 import Command from '../command.js';
 import msgHandler from '../../misc/messageHandler.js';
-import config from '../../config.js';
+import {dic as language} from '../../misc/languageHandler.js';
 
 export default class Kick extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'kick <user> [Reason]';
+    this.usage = `kick <${language.general.user}> [${language.general.reason}]`;
     this.command = 'kick';
-    this.description = 'Kicks a user from the server with an optional reason.';
+    this.description = language.commands.kick.description;
     this.example = 'kick @kellerus\n kick @kellerus he is a bot';
     this.permissions = ['KICK_MEMBERS'];
   }
@@ -19,10 +19,15 @@ export default class Kick extends Command {
       return;
     }
     if (!args || args.length == 0) {
-      msgHandler.sendRichText(msg, 'Kick Info', [{
-        title: 'Usage',
-        text: `\`${config.prefix}${this.usage}\``,
-      }]);
+      messageHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.error.invalid_usage,
+        categories: [{
+          title: language.general.usage,
+          text: `\`${this.usage}\``,
+        }],
+      });
       return;
     }
     let reason;
@@ -32,17 +37,17 @@ export default class Kick extends Command {
     if (!targetuser) {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: 'User not found',
+        title: language.general.error,
+        description: language.error.user_not_found,
         color: 0xCC0000,
       });
       return;
     }
 
     if (targetuser.highestRole <= user.highestRole || msg.guild.ownerID == targetuser.id || targetuser.user.bot) {
-      msgHandler.sendRichText(msg, 'Error', [{
-        title: 'Invalid permissions',
-        text: 'You cannot kick this user!',
+      msgHandler.sendRichText(msg, language.general.error, [{
+        title: language.error.invalid_permissions,
+        text: language.commands.kick.error.blocked,
       }], 0xCC0000);
       return;
     }
@@ -55,23 +60,23 @@ export default class Kick extends Command {
     const categories = [];
     if (reason) {
       categories.push({
-        'title': 'Reason',
+        'title': language.general.reason,
         'text': reason,
       });
     }
 
     const usercategories = categories.slice();
     usercategories.push({
-      title: 'Server',
+      title: language.general.server,
       text: msg.guild.name,
     });
     categories.unshift({
-      title: 'User',
+      title: language.general.user,
       text: args[0],
     });
-    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, 'Kicked', usercategories).then((m) => {
+    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, language.commands.kick.success, usercategories).then((m) => {
       targetuser.kick(reason).then((member) => {
-        msgHandler.sendRichText(msg, 'Kicked', categories);
+        msgHandler.sendRichText(msg, language.commands.kick.success, categories);
       });
     });
   }

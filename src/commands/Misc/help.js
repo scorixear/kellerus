@@ -3,13 +3,14 @@ import msgHandler from '../../misc/messageHandler.js';
 import permHandler from '../../misc/permissionHandler.js';
 import config from '../../config.js';
 import Command from './../command.js';
+import {dic as language, replaceArgs} from './../../misc/languageHandler.js';
 
 export default class Help extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'help [command]';
+    this.usage = `help [${language.commands.help.labels.command.toLowerCase()}]`;
     this.command = 'help';
-    this.description = 'Returns a list of commands, you are able to use or informations about a specific command!';
+    this.description = language.commands.help.description;
     this.example = 'help\nhelp hi';
   }
 
@@ -25,29 +26,31 @@ export default class Help extends Command {
         if (permHandler.checkPermissionSilent(command.permissions, msg) === false) {
           msgHandler.sendRichText(msg, 'Help Info', [{
             title: 'Info',
-            text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`,
+            text: replaceArgs(language.commands.help.error.unknown, [config.botPrefix]),
           }]);
           return;
         }
-        const example = '\`\`\`' + config.prefix +
-            command.example.split('\n').reduce((acc, val) => acc + '\`\`\`\n\`\`\`' + config.prefix + val) + '\`\`\`';
+        const example = '\`\`\`' + config.botPrefix +
+            command.example
+                .split('\n')
+                .reduce((acc, val) => acc + '\`\`\`\n\`\`\`' + config.botPrefix + val) + '\`\`\`';
         msgHandler.sendRichTextDefault({
           msg: msg,
           categories: [{
-            title: 'Command',
-            text: `\`${config.prefix}${command.command}\``,
+            title: language.commands.help.labels.command,
+            text: `\`${config.botPrefix}${command.command}\``,
             inline: false,
           },
           {
-            title: 'Description',
+            title: language.general.description,
             text: command.description,
           },
           {
-            title: 'Usage',
-            text: `\`\`\`${config.prefix}${command.usage}\`\`\``,
+            title: language.general.usage,
+            text: `\`\`\`${config.botPrefix}${command.usage}\`\`\``,
           },
           {
-            title: 'Example',
+            title: language.general.example,
             text: example,
           },
           ],
@@ -55,7 +58,7 @@ export default class Help extends Command {
       } else {
         msgHandler.sendRichText(msg, 'Help Info', [{
           title: 'Info',
-          text: `This command is unknown. Use \`${config.prefix}help\` for a list of commands.`,
+          text: replaceArgs(language.commands.help.error.unknown, [config.botPrefix]),
         }]);
       }
       return;
@@ -73,10 +76,11 @@ export default class Help extends Command {
     });
     const embededCategories = new Array({
       title: 'Info',
-      text: `Type in \`${config.prefix}<command> [args]\` to use a command!`,
+      text: replaceArgs(language.commands.help.success.type, [config.botPrefix, language.commands.help.labels.command]),
     });
     categories.forEach((value, key, map) => {
-      const commands = '\`' + config.prefix + value.reduce((acc, val) => acc + '\`\n\`' + config.prefix + val) + '\`';
+      const commands = '\`' + config.botPrefix + value
+          .reduce((acc, val) => acc + '\`\n\`' + config.botPrefix + val) + '\`';
       embededCategories.push({
         title: key,
         text: commands,

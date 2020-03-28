@@ -1,0 +1,22 @@
+{
+  "token": "your_token",
+  "discordUrl": "https://discordapp.com/oauth2/authorize?client_id=client_id&scope=bot&permissions=2146958807",
+  "youtubeApiKey": "your_key",
+  "repository": "https://github.com/scorixear/kellerus",
+  "botPrefix": "!",
+  "language": "en-EN",
+  "dbhost": "127.0.0.1",
+  "dbuser": "username",
+  "dbpassword": "password",
+  "dbport": "3306",
+  "dbDataBase": "kellerus",
+  "commands":{
+    "sound": {
+      "add": {
+        "fileType": "mp3",
+        "maxFileSize": 2097152,
+        "allowedChars": "/^[A-Za-z0-9#+_?]*$/"
+      }
+    }
+  }
+}

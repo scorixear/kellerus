@@ -1,11 +1,10 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
 import basedir from '../../../basedir';
-import https from 'https';
 import config from '../../config';
 import fs from 'fs';
-import {downloadFromInfo} from 'ytdl-core';
 import msgHandler from '../../misc/messageHandler';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
 /**
  * Removes a sound from the Discords Sound repertoire
@@ -13,9 +12,9 @@ import msgHandler from '../../misc/messageHandler';
 export default class Remove extends Command {
   constructor(category) {
     super(category);
-    this.usage = `remove < title>`;
+    this.usage = `remove <${language.general.title}>`;
     this.command = 'remove';
-    this.description = 'Removes a SoundFile';
+    this.description = language.commands.remove.description;
     this.example = 'remove badumts';
   }
 
@@ -30,10 +29,9 @@ export default class Remove extends Command {
 
       if (title == null) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: '`Title invalid`\n' +
-          'Gimme gimme gimme a title. Anything between three and twenty characters\n' +
-          `Must match this regex \`${allowedChars}\``});
+          title: language.general.error,
+          description: replaceArgs(language.commands.add.error.title_invalid, [allowedChars]),
+        });
         return;
       }
 
@@ -41,32 +39,30 @@ export default class Remove extends Command {
       const exists = fs.existsSync(path);
       if (!exists) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: `\`Command doesn't exists\``,
+          title: language.general.error,
+          description: language.commands.remove.error.not_found,
         });
         return;
       }
       try {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Removed 💥',
-          description: `Command \`${title}\` removed`,
+          title: language.commands.remove.labels.removed,
+          description: replaceArgs(language.commands.remove.success, [title]),
         });
         return;
       } catch (err) {
         console.error(err);
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: `\`Deletion failed\`\n
-          Something bad happened while deleting command. PAUUUUUL, helpppp!`,
+          title: language.general.error,
+          description: language.commands.remove.error.file_deletion,
         });
         return;
       }
     } catch (err) {
       console.error(err);
       msgHandler.sendRichTextDefault({msg,
-        title: 'Crap 😕',
-        description: '`Unexpected Error`\n' +
-        'Luca expected every possible error. But you ... you managed to find another one',
+        title: language.general.error,
+        description: language.commands.add.error.generic_error,
       });
     }
   }

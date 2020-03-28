@@ -77,7 +77,7 @@ function sendRichText(msg, title, categories, color, image, description, thumbna
 
 export default {
   sendRichText,
-  sendRichTextExplicit: sendRichTextExplicit,
-  sendRichTextDefault: sendRichTextDefault,
+  sendRichTextExplicit,
+  sendRichTextDefault,
   sendRichTextDefaultExplicit,
 };

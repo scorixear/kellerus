@@ -1,8 +1,0 @@
-{
-    "win": ["YOU LOOSE", "Got you", "You'll never win this one", "Well that was easy", "I win", "Try harder", "Pure skill"],
-    "loose": ["I WIN... wait... lets replay that", "Got me", "That doesn't count", "this game is pure luck",
-        "Imagine what if the answer to all and everything wasn't 42. I mean, we live in a world that is so pure chaos and so deadly and still, here we are, breathing, thinking, loving (well at least you guys). And this on a sphere of dirt that is circling around a gas giant. Every step of this dirt thingi will kill you, almost immediatly. And still you are here. This world could be done in an instant, just a small meteorite (or astroid, forgott how they are called) could end all life. And there could be more life, more living thinking creatures. And what are you doing? Sitting and winning rock paper scissors against a computer. Ridiculus. Great. `[Note from the developer, the bot can't loose]`\n\n\n\n\n\nI HEARD THAT"
-    ],
-    "tie": ["TIE", "Both win", "All loose", "Lets do that again", "There is a theory, that Rock is always winning..."],
-    "spock": ["I WIN, HAHAHAH,  EASY", "Ehre", "Honor", "And nop, you can't play this. I win!"]
-}

@@ -1,8 +1,8 @@
 import Command from '../command.js';
 import msgHandler from '../../misc/messageHandler.js';
-import fs from 'fs';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
-const responses = JSON.parse(fs.readFileSync('./src/commands/Fun/rps_response.json'));
+const responses = language.commands.rock_paper_scissor.responses;
 
 function getAnswer() {
   return Math.floor((Math.random() * 4));
@@ -14,7 +14,7 @@ class Rock extends Command {
     super(category);
     this.command = 'rock';
     this.usage = 'rock';
-    this.description = 'Plays `rock` against the bot.';
+    this.description = replaceArgs(language.commands.rock_paper_scissor.description, [language.commands.rock_paper_scissor.labels.rock]);
     this.example = 'rock';
     this.permissions = [];
   }
@@ -24,15 +24,15 @@ class Rock extends Command {
     switch (getAnswer()) {
       case 0:
         answer = responses.tie[Math.floor(Math.random() * responses.tie.length)];
-        msgHandler.sendRichText(msg, 'Rock', [], undefined, 'rock.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.rock, [], undefined, 'rock.png').then((_) => msg.reply(answer));
         break;
       case 1:
         answer = responses.win[Math.floor(Math.random() * responses.win.length)];
-        msgHandler.sendRichText(msg, 'Paper', [], undefined, 'paper.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.paper, [], undefined, 'paper.png').then((_) => msg.reply(answer));
         break;
       case 2:
         answer = responses.loose[Math.floor(Math.random() * responses.loose.length)];
-        msgHandler.sendRichText(msg, 'Scissor', [], undefined, 'scissors.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.scissor, [], undefined, 'scissors.png').then((_) => msg.reply(answer));
         break;
       case 3:
         answer = responses.spock[Math.floor(Math.random() * responses.spock.length)];
@@ -45,7 +45,9 @@ class Paper extends Command {
   constructor(category) {
     super(category);
     this.command = 'paper';
+    this.description = replaceArgs(language.commands.rock_paper_scissor.description, [language.commands.rock_paper_scissor.labels.paper]);
     this.usage = 'paper';
+    this.example = 'paper';
     this.permissions = [];
   }
 
@@ -54,15 +56,15 @@ class Paper extends Command {
     switch (getAnswer()) {
       case 0:
         answer = responses.loose[Math.floor(Math.random() * responses.loose.length)];
-        msgHandler.sendRichText(msg, 'Rock', [], undefined, 'rock.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.rock, [], undefined, 'rock.png').then((_) => msg.reply(answer));
         break;
       case 1:
         answer = responses.tie[Math.floor(Math.random() * responses.tie.length)];
-        msgHandler.sendRichText(msg, 'Paper', [], undefined, 'paper.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.paper, [], undefined, 'paper.png').then((_) => msg.reply(answer));
         break;
       case 2:
         answer = responses.win[Math.floor(Math.random() * responses.win.length)];
-        msgHandler.sendRichText(msg, 'Scissor', [], undefined, 'scissors.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.scissor, [], undefined, 'scissors.png').then((_) => msg.reply(answer));
         break;
       case 3:
         answer = responses.spock[Math.floor(Math.random() * responses.spock.length)];
@@ -76,6 +78,8 @@ class Scissor extends Command {
     super(category);
     this.command = 'scissor';
     this.usage = 'scissor';
+    this.description = replaceArgs(language.commands.rock_paper_scissor.description, [language.commands.rock_paper_scissor.labels.scissor]);
+    this.example = 'scissor';
     this.permissions = [];
   }
 
@@ -84,15 +88,15 @@ class Scissor extends Command {
     switch (getAnswer()) {
       case 0:
         answer = responses.win[Math.floor(Math.random() * responses.win.length)];
-        msgHandler.sendRichText(msg, 'Rock', [], undefined, 'rock.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.rock, [], undefined, 'rock.png').then((_) => msg.reply(answer));
         break;
       case 1:
         answer = responses.loose[Math.floor(Math.random() * responses.loose.length)];
-        msgHandler.sendRichText(msg, 'Paper', [], undefined, 'paper.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.paper, [], undefined, 'paper.png').then((_) => msg.reply(answer));
         break;
       case 2:
         answer = responses.tie[Math.floor(Math.random() * responses.tie.length)];
-        msgHandler.sendRichText(msg, 'Scissor', [], undefined, 'scissors.png').then((_) => msg.reply(answer));
+        msgHandler.sendRichText(msg, language.commands.rock_paper.scissor.labels.scissor, [], undefined, 'scissors.png').then((_) => msg.reply(answer));
         break;
       case 3:
         answer = responses.spock[Math.floor(Math.random() * responses.spock.length)];

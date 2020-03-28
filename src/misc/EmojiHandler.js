@@ -1,7 +1,13 @@
 import discordHandler from './discordHandler';
+import messageHandler from './messageHandler';
+import {dic as language} from './languageHandler.js';
+
+const numbers = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
+const numberString = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+
 function getCustomGuildEmoji(name, guild) {
   if (!isNaN(name)) {
-    name = findNumber(name);
+    name = numberString[name];
   }
   return guild.emojis.cache.find((emoji) => {
     return emoji.name === name;
@@ -10,90 +16,68 @@ function getCustomGuildEmoji(name, guild) {
 
 function getCustomClientEmoji(name) {
   if (!isNaN(name)) {
-    name = findNumber(name);
+    name = numberString[name];
   }
   return discordHandler.client.emojis.cache.find((emoji) => {
     return emoji.name === name;
   });
 }
 
-function getGlobalDiscordEmoji(name) {
-  switch (name) {
-    case '0':
-      return '0️⃣';
-    case '1':
-      return '1️⃣';
-    case '2':
-      return '2️⃣';
-    case '3':
-      return '3️⃣';
-    case '4':
-      return '4️⃣';
-    case '5':
-      return '5️⃣';
-    case '6':
-      return '6️⃣';
-    case '7':
-      return '7️⃣';
-    case '8':
-      return '8️⃣';
-    case '9':
-      return '9️⃣';
-  }
+function getGlobalDiscordEmoji(number) {
+  return numbers[number];
 }
 
 function getNumberFromEmoji(emoji) {
-  switch (emoji) {
-    case '0️⃣':
-      return 0;
-    case '1️⃣':
-      return 1;
-    case '2️⃣':
-      return 2;
-    case '3️⃣':
-      return 3;
-    case '4️⃣':
-      return 4;
-    case '5️⃣':
-      return 5;
-    case '6️⃣':
-      return 6;
-    case '7️⃣':
-      return 7;
-    case '8️⃣':
-      return 8;
-    case '9️⃣':
-      return 9;
-  }
+  return numbers.indexOf(emoji);
 }
 
-function findNumber(number) {
-  switch (number) {
-    case 0:
-      return 'zero';
-    case 1:
-      return 'one';
-    case 2:
-      return 'two';
-    case 3:
-      return 'three';
-    case 4:
-      return 'four';
-    case 5:
-      return 'five';
-    case 6:
-      return 'six';
-    case 7:
-      return 'seven';
-    case 8:
-      return 'eight';
-    case 9:
-      return 'nine';
+function resolveWithReaction(msg, messageString, options, join, method, additionalArguments) {
+  const reactEmojis = [];
+  let commandList;
+  if (options && options.length > 0) {
+    commandList = language.handlers.emoji.labels.did_you_mean;
+    for (let i = 0; i<options.length; i++) {
+      const emoji = getGlobalDiscordEmoji(i);
+      commandList += `\n${emoji} \`${options[i]}`;
+      reactEmojis.push(emoji);
+      if (join.length > 0) {
+        commandList += ` ${join.join(' ')}`;
+      }
+      commandList += '`';
+    }
   }
+
+  const categories = [{
+    title: language.general.message,
+    text: messageString,
+  }];
+  if (commandList) {
+    categories.push({
+      title: language.handlers.emoji.labels.synonyms,
+      text: commandList,
+    });
+    categories.push({
+      title: language.general.usage,
+      text: language.handlers.emoji.labels.usage,
+    });
+  }
+
+  messageHandler.sendRichText(msg, language.general.error, categories).then((m) => {
+    reactEmojis.forEach((e)=>m.react(e));
+    return m;
+  }).then((m) => {
+    m.awaitReactions((react, user) => reactEmojis.includes(react.emoji.name) && user.id === msg.author.id,
+        {max: 1, time: 60000, errors: ['time']}).then((collected) => {
+      const reaction = collected.first();
+      method(options[getNumberFromEmoji(reaction.emoji.name)], msg, additionalArguments);
+    });
+  });
 }
+
 export default {
   getCustomClientEmoji,
   getCustomGuildEmoji,
   getGlobalDiscordEmoji,
   getNumberFromEmoji,
+  resolveWithReaction,
 };

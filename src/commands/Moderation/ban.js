@@ -1,13 +1,13 @@
 import Command from './../command.js';
 import msgHandler from '../../misc/messageHandler.js';
-import config from '../../config.js';
+import {dic as language} from '../../misc/languageHandler.js';
 
 export default class Ban extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'ban <user> [reason]';
+    this.usage = `ban <${language.general.user}> [${language.general.reason}]`;
     this.command = 'ban';
-    this.description = 'Bans a player with an optional reason.';
+    this.description = language.commands.ban.description;
     this.example = 'ban @kellerus\nban @kellerus he is a bot';
     this.permissions = ['BAN_MEMBERS'];
   }
@@ -19,10 +19,15 @@ export default class Ban extends Command {
       return;
     }
     if (!args || args.length == 0) {
-      msgHandler.sendRichText(msg, 'Ban Info', [{
-        title: 'Usage',
-        text: `\`${config.prefix}${this.usage}\``,
-      }]);
+      messageHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.error.invalid_usage,
+        categories: [{
+          title: language.general.usage,
+          text: `\`${this.usage}\``,
+        }],
+      });
       return;
     }
     let reason;
@@ -31,16 +36,16 @@ export default class Ban extends Command {
     if (!targetuser) {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: 'User not found',
+        title: language.general.usage,
+        description: language.error.user_not_found,
         color: 0xCC0000,
       });
       return;
     }
     if (targetuser.highestRole <= user.highestRole || msg.guild.ownerID == targetuser.id || targetuser.user.bot) {
-      msgHandler.sendRichText(msg, 'Error', [{
-        title: 'Invalid permissions',
-        text: 'You cannot ban this user!',
+      msgHandler.sendRichText(msg, language.general.error, [{
+        title: language.error.invalid_permissions,
+        text: language.commands.ban.error.blocked,
       }], 0xCC0000);
       return;
     }
@@ -69,23 +74,23 @@ export default class Ban extends Command {
     const categories = [];
     if (reasonstring) {
       categories.push({
-        'title': 'Reason',
+        'title': language.general.reason,
         'text': reasonstring,
       });
     }
 
     const usercategories = categories.slice();
     usercategories.push({
-      title: 'Server',
+      title: language.general.server,
       text: msg.guild.name,
     });
     categories.unshift({
-      title: 'User',
+      title: language.general.user,
       text: args[0],
     });
-    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, 'Banned', usercategories).then((m) => {
+    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, language.commands.ban.success, usercategories).then((m) => {
       targetuser.ban(reason).then((member) => {
-        msgHandler.sendRichText(msg, 'Banned', categories);
+        msgHandler.sendRichText(msg, language.commands.ban.success, categories);
       });
     });
   }

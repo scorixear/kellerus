@@ -1,14 +1,14 @@
 import Command from './../command.js';
-import fs from 'fs';
+import {dic as language} from './../../misc/languageHandler.js';
 
-const replys = JSON.parse(fs.readFileSync('./src/commands/Fun/hi_response.json'));
+const replys = language.commands.hi.responses;
 
 export default class Hi extends Command {
   constructor(category) {
     super(category);
     this.usage = 'hi';
     this.command = 'hi';
-    this.description = 'Says Hi to the Bot!';
+    this.description = language.commands.hi.description;
     this.example = 'hi\nhi @Kellerus';
   }
 

@@ -1,17 +1,17 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
 import basedir from '../../../basedir';
-import https from 'https';
 import config from '../../config';
 import fs from 'fs';
-import {downloadFromInfo} from 'ytdl-core';
 import msgHandler from '../../misc/messageHandler';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
+
 export default class Play extends Command {
   constructor(category) {
     super(category);
-    this.usage = `play < title> `;
+    this.usage = `play <${language.general.title}> `;
     this.command = 'play';
-    this.description = 'Plays a SoundFile';
+    this.description = language.commands.play.description;
     this.example = 'play badumtsss';
   }
 
@@ -30,8 +30,8 @@ export default class Play extends Command {
       if (!exists) {
         msgHandler.sendRichTextDefault({
           msg,
-          title: 'Crap 💥',
-          description: `404: Sound Command \`${args[0]}\` not found :/`,
+          title: language.general.error,
+          description: replaceArgs(language.commands.play.error, [args[0]]),
         });
         return;
       }

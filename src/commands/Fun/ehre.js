@@ -1,13 +1,14 @@
 import Command from './../command.js';
 import sqlHandler from '../../misc/sqlHandler.js';
 import msgHandler from '../../misc/messageHandler.js';
+import {dic as language, replaceArgs} from './../../misc/languageHandler.js';
 
 export default class Ehre extends Command {
   constructor(category) {
     super(category);
     this.usage = 'ehre';
     this.command = 'ehre';
-    this.description = 'Awards `Ehre` points to users, that did something honorable.';
+    this.description = language.commands.ehre.description;
     this.example = 'ehre @kellerus';
   }
 
@@ -23,8 +24,8 @@ export default class Ehre extends Command {
     } else {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: 'You must mention a user!',
+        title: language.general.error,
+        description: language.error.user_mention,
         color: 0xcc0000,
       });
       return;
@@ -33,8 +34,8 @@ export default class Ehre extends Command {
     if (!targetuser) {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: 'User not found',
+        title: language.general.error,
+        description: language.error.user_not_found,
         color: 0xCC0000,
       });
       return;
@@ -43,8 +44,8 @@ export default class Ehre extends Command {
     if (targetuser === msg.guild.member(msg.author)) {
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error',
-        description: 'You cannot award yourself `Ehre`!',
+        title: language.general.error,
+        description: language.commands.ehre.error.self_award,
         color: 0xcc0000,
       });
       return;
@@ -54,7 +55,7 @@ export default class Ehre extends Command {
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: 'Ehre',
-        description: `${targetuser} war \`${cnt}\` mal ehrenvoll.`,
+        description: replaceArgs(language.commands.ehre.success, [targetuser, cnt]),
         color: 0x00CC00,
       });
     });

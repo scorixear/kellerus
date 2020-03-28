@@ -1,12 +1,14 @@
 import Command from './../command.js';
 import musicPlayer from '../../misc/musicPlayer.js';
 import messageHandler from '../../misc/messageHandler.js';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
+
 export default class Vol extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'vol <percent>';
+    this.usage = `vol <${language.commands.vol.labels.percent}>`;
     this.command = 'vol';
-    this.description = 'Adjust the volume of the bot';
+    this.description = language.commands.vol.description;
     this.example = 'vol 25';
   }
 
@@ -19,10 +21,10 @@ export default class Vol extends Command {
     if (args.length != 1 || isNaN(args[0])) {
       messageHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error 💥',
-        description: `Invalid usage`,
+        title: language.general.error,
+        description: language.error.invalid_usage,
         categories: [{
-          title: 'Usage',
+          title: language.general.usage,
           text: `\`${this.usage}\``,
         }],
       });
@@ -32,16 +34,16 @@ export default class Vol extends Command {
     if (volume > 2 || volume <= 0) {
       messageHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Error 💥',
-        description: 'Volume can only between `0`% and `200`%',
+        title: language.general.error,
+        description: language.commands.vol.error.volume_param,
       });
       return;
     }
     musicPlayer.setVolume(msg.guild.id, volume);
     messageHandler.sendRichTextDefault({
       msg: msg,
-      title: 'Volume set',
-      description: `Volume was set to ${args[0]}%`,
+      title: language.commands.vol.labels.volume_set,
+      description: replaceArgs(language.commands.vol.success, [args[0]]),
     });
   }
 }

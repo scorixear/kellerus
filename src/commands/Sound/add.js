@@ -4,8 +4,8 @@ import basedir from '../../../basedir';
 import https from 'https';
 import config from '../../config';
 import fs from 'fs';
-import {downloadFromInfo} from 'ytdl-core';
 import msgHandler from '../../misc/messageHandler';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
 /**
  * Adds a sound to the Discords Sound repertoire
@@ -13,9 +13,9 @@ import msgHandler from '../../misc/messageHandler';
 export default class Add extends Command {
   constructor(category) {
     super(category);
-    this.usage = `add < title> <SoundFile.mp3>`;
+    this.usage = `add <${language.general.title}> {${language.commands.add.labels.append_soundfile}.mp3}`;
     this.command = 'add';
-    this.description = 'Stores a SoundFile';
+    this.description = language.commands.add.description;
     this.example = 'add badumtsss ';
   }
 
@@ -31,10 +31,9 @@ export default class Add extends Command {
 
       if (title == null || title.length < 3 || title.length > 20) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: '`Title invalid`\n'+
-          'Gimme gimme gimme a title. Anything between three and twenty characters\n'+
-          `Must match this regex \`${allowedChars}\``});
+          title: language.general.error,
+          description: replaceArgs(language.commands.add.error.title_invalid, [allowedChars]),
+        });
         return;
       }
 
@@ -42,33 +41,34 @@ export default class Add extends Command {
       const attachment = msg.attachments.first();
       if (attachment == null) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: `\`No attachment found\`\nYou're not a Jedi, attachments are not forbidden`});
+          title: language.general.error,
+          description: language.commands.add.error.no_attachment,
+        });
         return;
       }
 
       const {url, size, name} = attachment;
       if (size > maxFileSize) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: `\`Filesize exceeds maximum\`\nQuoting a famous actress: "It's too big 😲"`});
+          title: language.general.error,
+          description: language.commands.add.error.file_size,
+        });
         return;
       }
       const fileType = name.split('.')[1];
       if (!(allowedFileType === fileType)) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: '`File is not in mp3 format`\nmp4 and mp5 are forbidden, too'});
+          title: language.general.error,
+          description: language.commands.add.error.invalid_format,
+        });
         return;
       }
       const path = basedir+`/resources/soundeffects/${title}.${fileType}`;
       const exists = fs.existsSync(path);
       if (exists && overwrite !== 'overwrite') {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 😕',
-          description: '`This command already exists`\n'+
-          'Try to save it under another command, '+
-          `or overwrite this command using \`${config.prefix}${this.command} ${title} overwrite\``,
+          title: language.general.error,
+          description: replaceArgs(language.commands.add.error.already_exists, [config.botPrefix, this.command, title]),
         });
         return;
       }
@@ -76,23 +76,22 @@ export default class Add extends Command {
       console.log(added);
       if (added) {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Command Added 🎉🎉',
-          description: `Command \`${title}\` added :D`,
+          title: language.commands.add.labels.command_added,
+          description: replaceArgs(language.commands.add.success, [title]),
         });
         return;
       } else {
         msgHandler.sendRichTextDefault({msg,
-          title: 'Crap 💥',
-          description: `Something went wrong :/`,
+          title: language.general.error,
+          description: language.commands.add.error.file_saving,
         });
         return;
       }
     } catch (err) {
       console.error(err);
       msgHandler.sendRichTextDefault({msg,
-        title: 'Crap 😕',
-        description: '`Unexpected Error`'+
-        '\nLuca expected every possible error. But you ... you managed to find another one',
+        title: language.general.error,
+        description: language.commands.add.error.generic_error,
       });
     }
   }

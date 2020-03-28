@@ -3,6 +3,7 @@ import config from './../config.js';
 import request from 'superagent';
 import messageHandler from './messageHandler.js';
 import sqlHandler from './sqlHandler.js';
+import {dic as language} from './languageHandler';
 
 async function setVolume(serverid, volume) {
   if (!servers[serverid]) {
@@ -46,11 +47,11 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
         }),
         {volume: server.volume});
     server.dispatcher.on('start', () => {
-      messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined, 'Playing', [{
-        title: 'Description',
-        text: 'Currently playing:',
+      messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined, language.handlers.musicPlayer.labels.playing, [{
+        title: language.general.description,
+        text: language.handlers.musicPlayer.labels.currently_playing,
       }, {
-        title: 'Title',
+        title: language.general.title,
         text: `\`${queue[index].title}\``,
         inline: true,
       }, {
@@ -66,8 +67,8 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
         connection.disconnect();
         messageHandler.sendRichTextDefaultExplicit({
           channel: msgChannel,
-          title: 'Disconnected',
-          description: 'Left channel because nobody was listening :(',
+          title: language.handlers.musicPlayer.labels.disconnected,
+          description: language.handlers.musicPlayer.labels.disconnected_emptyChannel,
         });
       } else {
         play(connection, voiceChannel, serverid, msgChannel);
@@ -81,7 +82,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
     messageHandler.sendRichTextDefaultExplicit({
       channel: msgChannel,
       title: 'Queue',
-      description: 'Queue empty! Disconnecting.',
+      description: language.handlers.musicPlayer.labels.disconnected_emptyQueue,
       color: 0xcc0000,
     });
   }
@@ -146,5 +147,5 @@ export default {
   stop,
   youtubeSearch,
   updateQueue,
-  setVolume: setVolume,
+  setVolume,
 };
