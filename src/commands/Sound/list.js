@@ -1,6 +1,4 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
-import basedir from '../../../basedir';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
@@ -25,7 +23,7 @@ export default class ListSounds extends Command {
       return;
     }
     try {
-      const files = fs.readdirSync(basedir+'/resources/soundeffects');
+      const files = fs.readdirSync('/resources/soundeffects');
       if(files.length === 0) {
         msgHandler.sendRichTextDefault({msg,
           title: language.commands.listSounds.labels.no_sounds,
