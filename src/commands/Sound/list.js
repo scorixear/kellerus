@@ -1,7 +1,6 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
 import basedir from '../../../basedir';
-import https from 'https';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
@@ -20,6 +19,11 @@ export default class ListSounds extends Command {
   }
 
   async executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
+    }
     try {
       const files = fs.readdirSync(basedir+'/resources/soundeffects');
       if(files.length === 0) {
