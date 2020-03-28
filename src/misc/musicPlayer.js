@@ -17,7 +17,7 @@ async function setVolume(serverid, volume) {
   if (!server.dispatcher) {
     server.volume = volume;
   }
-  server.dispatcher.setVolume(volume);
+  server.dispatcher.setVolumeLogarithmic(volume);
 }
 
 async function play(connection, voiceChannel, serverid, msgChannel) {
@@ -44,18 +44,23 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
           highWaterMark: 1 << 25,
         }, {
           highWaterMark: 1,
-        }),
-        {volume: server.volume});
+        }));
+    server.dispatcher.setVolumeLogarithmic(server.volume);
     server.dispatcher.on('start', () => {
       messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined,
           language.handlers.musicPlayer.labels.playing,
           [{
             title: language.general.description,
             text: language.handlers.musicPlayer.labels.currently_playing,
+            inline: true,
+          }, {
+            title: language.handlers.musicPlayer.labels.volume,
+            text: (server.volume * 100) + '%',
+            inline: true,
           }, {
             title: language.general.title,
             text: `\`${queue[index].title}\``,
-            inline: true,
+            inline: false,
           }, {
             title: 'Url',
             text: queue[index].url,

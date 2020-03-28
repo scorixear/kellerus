@@ -181,7 +181,8 @@
     "musicPlayer": {
       "labels": {
         "playing": "Playing",
-        "currently_playing": "Currently playing",
+        "volume": "Volume",
+        "currently_playing": "Currently playing:",
         "disconnected": "Disconnected",
         "disconnecting_emptyChannel": "Left channel because nobody was listening :(",
         "disconnecting_emptyQueue": "Queue empty! Disconnecting."
