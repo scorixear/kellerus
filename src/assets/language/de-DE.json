@@ -4,14 +4,14 @@
       "description": "Frage den Bot, ob er TheCycle spielen möchte!"
     },
     "ehre": {
-      "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas ehrenhaftes getan haben.",
+      "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas Ehrenhaftes getan haben.",
       "error": {
-        "self_award": "Du kannst dir selber kein `Ehre` verleien."},
+        "self_award": "Du kannst dir selber keine `Ehre` verleihen."},
       "success": "$0 war `$1`-mal ehrenhaft."
     },
     "hi": {
       "description": "Sag Hi zu dem Bot!",
-      "responses": ["Hi Freund", "O.O", ":3 Huhu", "Du schonwieder 😅", ""]
+      "responses": ["Hi Freund", "O.O", ":3 Huhu", "Du schon wieder 😅", ""]
     },
     "rock_paper_scissor": {
       "labels":{
@@ -60,7 +60,7 @@
       "success": "Gebannt"
     },
     "clear": {
-      "description": "Löscht kürzlich gesendete Nachricht im aktuellen Channel.",
+      "description": "Löscht kürzlich gesendete Nachricht im aktuellen Kanal.",
       "labels":{
         "message_amount": "Nachrichtenanzahl"
       },
@@ -84,7 +84,7 @@
       "success": "Nickname geändert!"
     },
     "join": {
-      "description": "Lässt den Bot in einen Sprach-Kanal beitreten oder verschiebt den Bot in einen anderen Kanal.\nDer Bot wird einen Titel von der Queue anfangen zu spielen.",
+      "description": "Lässt den Bot einem Sprach-Kanal beitreten oder verschiebt den Bot in einen anderen Kanal.\nDer Bot wird einen Titel von der Queue anfangen zu spielen.",
       "labels": {
         "joined": "Joined"
       },
@@ -92,12 +92,12 @@
       "success": "Erfolgreich Beigetreten!"
     },
     "leave": {
-      "description": "Kickt den Bot vom Sprach-Kanal",
-      "error" : "Ich muss in einem Sprach-Kanal sein, um verbannt zu werden."
+      "description": "Bittet den Bot den Sprach-Kanal zu verlassen. Mal sehen, ob er es tut.",
+      "error" : "Ich muss in einem Sprach-Kanal sein, um ihn verlassen zu können."
     },
     "queue": {
-      "description": "Stellt ein Lied in die Queue, listet alle Lieder in der Queue oder löscht die Queue.\nLieder können per Sucheingabe oder Youtube URL eingereiht werden.",
-      "example": "queue list\nqueue clear\nqueue Lied_Titel\nqueue https://www.youtube.com/watch?v=video_id",
+      "description": "Stellt ein Titel in die Queue, listet alle Titel in der Queue auf oder löscht die Queue.\nTitel können per Sucheingabe oder Youtube URL eingereiht werden.",
+      "example": "queue list\nqueue clear\nqueue Titel\nqueue https://www.youtube.com/watch?v=video_id",
       "labels": {
         "list": "Queue Liste"
       },
@@ -158,7 +158,7 @@
         "title_invalid": "`Titel ungültig`\nGimme gimme gimme a title. Irgendetwas zwischen 3 und 20 Zeichen\nMuss dem folgenden Regex folgen: `$0`",
         "not_found": "`Titel exisitert nicht`",
         "file_deletion": "`Entfernen fehlgeschlagen`\nEtwas schlechtes ist während der Entfernung passiert. PAUUUUUL, hilfffffffeeeee!",
-        "generic_error": "`Unerwarteter Fheler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
+        "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
       },
       "success": "Titel `$0` entfernt"
     }
@@ -166,7 +166,7 @@
   "handlers": {
     "command": {
       "error": {
-        "unknown": "Der Befehl ist nicht bekannt. Nutze `$0help` um eine List an Befehln zu erhalten.",
+        "unknown": "Der Befehl ist nicht bekannt. Nutze `$0help` um eine List an Befehlen zu erhalten.",
         "generic_error": "Es gab einen Fehler während der Ausführung von `$0$1`."
       }
     },
