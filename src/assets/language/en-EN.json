@@ -200,7 +200,7 @@
     "server": "Server",
     "user": "User",
     "message": "Message",
-    "title" :"title"
+    "title" :"Title"
   },
   "error": {
     "user_mention": "You must mention a user",

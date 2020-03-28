@@ -83,7 +83,7 @@ export default class Queue extends Command {
       if (!servers[msg.guild.id]) {
         servers[msg.guild.id] = {
           queueIndex: 0,
-          volumne: 1,
+          volume: 1,
         };
       }
 
@@ -140,7 +140,7 @@ export default class Queue extends Command {
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.usage,
-        description: replaceArgs(language.commands.queue.usage, [config.botPrefix, this.usage]),
+        description: replaceArgs(language.commands.queue.error.usage, [config.botPrefix, this.usage]),
         color: 0xCC0000,
       });
     }

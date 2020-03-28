@@ -88,10 +88,12 @@ export default class Ban extends Command {
       title: language.general.user,
       text: args[0],
     });
-    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, language.commands.ban.success, usercategories).then((m) => {
-      targetuser.ban(reason).then((member) => {
-        msgHandler.sendRichText(msg, language.commands.ban.success, categories);
-      });
-    });
+    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author,
+        language.commands.ban.success, usercategories)
+        .then((m) => {
+          targetuser.ban(reason).then((member) => {
+            msgHandler.sendRichText(msg, language.commands.ban.success, categories);
+          });
+        });
   }
 }

@@ -47,18 +47,20 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
         }),
         {volume: server.volume});
     server.dispatcher.on('start', () => {
-      messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined, language.handlers.musicPlayer.labels.playing, [{
-        title: language.general.description,
-        text: language.handlers.musicPlayer.labels.currently_playing,
-      }, {
-        title: language.general.title,
-        text: `\`${queue[index].title}\``,
-        inline: true,
-      }, {
-        title: 'Url',
-        text: queue[index].url,
-        inline: true,
-      }]);
+      messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined,
+          language.handlers.musicPlayer.labels.playing,
+          [{
+            title: language.general.description,
+            text: language.handlers.musicPlayer.labels.currently_playing,
+          }, {
+            title: language.general.title,
+            text: `\`${queue[index].title}\``,
+            inline: true,
+          }, {
+            title: 'Url',
+            text: queue[index].url,
+            inline: true,
+          }]);
     });
     server.dispatcher.on('finish', () => {
       server.queueIndex++;

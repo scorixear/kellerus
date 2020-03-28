@@ -74,10 +74,12 @@ export default class Kick extends Command {
       title: language.general.user,
       text: args[0],
     });
-    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author, language.commands.kick.success, usercategories).then((m) => {
-      targetuser.kick(reason).then((member) => {
-        msgHandler.sendRichText(msg, language.commands.kick.success, categories);
-      });
-    });
+    msgHandler.sendRichTextExplicit(msg.guild, targetuser.user, msg.author,
+        language.commands.kick.success, usercategories)
+        .then((m) => {
+          targetuser.kick(reason).then((member) => {
+            msgHandler.sendRichText(msg, language.commands.kick.success, categories);
+          });
+        });
   }
 }

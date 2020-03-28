@@ -27,7 +27,7 @@ export function changeLanguage(lang) {
  */
 export function replaceArgs(input, args) {
   for (let i = 0; i<args.length; i++) {
-    input = input.replace('$'+i, args[i]);
+    input = input.split('$'+i).join(args[i]);
   }
   return input;
 }
