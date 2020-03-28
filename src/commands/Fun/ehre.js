@@ -1,65 +1,63 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
 import sqlHandler from '../../misc/sqlHandler.js';
 import msgHandler from '../../misc/messageHandler.js';
+import {dic as language, replaceArgs} from './../../misc/languageHandler.js';
 
 export default class Ehre extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = 'ehre';
+    this.command = 'ehre';
+    this.description = language.commands.ehre.description;
+    this.example = 'ehre @kellerus';
+  }
 
-    constructor(category) {
-        super(category);
-        this.usage = 'ehre';
-        this.command = 'ehre';
-        this.description = 'Awards `Ehre` points to users, that did something honorable.';
-        this.example = 'ehre @kellerus';
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
+    }
+    let targetuser;
+    if (args && args.length >= 1) {
+      targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member(args[0]));
+    } else {
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.error.user_mention,
+        color: 0xcc0000,
+      });
+      return;
     }
 
-    executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if (hasPermission === false) {
-            return;
-        }
-        let targetuser;
-        if (args && args.length >= 1) {
-            targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
-        } else {
-            msgHandler.sendRichText_Default({
-                msg: msg,
-                title: 'Error',
-                description: 'You must mention a user!',
-                color: 0xcc0000
-            });
-            return;
-        }
-
-        if (!targetuser) {
-            msgHandler.sendRichText_Default({
-                msg: msg,
-                title: 'Error',
-                description: 'User not found',
-                color: 0xCC0000
-            });
-            return;
-        }
-
-        if (targetuser === msg.guild.member(msg.author)) {
-            msgHandler.sendRichText_Default({
-                msg: msg,
-                title: 'Error',
-                description: 'You cannot award yourself `Ehre`!',
-                color: 0xcc0000
-            });
-            return;
-        }
-
-        sqlHandler.addHonorCount(targetuser.user).then((cnt) => {
-            msgHandler.sendRichText_Default({
-                msg: msg,
-                title: 'Ehre',
-                description: `${targetuser} war \`${cnt}\` mal ehrenvoll.`,
-                color: 0x00CC00
-            });
-        });
-
-
+    if (!targetuser) {
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.error.user_not_found,
+        color: 0xCC0000,
+      });
+      return;
     }
+
+    if (targetuser === msg.guild.member(msg.author)) {
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.commands.ehre.error.self_award,
+        color: 0xcc0000,
+      });
+      return;
+    }
+
+    sqlHandler.addHonorCount(targetuser.user).then((cnt) => {
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: 'Ehre',
+        description: replaceArgs(language.commands.ehre.success, [targetuser, cnt]),
+        color: 0x00CC00,
+      });
+    });
+  }
 }

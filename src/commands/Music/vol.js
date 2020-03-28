@@ -1,0 +1,49 @@
+import Command from './../command.js';
+import musicPlayer from '../../misc/musicPlayer.js';
+import messageHandler from '../../misc/messageHandler.js';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
+
+export default class Vol extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = `vol <${language.commands.vol.labels.percent}>`;
+    this.command = 'vol';
+    this.description = language.commands.vol.description;
+    this.example = 'vol 25';
+  }
+
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
+    }
+    if (args.length != 1 || isNaN(args[0])) {
+      messageHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.error.invalid_usage,
+        categories: [{
+          title: language.general.usage,
+          text: `\`${this.usage}\``,
+        }],
+      });
+      return;
+    }
+    const volume = parseInt(args[0]) / 100;
+    if (volume > 2 || volume <= 0) {
+      messageHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.commands.vol.error.volume_param,
+      });
+      return;
+    }
+    musicPlayer.setVolume(msg.guild.id, volume);
+    messageHandler.sendRichTextDefault({
+      msg: msg,
+      title: language.commands.vol.labels.volume_set,
+      description: replaceArgs(language.commands.vol.success, [args[0]]),
+    });
+  }
+}

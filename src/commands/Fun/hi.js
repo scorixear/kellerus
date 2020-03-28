@@ -1,31 +1,28 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
-import fs from 'fs';
+import {dic as language} from './../../misc/languageHandler.js';
 
-const replys = JSON.parse(fs.readFileSync('./src/commands/Fun/hi_response.json'));
+const replys = language.commands.hi.responses;
 
 export default class Hi extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = 'hi';
+    this.command = 'hi';
+    this.description = language.commands.hi.description;
+    this.example = 'hi\nhi @Kellerus';
+  }
 
-    constructor(category) {
-        super(category);
-        this.usage = 'hi';
-        this.command = 'hi';
-        this.description = 'Says Hi to the Bot!';
-        this.example = 'hi\nhi @Kellerus';
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
     }
 
-    executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) {
-            return;
-        }
-        
-        if(args && args.length > 0)
-        {
-            msg.channel.send(`${args[0]}, ${replys[Math.floor(Math.random() * replys.length)]}`)
-        }
-        else {
-            msg.reply(replys[Math.floor(Math.random() * replys.length)]);
-        }
+    if (args && args.length > 0) {
+      msg.channel.send(`${args[0]}, ${replys[Math.floor(Math.random() * replys.length)]}`);
+    } else {
+      msg.reply(replys[Math.floor(Math.random() * replys.length)]);
     }
+  }
 }

@@ -1,26 +1,35 @@
-import Config from '../../config.js';
 import Command from './../command.js';
-import msgHandler from '../../misc/messageHandler.js';
-import permHandler from '../../misc/permissionHandler.js';
+import messageHandler from '../../misc/messageHandler.js';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
 export default class Clear extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = `clear <${language.commands.clear.labels.message_amount}>`;
+    this.command = 'clear';
+    this.description = language.commands.clear.description;
+    this.example = 'clear 20';
+    this.permissions = ['MANAGE_MESSAGES'];
+  }
 
-    constructor(category) {
-        super(category);
-        this.usage = 'clear <Message Amount>';
-        this.command = 'clear';
-        this.description = 'Deletes recent messages from the current channel.';
-        this.example = 'clear 20';
-        this.permissions = ['MANAGE_MESSAGES'];
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
     }
-
-    executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) {
-            return;
-        }
-        if (!args[0]) return msgHandler.sendRichText(msg, 'Error', [{title: 'Message', text:`Invalid usage! \`${Config.prefix}${this.usage}\``}]);
-        msg.channel.bulkDelete(parseInt(args[0]) + 1);
-        msg.channel.send(`<@${msg.author.id}> cleared the chat`);
+    if (!args[0]) {
+      return messageHandler.sendRichTextDefault({
+        msg: msg,
+        title: commands.general.error,
+        description: commands.error.invalid_usage,
+        categories: [{
+          title: commands.general.usage,
+          text: `\`${this.usage}\``,
+        }],
+      });
     }
+    msg.channel.bulkDelete(parseInt(args[0]) + 1);
+    msg.channel.send(replaceArgs(language.commands.clear.success, [msg.author.id]));
+  }
 }

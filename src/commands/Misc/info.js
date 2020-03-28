@@ -1,38 +1,38 @@
-import msgHandler from '../../misc/messageHandler.js'
-import permHandler from '../../misc/permissionHandler.js';
-import config from '../../config.js'
+import msgHandler from '../../misc/messageHandler.js';
+import config from '../../config.js';
 import Command from './../command.js';
+import {dic as language} from '../../misc/languageHandler.js';
 
 export default class Info extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = 'info';
+    this.command = 'info';
+    this.description = language.commands.info.description;
+    this.example = 'info';
+  }
 
-    constructor(category) {
-        super(category);
-        this.usage = 'info';
-        this.command = 'info';
-        this.description = 'Prints informations about the bot.';
-        this.example = 'info';
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
     }
-
-    executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if(hasPermission === false) {
-            return;
-        }
-        let categories = new Array();
-        categories[0] = {
-            title: 'Version',
-            text: config.version,
-            inline: true
-        };
-        categories[1] = {
-            title: 'Repository',
-            text: config.repo,
-            inline: true
-        };
-        categories[2] = {
-            title: 'Author',
-            text: 'Paul Keller'
-        };
-        msgHandler.sendRichText(msg, 'Bot Info', categories, 0xF1C40F)
-    }
+    const categories = [];
+    categories[0] = {
+      title: language.commands.info.labels.version,
+      text: config.version,
+      inline: true,
+    };
+    categories[1] = {
+      title: language.commands.info.labels.repository,
+      text: config.repo,
+      inline: true,
+    };
+    categories[2] = {
+      title: language.commands.info.labels.author,
+      text: 'Paul Keller',
+    };
+    msgHandler.sendRichText(msg, 'Bot Info', categories, 0xF1C40F);
+  }
 }

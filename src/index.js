@@ -4,14 +4,14 @@ import sqlHandler from './misc/sqlHandler.js';
 import config from './config.js';
 
 
-global.servers = {}
+global.servers = {};
 
 DiscordHandler.client.on('ready', () => {
-    console.log('Kellerus is online!')
+  console.log('Kellerus is online!');
 });
 
 DiscordHandler.client.on('message', CmdHandler ? CmdHandler.parseCommand : () => {});
 
-sqlHandler.InitDB().then(() => {
-    DiscordHandler.client.login(config.token);
+sqlHandler.initDB().then(() => {
+  DiscordHandler.client.login(config.token);
 });

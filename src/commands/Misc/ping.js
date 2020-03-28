@@ -1,25 +1,27 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
 import msgHandler from '../../misc/messageHandler.js';
 import discordHandler from '../../misc/discordHandler.js';
+import {dic as language} from '../../misc/languageHandler.js';
 
 export default class Ping extends Command {
+  constructor(category) {
+    super(category);
+    this.usage = 'ping';
+    this.command = 'ping';
+    this.description = language.commands.ping.description;
+    this.example = 'ping';
+  }
 
-    constructor(category) {
-        super(category);
-        this.usage = 'ping';
-        this.command = 'ping';
-        this.description = 'Tests the Ping of the bot.';
-        this.example = 'ping';
+  executeCommand(args, msg) {
+    try {
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
     }
-
-    executeCommand(args, msg) {
-        let hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-        if (hasPermission === false) return;
-        msgHandler.sendRichText_Default({
-            msg: msg,
-            title: 'Pong',
-            description: `${discordHandler.client.ping}ms`
-        });
-    }
+    msgHandler.sendRichTextDefault({
+      msg: msg,
+      title: 'Pong',
+      description: `${discordHandler.client.ws.ping}ms`,
+    });
+  }
 }

@@ -1,6 +1,14 @@
 # Private Files
 
-config.js
+config.json
+
+# IDE
+*.idea
+/.vscode
+
+#resources folder
+resources/
+resources/*
 
 # Logs
 logs
