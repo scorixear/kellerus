@@ -146,6 +146,17 @@
       },
       "success": "Command `$0` added :D"
     },
+    "listSounds": {
+      "description":"Lists all stored Sound files",
+      "labels": {
+        "header": "Here are your Sounds 🎶🎵",
+        "templateEntry": "$0. `$1`\n",
+        "no_sounds": "No Sound files found"
+      },
+      "error": {
+        "internal_error": "`Something bad happened 😫😫`"
+      }
+    },
     "play": {
       "description":  "Plays a SoundFile",
       "error": "404: Sound Command `$0` not found :/"
