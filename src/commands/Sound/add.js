@@ -13,7 +13,7 @@ import msgHandler from '../../misc/messageHandler';
 export default class Add extends Command {
   constructor(category) {
     super(category);
-    this.usage = `add < title> < SoundFile.mp3>`;
+    this.usage = `add < title> <SoundFile.mp3>`;
     this.command = 'add';
     this.description = 'Stores a SoundFile';
     this.example = 'add badumtsss ';
@@ -58,7 +58,7 @@ export default class Add extends Command {
       if (!(allowedFileType === fileType)) {
         msgHandler.sendRichTextDefault({msg,
           title: 'Crap 😕',
-          description: `\`File is not in mp3 format\`\nmp4 and mp5 are forbidden, too`});
+          description: '`File is not in mp3 format`\nmp4 and mp5 are forbidden, too'});
         return;
       }
       const path = basedir+`/resources/soundeffects/${title}.${fileType}`;
