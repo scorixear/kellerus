@@ -49,6 +49,17 @@
         "author": "Autor"
       }
     },
+    "lang": {
+      "description": "Stell die Sprache des Bots ein.",
+      "labels": {
+        "list": "Unterstützte Sprachen",
+        "success": "Sprache geändert"
+      },
+      "error": {
+        "not_found": "Sprache konnte nicht gefunden werden. Hier ist eine Liste der verfügbaren Sprachen:"
+      },
+      "success": "Sprache wurde zu `$0` geändert!"
+    },
     "ping": {
       "description": "Testet den Ping des Bots."
     },
