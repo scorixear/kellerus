@@ -43,7 +43,7 @@ export default class Help extends Command {
           },
           {
             title: language.general.description,
-            text: command.description,
+            text: command.description(),
             inline: true,
           },
           {
