@@ -21,10 +21,10 @@ export default class Clear extends Command {
     if (!args[0]) {
       return messageHandler.sendRichTextDefault({
         msg: msg,
-        title: commands.general.error,
-        description: commands.error.invalid_usage,
+        title: language.general.error,
+        description: language.error.invalid_usage,
         categories: [{
-          title: commands.general.usage,
+          title: language.general.usage,
           text: `\`${this.usage}\``,
         }],
       });

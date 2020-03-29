@@ -19,7 +19,7 @@ export default class Ban extends Command {
       return;
     }
     if (!args || args.length == 0) {
-      messageHandler.sendRichTextDefault({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: language.error.invalid_usage,

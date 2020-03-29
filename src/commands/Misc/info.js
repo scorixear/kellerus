@@ -26,7 +26,7 @@ export default class Info extends Command {
     };
     categories[1] = {
       title: language.commands.info.labels.repository,
-      text: config.repo,
+      text: config.repository,
       inline: true,
     };
     categories[2] = {

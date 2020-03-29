@@ -19,7 +19,7 @@ export default class Nick extends Command {
       return;
     }
     if (!args || args.length < 2) {
-      return messageHandler.sendRichTextDefault({
+      return msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: language.error.invalid_usage,

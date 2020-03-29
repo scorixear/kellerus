@@ -75,7 +75,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
         messageHandler.sendRichTextDefaultExplicit({
           channel: msgChannel,
           title: language.handlers.musicPlayer.labels.disconnected,
-          description: language.handlers.musicPlayer.labels.disconnected_emptyChannel,
+          description: language.handlers.musicPlayer.labels.disconnecting_emptyChannel,
         });
       } else {
         play(connection, voiceChannel, serverid, msgChannel);
@@ -89,7 +89,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
     messageHandler.sendRichTextDefaultExplicit({
       channel: msgChannel,
       title: 'Queue',
-      description: language.handlers.musicPlayer.labels.disconnected_emptyQueue,
+      description: language.handlers.musicPlayer.labels.disconnecting_emptyQueue,
       color: 0xcc0000,
     });
   }

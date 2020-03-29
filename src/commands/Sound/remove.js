@@ -19,7 +19,7 @@ export default class Remove extends Command {
 
   async executeCommand(args, msg) {
     try {
-      const {fileType} = config.commands.sound.add;
+      const {fileType, allowedChars} = config.commands.sound.add;
       const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
       if (hasPermission === false) {
         return;
