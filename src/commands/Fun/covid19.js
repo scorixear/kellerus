@@ -3,6 +3,8 @@ import Command from '../command.js';
 import msgHandler from '../../misc/messageHandler.js';
 import {dic as language} from './../../misc/languageHandler.js';
 
+let timeout;
+
 export default class Covid19 extends Command {
   constructor(category) {
     super(category);
@@ -21,13 +23,13 @@ export default class Covid19 extends Command {
 
     msg.channel.send('Loading...');
 
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       msg.channel.bulkDelete(1);
       msg.channel.send('Loading... (Please wait a moment for fuck sakes)');
     }, 1000);
 
     try {
-      const {totalNumber, totalDeaths, totalHealed, topTenList} = await this.topTenList();
+      const {totalNumber, totalDeaths, totalHealed, topTenList} = await this.crawlPageForData();
 
       msg.channel.bulkDelete(1);
 
@@ -47,17 +49,22 @@ export default class Covid19 extends Command {
         description: topTenList,
       });
     } catch (err) {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      msg.channel.bulkDelete(1);
+
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: 'P != NP',
-        color: 0xcc0000,
       });
       return;
     }
   }
 
   async crawlPageForData() {
+    console.log('TEST');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
