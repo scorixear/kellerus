@@ -13,9 +13,9 @@ export default class Skip extends Command {
     this.permissions = ['MOVE_MEMBERS'];
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }

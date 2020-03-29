@@ -189,7 +189,10 @@
     "command": {
       "error": {
         "unknown": "Der Befehl ist nicht bekannt. Nutze `$0help` um eine List an Befehlen zu erhalten.",
-        "generic_error": "Es gab einen Fehler während der Ausführung von `$0$1`."
+        "generic_error": "Es gab einen Fehler während der Ausführung von `$0$1`.",
+        "general_format": "Dein Befehl ist falsch formatiert:\n`$0<Befehl> [args] [--<option> [option-arg]]`",
+        "args_format": "Deine Argumente sind falsch formatiert.\n*Hinweis: Argumente mit Leerzeichen müssen durch \" abgegrenzt sein und können keine weiteren \" enthalten.*",
+        "params_format": "Deine Optionen sind falsch formatiert.\n*Hinweis: Optionen müssen mit '--' starten und __können__ ein weiteres Argument enthalten.*"
       }
     },
     "emoji": {

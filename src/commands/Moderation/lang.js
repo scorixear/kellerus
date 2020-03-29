@@ -13,9 +13,9 @@ export default class Lang extends Command {
     this.permissions = ['MANAGE_ROLES'];
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }

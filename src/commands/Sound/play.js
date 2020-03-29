@@ -24,7 +24,7 @@ export default class Play extends Command {
       }
       const title = args[0] +'.'+fileType;
       voiceChannel = msg.member.voice.channel;
-      const path = '/resources/soundeffects/' + title;
+      const path = './resources/soundeffects/' + title;
       const exists = fs.existsSync(path);
       if (!exists) {
         msgHandler.sendRichTextDefault({

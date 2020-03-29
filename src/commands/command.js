@@ -11,7 +11,7 @@ export default class Command {
     this.description;
     this.example;
   }
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params = {}) {
     const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
     if (hasPermission === false) {
       throw new Error('Invalid');
