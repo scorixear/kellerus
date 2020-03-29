@@ -1,0 +1,233 @@
+{
+  "commands": {
+    "cycle": {
+      "description": "Frage den Bot, ob er TheCycle spielen möchte!"
+    },
+    "ehre": {
+      "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas Ehrenhaftes getan haben.",
+      "error": {
+        "self_award": "Du kannst dir selber keine `Ehre` verleihen."},
+      "success": "$0 war `$1`-mal ehrenhaft."
+    },
+    "hi": {
+      "description": "Sag Hi zu dem Bot!",
+      "responses": ["Hi Freund", "O.O", ":3 Huhu", "Du schon wieder 😅", ""]
+    },
+    "rock_paper_scissor": {
+      "labels":{
+        "rock": "Stein",
+        "paper": "Papier",
+        "scissor": "Schere"
+      },
+      "description": "Spielt `$0` gegen den Bot.",
+      "responses": {
+        "win": ["DU VERLIERST", "Hab dich", "Du wirst niemals gewinnen", "Nun, das war einfach", "Ich gewinne", "Streng dich mehr an", "Purer Skill"],
+        "loose": ["ICH GEWINNE... warte... lass du uns das wiederholen", "Hast mich", "Das zählt nicht", "Dieses Spiel ist pures Glück",
+          "Stell dir vor die Antwort zu allem und jeden ist nicht 42. Schau mal, wir leben in einer Welt aus purem Chaos, die so tödlich und still ist, aber trotdem sind wir hier, atmen, denken, lieben (nunja, zumindest ihr). Und das auf einer Kugel aus Erde, die sich um einen Gas Giganten dreht. Jeder Schritt von diesem Schmutzding weg wird dich töten, quasi sofort. Und trotzdem bist du hier. Diese Welt könnte von heute auf morgen untergehen. Nur ein kleiner Meteorit (oder Asteroid, keine Ahnung wo da jetzt der Unterschied ist) kann alles Leben auslöschen. Und es könnte auch mehr Leben geben, weitere lebende, denkende Kreature. Aber was tust du? Sitz hier und gewinnst Schere, Stein, Papier gegen einen Computer. Lächerlich. Super. `[Notiz des Entwicklers, der Bot kann nicht verlieren]`\n\n\n\n\nDAS HABE ICH GEHÖRT"
+        ],
+        "tie": ["UNENTSCHIEDEN", "Beide gewinnen", "Alle verlieren", "Lass uns das nochmal versuchen", "Es gibt eine Theorie, das Stein immer gewinnt..."],
+        "spock": ["Ich gewinne, HAHAHAH,  EASY", "Ehre", "Honor", "Und nein, du kannst das nicht benutzen!"]
+      }
+    },
+    "help":{
+      "description": "Gibt eine Liste von Befehlen zurück, welche du benutzen kannst oder zeigt Informationen über spezifische Befehle!",
+      "error": {
+        "unknown": "Der Befehl ist nicht bekannt. Gib `$0help` ein für eine Liste von Befehlen."
+      },
+      "labels": {
+        "command": "Befehl"
+      },
+      "success":{
+        "type":"Gib `$0<$1> [args]` ein um einen $1 auszuführen!"
+      }
+    },
+    "info": {
+      "description": "Gibt Informationen über den Bot heraus.",
+      "labels":{
+        "version": "Version",
+        "repository": "Repository",
+        "author": "Autor"
+      }
+    },
+    "lang": {
+      "description": "Stell die Sprache des Bots ein.",
+      "labels": {
+        "list": "Unterstützte Sprachen",
+        "success": "Sprache geändert"
+      },
+      "error": {
+        "not_found": "Sprache konnte nicht gefunden werden. Hier ist eine Liste der verfügbaren Sprachen:"
+      },
+      "success": "Sprache wurde zu `$0` geändert!"
+    },
+    "ping": {
+      "description": "Testet den Ping des Bots."
+    },
+    "ban": {
+      "description": "Bannt ein Mitglieder mit einem optionalen Grund.",
+      "error":{
+        "blocked": "Du kannst dieses Mitglied nicht bannen!"
+      },
+      "success": "Gebannt"
+    },
+    "clear": {
+      "description": "Löscht kürzlich gesendete Nachricht im aktuellen Kanal.",
+      "labels":{
+        "message_amount": "Nachrichtenanzahl"
+      },
+      "success": "<@$0> hat den Chat gecleared."
+    },
+    "kick": {
+      "description": "Kickt ein Mitglieder vom Server mit optionalem Grund.",
+      "error": {
+        "blocked": "Du kannst dieses Mitglied nicht kicken!"
+      },
+      "success": "Gekickt"
+    },
+    "nick": {
+      "description": "Nickt ein Mitglied.",
+      "labels": {
+        "nickname": "Nickname"
+      },
+      "error":{
+        "blocked": "Du kannst dieses Mitglied nicht nicken!"
+      },
+      "success": "Nickname geändert!"
+    },
+    "join": {
+      "description": "Lässt den Bot einem Sprach-Kanal beitreten oder verschiebt den Bot in einen anderen Kanal.\nDer Bot wird einen Titel von der Queue anfangen zu spielen.",
+      "labels": {
+        "joined": "Joined"
+      },
+      "error": "Du musst in einem Sprach-Kanal sein, um mich einzuladen!",
+      "success": "Erfolgreich Beigetreten!"
+    },
+    "leave": {
+      "description": "Bittet den Bot den Sprach-Kanal zu verlassen. Mal sehen, ob er es tut.",
+      "error" : "Ich muss in einem Sprach-Kanal sein, um ihn verlassen zu können."
+    },
+    "queue": {
+      "description": "Stellt ein Titel in die Queue, listet alle Titel in der Queue auf oder löscht die Queue.\nTitel können per Sucheingabe oder Youtube URL eingereiht werden.",
+      "example": "queue list\nqueue clear\nqueue Titel\nqueue https://www.youtube.com/watch?v=video_id",
+      "labels": {
+        "list": "Queue Liste"
+      },
+      "error": {
+        "clear": "Queue konnte nicht gelöscht werden",
+        "added": "Titel `$0` ist bereits in der Queue.",
+        "no_results": "Keine Ergebnisse gefunden!",
+        "unknown_error": "Unerwartetes Ergebnis beim Kontaktieren der Youtube Search API.",
+        "usage":"Kein Titel angegeben! Nutze `$0$1` um einen Titel in die Queue zu stellen."
+      },
+      "success": {
+        "clear": "Queue gelöscht",
+        "empty_queue": "Leere Queue",
+        "added": "Titel `$0` hinzugefügt."
+      }
+    },
+    "skip": {
+      "description": "Skipt zum nächsten Titel in der Queue."
+    },
+    "vol": {
+      "description": "Passt die Lautstärke des Bots an.",
+      "labels": {
+        "percent": "Prozent",
+        "volume_set": "Lautstärke gesetzt"
+      },
+      "error": {
+        "volume_param": "Lautstärke kann nur zwischen `0`% und `200`% liegen"
+      },
+      "success": "Lautstärke wurde auf $0% gesetzt"
+    },
+    "add": {
+      "description":"Speichert eine Sound-Datei",
+      "labels": {
+        "append_soundfile": "SoundFile angehängt",
+        "command_added": "Titel hinzugefügt 🎉🎉"
+      },
+      "error": {
+        "title_invalid": "`Titel ist falsch`\nGimme gimme gimme a title. Irgendetwas zwischen 3 und 20 Zeichen\nMuss dem folgenden Regex folgen: `$0`",
+        "no_attachment": "`Kein Anhang gefunden`\nDu bist kein Jedi, Anhänge sind nicht verboten",
+        "file_size": "`Dateigröße überschritt das Maximum`\nUm eine berühmte Schauspielerin zu zitieren: \"Es ist zu groß 😲\"",
+        "invalid_format": "`Datei ist nicht im MP3-Format`\nMP4 und MP5 sind auch verboten",
+        "already_exists": "`Dieser Titel existiert bereits`\nVersuche es unter einem anderen Namen zu speichern, oder überschreibe den Titel mit dem Befehl `$0$1 $2 overwrite`",
+        "file_saving": "Etwas ist schief gelaufen :/",
+        "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
+      },
+      "success": "Titel `$0` hinzugefügt :D"
+    },
+    "listSounds": {
+      "description":"Zeigt alle gespeicherten Sound-Dateien an",
+      "labels": {
+        "header": "Hier sind deine Titel 🎶🎵",
+        "templateEntry": "$0. `$1`\n",
+        "no_sounds": "Keine Sound-Dateien gefunden"
+      },
+      "error": {
+        "internal_error": "`Etwas ist schiefgelaufen 😫😫`"
+      }
+    },
+    "play": {
+      "description":  "Spiel eine Sound-Datei ab",
+      "error": "404: Titel `$0` nicht gefunden :/"
+    },
+    "remove": {
+      "description": "Entfernt eine Sound-Datei",
+      "labels": {
+        "removed": "Entfernt 💥"
+      },
+      "error": {
+        "title_invalid": "`Titel ungültig`\nGimme gimme gimme a title. Irgendetwas zwischen 3 und 20 Zeichen\nMuss dem folgenden Regex folgen: `$0`",
+        "not_found": "`Titel exisitert nicht`",
+        "file_deletion": "`Entfernen fehlgeschlagen`\nEtwas schlechtes ist während der Entfernung passiert. PAUUUUUL, hilfffffffeeeee!",
+        "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
+      },
+      "success": "Titel `$0` entfernt"
+    }
+  },
+  "handlers": {
+    "command": {
+      "error": {
+        "unknown": "Der Befehl ist nicht bekannt. Nutze `$0help` um eine List an Befehlen zu erhalten.",
+        "generic_error": "Es gab einen Fehler während der Ausführung von `$0$1`."
+      }
+    },
+    "emoji": {
+      "labels": {
+        "did_you_mean": "Meintest du",
+        "synonyms": "Synonyme",
+        "usage": "Reagiere mit der angezeigten Zahl auf diese Nachricht um den Befehl auszuführen!"
+      }
+    },
+    "musicPlayer": {
+      "labels": {
+        "playing": "Spiele",
+        "volume": "Lautstärke",
+        "currently_playing": "Aktuell wird gespielt:",
+        "disconnected": "Verbindung getrennt",
+        "disconnecting_emptyChannel": "Habe den Kanal verlassen, weil keiner mehr zugehört hat :(",
+        "disconnecting_emptyQueue": "Queue leer! Verbindung getrennt."
+      }
+    },
+    "permissions": {
+      "error": "Unzureichende Berechtigung um `$0$1` zu nutzen!"
+    }
+  },
+  "general": {
+    "error": "Fehler",
+    "description": "Beschreibung",
+    "example": "Beispiel",
+    "usage": "Benutzung",
+    "reason": "Grund",
+    "server": "Server",
+    "user": "Mitglied",
+    "message": "Nachricht",
+    "title" :"Titel"
+  },
+  "error": {
+    "user_mention": "Du must ein Mitglied erwähnen",
+    "user_not_found": "Mitglied nicht gefunden",
+    "invalid_permissions": "Unzureichende Berechtigung",
+    "invalid_usage" : "Falsche Benutzung"
+  }
+}

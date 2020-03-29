@@ -1,7 +1,4 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
-import basedir from '../../../basedir';
-import https from 'https';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
@@ -21,7 +18,12 @@ export default class ListSounds extends Command {
 
   async executeCommand(args, msg) {
     try {
-      const files = fs.readdirSync(basedir+'/resources/soundeffects');
+      super.executeCommand(args, msg);
+    } catch (err) {
+      return;
+    }
+    try {
+      const files = fs.readdirSync('/resources/soundeffects');
       if(files.length === 0) {
         msgHandler.sendRichTextDefault({msg,
           title: language.commands.listSounds.labels.no_sounds,

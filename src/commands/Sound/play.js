@@ -1,6 +1,5 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
-import basedir from '../../../basedir';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
@@ -25,7 +24,7 @@ export default class Play extends Command {
       }
       const title = args[0] +'.'+fileType;
       voiceChannel = msg.member.voice.channel;
-      const path = basedir + '/resources/soundeffects/' + title;
+      const path = '/resources/soundeffects/' + title;
       const exists = fs.existsSync(path);
       if (!exists) {
         msgHandler.sendRichTextDefault({

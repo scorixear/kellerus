@@ -39,11 +39,12 @@ export default class Help extends Command {
           categories: [{
             title: language.commands.help.labels.command,
             text: `\`${config.botPrefix}${command.command}\``,
-            inline: false,
+            inline: true,
           },
           {
             title: language.general.description,
             text: command.description,
+            inline: true,
           },
           {
             title: language.general.usage,
