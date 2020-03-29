@@ -14,9 +14,9 @@ export default class Help extends Command {
     this.example = 'help\nhelp hi';
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }

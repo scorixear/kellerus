@@ -62,7 +62,7 @@ export default class Add extends Command {
         });
         return;
       }
-      const path = `/resources/soundeffects/${title}.${fileType}`;
+      const path = `./resources/soundeffects/${title}.${fileType}`;
       const exists = fs.existsSync(path);
       if (exists && overwrite !== 'overwrite') {
         msgHandler.sendRichTextDefault({msg,

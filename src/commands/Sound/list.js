@@ -16,15 +16,15 @@ export default class ListSounds extends Command {
     this.example = 'listsounds';
   }
 
-  async executeCommand(args, msg) {
+  async executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
     try {
-      const files = fs.readdirSync('/resources/soundeffects');
-      if(files.length === 0) {
+      const files = fs.readdirSync('./resources/soundeffects');
+      if (files.length === 0) {
         msgHandler.sendRichTextDefault({msg,
           title: language.commands.listSounds.labels.no_sounds,
         });
@@ -33,9 +33,9 @@ export default class ListSounds extends Command {
       let commandList = '';
       let counter = 0;
       const {fileType} = config.commands.sound.add;
-      for(let i = 0; i < files.length; i += 1) {
+      for (let i = 0; i < files.length; i += 1) {
         const f = files[i];
-        if(f && f.endsWith(fileType)) {
+        if (f && f.endsWith(fileType)) {
           counter += 1;
           const theCommand = (f.substr(0, f.length - 1 - fileType.length));
           commandList+= replaceArgs(language.commands.listSounds.labels.templateEntry, [(counter), theCommand]);

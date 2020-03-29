@@ -9,9 +9,9 @@ export default class Cycle extends Command {
     this.example = 'cycle';
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
