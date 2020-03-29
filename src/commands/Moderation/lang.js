@@ -1,7 +1,6 @@
 import messageHandler from '../../misc/messageHandler.js';
 import fs from 'fs';
 import Command from './../command.js';
-import config from './../../config';
 import {dic as language, changeLanguage, replaceArgs} from '../../misc/languageHandler.js';
 
 export default class Lang extends Command {

@@ -156,6 +156,17 @@
       },
       "success": "Titel `$0` hinzugefügt :D"
     },
+    "listSounds": {
+      "description":"Zeigt alle gespeicherten Sound-Dateien an",
+      "labels": {
+        "header": "Hier sind deine Titel 🎶🎵",
+        "templateEntry": "$0. `$1`\n",
+        "no_sounds": "Keine Sound-Dateien gefunden"
+      },
+      "error": {
+        "internal_error": "`Etwas ist schiefgelaufen 😫😫`"
+      }
+    },
     "play": {
       "description":  "Spiel eine Sound-Datei ab",
       "error": "404: Titel `$0` nicht gefunden :/"
