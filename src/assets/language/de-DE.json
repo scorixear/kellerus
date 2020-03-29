@@ -49,6 +49,17 @@
         "author": "Autor"
       }
     },
+    "lang": {
+      "description": "Stell die Sprache des Bots ein.",
+      "labels": {
+        "list": "Unterstützte Sprachen",
+        "success": "Sprache geändert"
+      },
+      "error": {
+        "not_found": "Sprache konnte nicht gefunden werden. Hier ist eine Liste der verfügbaren Sprachen:"
+      },
+      "success": "Sprache wurde zu `$0` geändert!"
+    },
     "ping": {
       "description": "Testet den Ping des Bots."
     },
@@ -144,6 +155,17 @@
         "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
       },
       "success": "Titel `$0` hinzugefügt :D"
+    },
+    "listSounds": {
+      "description":"Zeigt alle gespeicherten Sound-Dateien an",
+      "labels": {
+        "header": "Hier sind deine Titel 🎶🎵",
+        "templateEntry": "$0. `$1`\n",
+        "no_sounds": "Keine Sound-Dateien gefunden"
+      },
+      "error": {
+        "internal_error": "`Etwas ist schiefgelaufen 😫😫`"
+      }
     },
     "play": {
       "description":  "Spiel eine Sound-Datei ab",

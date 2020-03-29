@@ -50,6 +50,17 @@
         "author": "Author"
       }
     },
+    "lang": {
+      "description": "Switches the language of the bot.",
+      "labels": {
+        "list": "Available Languages",
+        "success": "Language changed"
+      },
+      "error": {
+        "not_found": "Language not found. Here is a list of the available languages:"
+      },
+      "success": "Changed the language to `$0`!"
+    },
     "ping": {
       "description": "Tests the Ping of the bot."
     },
