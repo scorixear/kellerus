@@ -10,7 +10,7 @@ export default class Play extends Command {
     super(category);
     this.usage = `play <${language.general.title}> `;
     this.command = 'play';
-    this.description = language.commands.play.description;
+    this.description = () => language.commands.play.description;
     this.example = 'play badumtsss';
   }
 

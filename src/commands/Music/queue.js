@@ -11,7 +11,7 @@ export default class Queue extends Command {
     this.usage = 'queue <clear/list/link/search params>';
     this.command = 'queue';
     this.permissions = ['MOVE_MEMBERS'];
-    this.description = language.commands.queue.description;
+    this.description = () => language.commands.queue.description;
     this.example = language.commands.queue.example;
   }
 

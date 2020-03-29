@@ -12,7 +12,7 @@ export default class ListSounds extends Command {
     super(category);
     this.usage = `listsounds`;
     this.command = 'listsounds';
-    this.description = language.commands.listSounds.description;
+    this.description = () => language.commands.listSounds.description;
     this.example = 'listsounds';
   }
 

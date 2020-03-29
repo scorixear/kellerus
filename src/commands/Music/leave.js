@@ -7,7 +7,7 @@ export default class Leave extends Command {
     super(category);
     this.usage = 'leave';
     this.command = 'leave';
-    this.description = language.commands.leave.description;
+    this.description = () => language.commands.leave.description;
     this.example = 'leave';
     this.permissions = ['MOVE_MEMBERS'];
   }

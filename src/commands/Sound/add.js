@@ -14,7 +14,7 @@ export default class Add extends Command {
     super(category);
     this.usage = `add <${language.general.title}> {${language.commands.add.labels.append_soundfile}.mp3}`;
     this.command = 'add';
-    this.description = language.commands.add.description;
+    this.description = () => language.commands.add.description;
     this.example = 'add badumtsss ';
   }
 

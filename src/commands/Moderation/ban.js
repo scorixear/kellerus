@@ -7,7 +7,7 @@ export default class Ban extends Command {
     super(category);
     this.usage = `ban <${language.general.user}> [${language.general.reason}]`;
     this.command = 'ban';
-    this.description = language.commands.ban.description;
+    this.description = () => language.commands.ban.description;
     this.example = 'ban @kellerus\nban @kellerus he is a bot';
     this.permissions = ['BAN_MEMBERS'];
   }

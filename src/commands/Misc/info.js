@@ -8,7 +8,7 @@ export default class Info extends Command {
     super(category);
     this.usage = 'info';
     this.command = 'info';
-    this.description = language.commands.info.description;
+    this.description = () => language.commands.info.description;
     this.example = 'info';
   }
 

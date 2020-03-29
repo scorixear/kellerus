@@ -7,7 +7,7 @@ export default class Clear extends Command {
     super(category);
     this.usage = `clear <${language.commands.clear.labels.message_amount}>`;
     this.command = 'clear';
-    this.description = language.commands.clear.description;
+    this.description = () => language.commands.clear.description;
     this.example = 'clear 20';
     this.permissions = ['MANAGE_MESSAGES'];
   }

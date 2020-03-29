@@ -8,7 +8,7 @@ export default class Ehre extends Command {
     super(category);
     this.usage = 'ehre';
     this.command = 'ehre';
-    this.description = language.commands.ehre.description;
+    this.description = () => language.commands.ehre.description;
     this.example = 'ehre @kellerus';
   }
 

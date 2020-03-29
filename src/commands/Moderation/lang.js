@@ -8,7 +8,7 @@ export default class Lang extends Command {
     super(category);
     this.usage = 'lang <list/language>';
     this.command = 'lang';
-    this.description = language.commands.lang.description;
+    this.description = () => language.commands.lang.description;
     this.example = 'lang en-EN';
     this.permissions = ['MANAGE_ROLES'];
   }

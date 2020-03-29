@@ -13,7 +13,7 @@ export default class Remove extends Command {
     super(category);
     this.usage = `remove <${language.general.title}>`;
     this.command = 'remove';
-    this.description = language.commands.remove.description;
+    this.description = () => language.commands.remove.description;
     this.example = 'remove badumts';
   }
 

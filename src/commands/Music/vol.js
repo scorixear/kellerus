@@ -8,7 +8,7 @@ export default class Vol extends Command {
     super(category);
     this.usage = `vol <${language.commands.vol.labels.percent}>`;
     this.command = 'vol';
-    this.description = language.commands.vol.description;
+    this.description = () => language.commands.vol.description;
     this.example = 'vol 25';
   }
 

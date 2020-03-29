@@ -8,7 +8,7 @@ export default class Join extends Command {
     super(category);
     this.usage = 'join';
     this.command = 'join';
-    this.description = language.commands.join.description;
+    this.description = () => language.commands.join.description;
     this.example = 'join';
     this.permissions = ['MOVE_MEMBERS'];
   }

@@ -5,7 +5,7 @@ export default class Cycle extends Command {
     super(category);
     this.usage = 'cycle';
     this.command = 'cycle';
-    this.description = language.commands.cycle.description;
+    this.description = () => language.commands.cycle.description;
     this.example = 'cycle';
   }
 

@@ -10,7 +10,7 @@ export default class Help extends Command {
     super(category);
     this.usage = `help [${language.commands.help.labels.command.toLowerCase()}]`;
     this.command = 'help';
-    this.description = language.commands.help.description;
+    this.description = () => language.commands.help.description;
     this.example = 'help\nhelp hi';
   }
 

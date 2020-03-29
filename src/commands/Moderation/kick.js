@@ -7,7 +7,7 @@ export default class Kick extends Command {
     super(category);
     this.usage = `kick <${language.general.user}> [${language.general.reason}]`;
     this.command = 'kick';
-    this.description = language.commands.kick.description;
+    this.description = () => language.commands.kick.description;
     this.example = 'kick @kellerus\n kick @kellerus he is a bot';
     this.permissions = ['KICK_MEMBERS'];
   }

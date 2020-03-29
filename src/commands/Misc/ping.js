@@ -8,7 +8,7 @@ export default class Ping extends Command {
     super(category);
     this.usage = 'ping';
     this.command = 'ping';
-    this.description = language.commands.ping.description;
+    this.description = () => language.commands.ping.description;
     this.example = 'ping';
   }
 
