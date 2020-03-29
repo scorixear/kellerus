@@ -15,9 +15,9 @@ export default class Queue extends Command {
     this.example = language.commands.queue.example;
   }
 
-  async executeCommand(args, msg) {
+  async executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }

@@ -12,9 +12,9 @@ export default class Hi extends Command {
     this.example = 'hi\nhi @Kellerus';
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
