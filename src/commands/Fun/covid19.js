@@ -64,7 +64,6 @@ export default class Covid19 extends Command {
   }
 
   async crawlPageForData() {
-    console.log('TEST');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
