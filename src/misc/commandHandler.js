@@ -62,7 +62,7 @@ function parseCommand(msg) {
 }
 
 function parseCommandParams(msg) {
-  const regex = new RegExp(`^${config.botPrefix}([^ ]+)((?:(?!--).)+)?( +--.+)?$`);
+  const regex = new RegExp('^\\'+`${config.botPrefix}([^ ]+)((?:(?!--).)+)?( +--.+)?$`);
   if (!regex.test(msg.content)) {
     msgHandler.sendRichText(msg, language.general.error, [{
       title: language.general.message,
@@ -118,7 +118,7 @@ function parseCommandParams(msg) {
     let lastOption;
     params = {};
     for (let i = 0; i < rawParams.length; i++) {
-      const current = rawParams[i];
+      let current = rawParams[i];
       if (current.startsWith('--')) {
         lastOption = current.substring(2);
         params[lastOption] = '';
