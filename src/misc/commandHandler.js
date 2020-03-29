@@ -39,9 +39,6 @@ function parseCommand(msg) {
   const args = temp.args;
   const params = temp.params;
 
-  console.log(command);
-  console.log(args);
-  console.log(params);
   let module = commands.find((c) => c.command.toLowerCase() == command.toLowerCase());
   if (!module || !module.executeCommand) {
     const commandOptions = commands.map((c)=>c.command);
@@ -77,7 +74,6 @@ function parseCommandParams(msg) {
   const command = regexSplit[1];
   let args = regexSplit[2];
   let params = regexSplit[3];
-  console.log(args);
   if (args) {
     const argsRegex = /(?: +([^ "]+|"[^"]*"))/g;
     if (!argsRegex.test(args)) {

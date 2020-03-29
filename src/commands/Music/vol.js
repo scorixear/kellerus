@@ -12,9 +12,9 @@ export default class Vol extends Command {
     this.example = 'vol 25';
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }

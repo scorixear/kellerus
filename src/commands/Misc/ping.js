@@ -12,9 +12,9 @@ export default class Ping extends Command {
     this.example = 'ping';
   }
 
-  executeCommand(args, msg) {
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
