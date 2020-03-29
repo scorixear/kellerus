@@ -187,12 +187,15 @@
     },
     "download": {
       "description": "Downloads a file from youtube and posts it here",
-        "error": {
-          "invalid_link": "`Link is invalid`",
-          "download_failed": "`Download failed",
-          "invalid_param": "`Params are invalid`",
-          "unexpected_error": "`An unexpected error occurred` 🎈"
-        },
+      "error": {
+        "invalid_link": "`Link is invalid`",
+        "download_failed": "Download failed",
+        "invalid_param": "Params are invalid",
+        "unexpected_error": "An unexpected error occurred 🎈",
+        "unknown_download_format": "Download format `$0` unknown. See `$1help $2` for allowed formats"
+      },
+      "download_started": "Download has started! This may take some time 📡⏳",
+      "download_completed": "Download has finished! Here's your file 💽",
       "success": "Here's your download 🌞"
     }
   },
