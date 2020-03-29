@@ -1,6 +1,5 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
-import basedir from '../../../basedir';
 import https from 'https';
 import config from '../../config';
 import fs from 'fs';
@@ -63,7 +62,7 @@ export default class Add extends Command {
         });
         return;
       }
-      const path = basedir+`/resources/soundeffects/${title}.${fileType}`;
+      const path = `/resources/soundeffects/${title}.${fileType}`;
       const exists = fs.existsSync(path);
       if (exists && overwrite !== 'overwrite') {
         msgHandler.sendRichTextDefault({msg,

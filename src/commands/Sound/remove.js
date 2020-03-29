@@ -1,6 +1,5 @@
 import Command from './../command.js';
 import permHandler from '../../misc/permissionHandler.js';
-import basedir from '../../../basedir';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
@@ -35,7 +34,7 @@ export default class Remove extends Command {
         return;
       }
 
-      const path = basedir+`/resources/soundeffects/${title}.${fileType}`;
+      const path = `/resources/soundeffects/${title}.${fileType}`;
       const exists = fs.existsSync(path);
       if (!exists) {
         msgHandler.sendRichTextDefault({msg,
