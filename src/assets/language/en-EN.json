@@ -184,6 +184,16 @@
         "generic_error": "`Unexpected Error`\nLuca expected every possible error. But you ... you managed to find another one"
       },
       "success": "Title `$0` removed"
+    },
+    "download": {
+      "description": "Downloads a file from youtube and posts it here",
+        "error": {
+          "invalid_link": "`Link is invalid`",
+          "download_failed": "`Download failed",
+          "invalid_param": "`Params are invalid`",
+          "unexpected_error": "`An unexpected error occurred` 🎈"
+        },
+      "success": "Here's your download 🌞"
     }
   },
   "handlers": {
