@@ -1,5 +1,20 @@
 {
   "commands": {
+    "covid19": {
+      "description": "Returns live statistics about the corona pandemic.",
+      "labels": {
+        "loading": "Loading...",
+        "loading2": "Loading... (Give me a moment for fucks sake)",
+        "stats": "Covid19 Statistics",
+        "topTen": "Top Ten Countries",
+        "retrieved": "Retrieved from"
+      },
+      "success": {
+        "total": "Total Cases: `$0`\nDeaths: `$1`\nHealed: `$2`",
+        "topTen": "$0. **$1** - Total Cases: `$2` - Deaths: `$3` - Healed: `$4`"
+      },
+      "error": "There was an error retrieving informations about Covid19"
+    },
     "cycle": {
       "description": "Asks the bot, if he wants to play TheCycle!"
     },

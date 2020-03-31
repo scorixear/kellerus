@@ -1,5 +1,20 @@
 {
   "commands": {
+    "covid19": {
+      "description": "Gibt aktuelle Statistiken über die Corona Pandemie zurück.",
+      "labels": {
+        "loading": "Lade...",
+        "loading2": "Lade... (Ich mach ja schon)",
+        "stats": "Covid19 Statistiken",
+        "topTen": "Top 10 Länder",
+        "retrieved": "Abgefragt von"
+      },
+      "success": {
+        "total": "Fälle: `$0`\nTode: `$1`\nGeheilt: `$2`",
+        "topTen": "$0. **$1** - Fälle: `$2` - Tode: `$3` - Geheilt: `$4`"
+      },
+      "error": "Ein Fehler ist aufgetreten. Covid19 Zahlen konnten nicht empfangen werden."
+    },
     "cycle": {
       "description": "Frage den Bot, ob er TheCycle spielen möchte!"
     },
