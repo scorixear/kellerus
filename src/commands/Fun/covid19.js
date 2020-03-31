@@ -78,7 +78,7 @@ export default class Covid19 extends Command {
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
-        description: language.command.covid19.error,
+        description: language.commands.covid19.error,
         color: 0xcc0000,
       });
       return;
@@ -121,7 +121,7 @@ export default class Covid19 extends Command {
       const healed = await rows[i].$eval('td:nth-child(6)', (element) => {
         return element.innerHTML;
       });
-      topTenList += replaceArgs(language.commands.covid19.success.topten,
+      topTenList += replaceArgs(language.commands.covid19.success.topTen,
           [i, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
     }
 
