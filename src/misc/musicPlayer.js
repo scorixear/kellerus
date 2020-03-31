@@ -3,8 +3,15 @@ import config from './../config.js';
 import request from 'superagent';
 import messageHandler from './messageHandler.js';
 import sqlHandler from './sqlHandler.js';
+// eslint-disable-next-line no-unused-vars
+import Discord from 'discord.js';
 import {dic as language} from './languageHandler';
 
+/**
+ * Set the volume of the server bot
+ * @param {number} serverid the serverid of this guild
+ * @param {number} volume the volume in between 0 and 2
+ */
 async function setVolume(serverid, volume) {
   if (!servers[serverid]) {
     servers[serverid] = {
@@ -20,6 +27,13 @@ async function setVolume(serverid, volume) {
   server.dispatcher.setVolumeLogarithmic(volume);
 }
 
+/**
+ * Starts the stream of queued titles
+ * @param {Discord.VoiceConnection} connection
+ * @param {Discord.VoiceChannel} voiceChannel
+ * @param {number} serverid
+ * @param {Discord.Channel} msgChannel
+ */
 async function play(connection, voiceChannel, serverid, msgChannel) {
   if (!servers[serverid]) {
     servers[serverid] = {
@@ -95,12 +109,22 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
   }
 }
 
+/**
+ * Stops the stream
+ * @param {Discord.Message} msg
+ */
 function stop(msg) {
   if (servers[msg.guild.id] && servers[msg.guild.id].dispatcher) {
     servers[msg.guild.id].dispatcher.end();
   }
 }
 
+/**
+ * Finds a url for a given search string
+ * @param {string} searchKeywords
+ * @param {Discord.Message} msg
+ * @return {Promise<string>} the found url
+ */
 function youtubeSearch(searchKeywords, msg) {
   const requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
     `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtubeApiKey}`;
@@ -128,6 +152,13 @@ function youtubeSearch(searchKeywords, msg) {
   });
 }
 
+/**
+ * Queues a Youtube Audio Stream
+ * @param {string} videoId
+ * @param {string} title
+ * @param {Discord.Message} msg
+ * @return {string} returns the title ofr '$$$$ignore' + title if not successfull
+ */
 async function queueYtAudioStream(videoId, title, msg) {
   const streamUrl = `https://www.youtube.com/watch?v=${videoId}`;
   if (!servers[msg.guild.id]) {
@@ -145,6 +176,11 @@ async function queueYtAudioStream(videoId, title, msg) {
   }
 }
 
+/**
+ * Returns the Queue of a server
+ * @param {number} serverid
+ * @return {Promise<Array<{url: string, title: string}>>}
+ */
 async function updateQueue(serverid) {
   return await sqlHandler.getQueue(serverid);
 }

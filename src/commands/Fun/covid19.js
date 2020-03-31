@@ -1,19 +1,30 @@
 import puppeteer from 'puppeteer';
 import Command from '../command.js';
 import msgHandler from '../../misc/messageHandler.js';
-import {dic as language} from './../../misc/languageHandler.js';
+import {dic as language, replaceArgs} from './../../misc/languageHandler.js';
+// eslint-disable-next-line no-unused-vars
+import {Message} from 'discord.js';
 
 let timeout;
 
+/**
+ * Command for showing current Covid19 Data.
+ */
 export default class Covid19 extends Command {
   constructor(category) {
     super(category);
     this.usage = 'covid19';
     this.command = 'covid19';
-    this.description = 'covid19'; // language.commands.ehre.description;
+    this.description = language.commands.covid19.description; // language.commands.ehre.description;
     this.example = 'covid19 [total]';
   }
 
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   async executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
@@ -21,11 +32,11 @@ export default class Covid19 extends Command {
       return;
     }
 
-    msg.channel.send('Loading...');
+    msg.channel.send(language.commands.covid19.labels.loading);
 
     timeout = setTimeout(() => {
       msg.channel.bulkDelete(1);
-      msg.channel.send('Loading... (Please wait a moment for fuck sakes)');
+      msg.channel.send(language.commands.covid19.labels.loading2);
     }, 1000);
 
     try {
@@ -36,17 +47,26 @@ export default class Covid19 extends Command {
       if (args[0] && args[0] === 'total') {
         msgHandler.sendRichTextDefault({
           msg: msg,
-          title: 'Covid-19 stats',
-          description: 'Total Cases: `'+ totalNumber +'`\nDeaths: `' + totalDeaths + '`\nHealed: `' + totalHealed + '`\n',
+          title: language.commands.covid19.labels.stats,
+          description: replaceArgs(language.commands.covid19.success.total, [totalNumber, totalDeaths, totalHealed]),
+          categories: [{
+            title: language.commands.covid19.labels.retrieved,
+            text: '*https://www.worldometers.info/coronavirus/*',
+          }],
         });
         return;
       }
 
       msgHandler.sendRichTextDefault({
         msg: msg,
-        title: 'Covid-19',
-        category: 'Top 10 List',
-        description: topTenList,
+        title: language.commands.covid19.labels.stats,
+        categories: [{
+          title: language.commands.covid19.labels.topTen,
+          text: topTenList,
+        }, {
+          title: language.commands.covid19.labels.retrieved,
+          text: '*https://www.worldometers.info/coronavirus/*',
+        }],
       });
     } catch (err) {
       console.log(err);
@@ -58,12 +78,16 @@ export default class Covid19 extends Command {
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
-        description: 'P != NP',
+        description: language.commands.covid19.error,
+        color: 0xcc0000,
       });
       return;
     }
   }
 
+  /**
+   * Crawls the website worldometers for Covid19 Stats
+   */
   async crawlPageForData() {
     const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
     const page = await browser.newPage();
@@ -97,7 +121,8 @@ export default class Covid19 extends Command {
       const healed = await rows[i].$eval('td:nth-child(6)', (element) => {
         return element.innerHTML;
       });
-      topTenList += i + '. *' + country.trim() + '* - Total Cases: `' + number.trim() + '` - Deaths: `' + deaths.trim() + '` - Healed: `' + healed.trim() + '`\n';
+      topTenList += replaceArgs(language.commands.covid19.success.topTen,
+          [i, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
     }
 
     await browser.close();

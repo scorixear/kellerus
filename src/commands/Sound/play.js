@@ -13,8 +13,13 @@ export default class Play extends Command {
     this.description = () => language.commands.play.description;
     this.example = 'play badumtsss';
   }
-
-  async executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg) {
     let voiceChannel;
     try {
       const {fileType} = config.commands.sound.add;

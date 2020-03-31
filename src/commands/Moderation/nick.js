@@ -11,7 +11,12 @@ export default class Nick extends Command {
     this.example = 'nick @kellerus Bot';
     this.permissions = ['MANAGE_NICKNAMES', 'CHANGE_NICKNAME'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
@@ -19,7 +24,7 @@ export default class Nick extends Command {
       return;
     }
     if (!args || args.length < 2) {
-      return msgHandler.sendRichTextDefault({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: language.error.invalid_usage,
@@ -28,6 +33,7 @@ export default class Nick extends Command {
           text: `\`${this.usage}\``,
         }],
       });
+      return;
     }
 
     let reason;

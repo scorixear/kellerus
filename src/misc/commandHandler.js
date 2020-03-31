@@ -44,10 +44,10 @@ function parseCommand(msg) {
     const commandOptions = commands.map((c)=>c.command);
     const message = replaceArgs(language.handlers.command.error.unknown, [config.botPrefix]);
     const possible = levenshteinDistance.findClosestMatch(command.toLowerCase(), commandOptions);
-    emojiHandler.resolveWithReaction(msg, message, possible, args, (c, m, a)=> {
+    emojiHandler.resolveWithReaction(msg, message, possible, msg.content.substring(command.length + 1), (c, m, a)=> {
       module = commands.find((x)=> x.command.toLowerCase() == c.toLowerCase());
-      module.executeCommand(a, m);
-    }, args);
+      module.executeCommand(a[0], m, a[1]);
+    }, [args, params]);
     return;
   }
   try {
@@ -61,6 +61,11 @@ function parseCommand(msg) {
   }
 }
 
+/**
+ * Parses a command from the given msg object
+ * @param {Message} msg the message object to parse from
+ * @return {{command: String, args: Array<String>, params: {}}} the parsed command
+ */
 function parseCommandParams(msg) {
   const regex = new RegExp('^\\'+`${config.botPrefix}([^ ]+)((?:(?!--).)+)?( +--.+)?$`);
   if (!regex.test(msg.content)) {

@@ -17,7 +17,12 @@ export default class Add extends Command {
     this.description = () => language.commands.add.description;
     this.example = 'add badumtsss ';
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   async executeCommand(args, msg) {
     try {
       const {fileType: allowedFileType, maxFileSize, allowedChars} = config.commands.sound.add;
