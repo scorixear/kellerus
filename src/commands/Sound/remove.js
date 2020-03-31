@@ -16,8 +16,13 @@ export default class Remove extends Command {
     this.description = () => language.commands.remove.description;
     this.example = 'remove badumts';
   }
-
-  async executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg) {
     try {
       const {fileType, allowedChars} = config.commands.sound.add;
       const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);

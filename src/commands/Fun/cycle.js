@@ -9,6 +9,12 @@ export default class Cycle extends Command {
     this.example = 'cycle';
   }
 
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);

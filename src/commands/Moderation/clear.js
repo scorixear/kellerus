@@ -11,7 +11,12 @@ export default class Clear extends Command {
     this.example = 'clear 20';
     this.permissions = ['MANAGE_MESSAGES'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
@@ -19,7 +24,7 @@ export default class Clear extends Command {
       return;
     }
     if (!args[0]) {
-      return messageHandler.sendRichTextDefault({
+      messageHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: language.error.invalid_usage,
@@ -28,6 +33,7 @@ export default class Clear extends Command {
           text: `\`${this.usage}\``,
         }],
       });
+      return;
     }
     msg.channel.bulkDelete(parseInt(args[0]) + 1);
     msg.channel.send(replaceArgs(language.commands.clear.success, [msg.author.id]));
