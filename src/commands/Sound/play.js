@@ -3,7 +3,10 @@ import permHandler from '../../misc/permissionHandler.js';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
+// eslint-disable-next-line no-unused-vars
+import {Message} from 'discord.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
+import localStorage from '../../misc/localStorage.js';
 
 export default class Play extends Command {
   constructor(category) {
@@ -40,8 +43,9 @@ export default class Play extends Command {
         return;
       }
       voiceChannel.join().then((connection) => {
-        const dispatcher = connection.play(path);
-        dispatcher.on('finish', (finish)=> {
+        const server = localStorage.getServer(msg.guild.id);
+        const dispatcher = connection.play(path, {volume: server.volume});
+        dispatcher.on('finish', ()=> {
           voiceChannel.leave();
         });
       }).catch(() => {
