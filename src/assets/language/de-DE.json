@@ -219,9 +219,9 @@
     },
     "musicPlayer": {
       "labels": {
-        "playing": "Spiele",
+        "playing": "Nächster Titel",
         "volume": "Lautstärke",
-        "currently_playing": "Aktuell wird gespielt:",
+        "currently_playing": "Aktuell wird gespielt",
         "disconnected": "Verbindung getrennt",
         "disconnecting_emptyChannel": "Habe den Kanal verlassen, weil keiner mehr zugehört hat :(",
         "disconnecting_emptyQueue": "Queue leer! Verbindung getrennt."

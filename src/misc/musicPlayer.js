@@ -6,43 +6,32 @@ import sqlHandler from './sqlHandler.js';
 // eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
 import {dic as language} from './languageHandler';
+import localStorage from './localStorage.js';
 
 /**
  * Set the volume of the server bot
- * @param {number} serverid the serverid of this guild
+ * @param {string} serverid the serverid of this guild
  * @param {number} volume the volume in between 0 and 2
  */
 async function setVolume(serverid, volume) {
-  if (!servers[serverid]) {
-    servers[serverid] = {
-      queueIndex: 0,
-      volume: volume,
-    };
-    return;
-  }
-  const server = servers[serverid];
+  const server = localStorage.getServer(serverid);
+  server.volume = volume;
   if (!server.dispatcher) {
-    server.volume = volume;
+    server.dispatcher.setVolumeLogarithmic(volume);
   }
-  server.dispatcher.setVolumeLogarithmic(volume);
 }
 
 /**
  * Starts the stream of queued titles
  * @param {Discord.VoiceConnection} connection
  * @param {Discord.VoiceChannel} voiceChannel
- * @param {number} serverid
+ * @param {string} serverid
  * @param {Discord.Channel} msgChannel
  */
 async function play(connection, voiceChannel, serverid, msgChannel) {
-  if (!servers[serverid]) {
-    servers[serverid] = {
-      queueIndex: 0,
-      volume: 1,
-    };
-  }
   const queue = await updateQueue(serverid);
-  const server = servers[serverid];
+  const server = localStorage.getServer(serverid);
+  console.log(server);
   let index = server.queueIndex;
   if (index >= queue.length) {
     index = 0;
@@ -56,10 +45,8 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
           quality: 'highestaudio',
           format: 'mp3',
           highWaterMark: 1 << 25,
-        }, {
-          highWaterMark: 1,
         }));
-    server.dispatcher.setVolumeLogarithmic(server.volume);
+    setVolume(serverid, server.volume);
     server.dispatcher.on('start', () => {
       messageHandler.sendRichTextExplicit(undefined, msgChannel, undefined,
           language.handlers.musicPlayer.labels.playing,
@@ -114,8 +101,9 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
  * @param {Discord.Message} msg
  */
 function stop(msg) {
-  if (servers[msg.guild.id] && servers[msg.guild.id].dispatcher) {
-    servers[msg.guild.id].dispatcher.end();
+  const server = localStorage.getServer(msg.guild.id);
+  if (server.dispatcher) {
+    server.dispatcher.end();
   }
 }
 
@@ -161,12 +149,6 @@ function youtubeSearch(searchKeywords, msg) {
  */
 async function queueYtAudioStream(videoId, title, msg) {
   const streamUrl = `https://www.youtube.com/watch?v=${videoId}`;
-  if (!servers[msg.guild.id]) {
-    servers[msg.guild.id] = {
-      queueIndex: 0,
-      volume: 1,
-    };
-  }
   const success = await sqlHandler.addQueue(title, streamUrl, msg.guild.id);
 
   if (success) {

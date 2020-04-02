@@ -24,7 +24,6 @@ export default class Join extends Command {
     } catch (err) {
       return;
     }
-
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join().then((connection) => {
         musicPlayer.play(connection, msg.member.voice.channel, msg.guild.id, msg.channel);

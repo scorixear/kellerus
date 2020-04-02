@@ -3,7 +3,10 @@ import config from '../../config.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
 import sqlHandler from '../../misc/sqlHandler.js';
+// eslint-disable-next-line no-unused-vars
+import Discord from 'discord.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
+import localStorage from '../../misc/localStorage.js';
 
 export default class Queue extends Command {
   constructor(category) {
@@ -17,8 +20,8 @@ export default class Queue extends Command {
   /**
    * Executes the command
    * @param {Array<String>} args the arguments fo the msg
-   * @param {Message} msg the msg object
-   * @param {*} params added parameters and their argument
+   * @param {Discord.Message} msg the msg object
+   * @param {{}} params added parameters and their argument
    */
   async executeCommand(args, msg, params) {
     try {
@@ -30,11 +33,6 @@ export default class Queue extends Command {
 
     if (args && args.length > 0) {
       if (args[0] === 'clear' && args.length === 1) {
-        if (!servers[msg.guild.id]) {
-          servers[msg.guild.id] = {
-            queueIndex: 0,
-          };
-        }
         sqlHandler.clearQueue(msg.guild.id).then((success) => {
           if (success) {
             msgHandler.sendRichTextDefault({
@@ -54,11 +52,6 @@ export default class Queue extends Command {
         return;
       }
       if (args[0] === 'list' && args.length === 1) {
-        if (!servers[msg.guild.id]) {
-          servers[msg.guild.id] = {
-            queueIndex: 0,
-          };
-        }
         const queue = await musicPlayer.updateQueue(msg.guild.id);
         if (queue.length === 0) {
           msgHandler.sendRichTextDefault({
@@ -68,8 +61,9 @@ export default class Queue extends Command {
           });
         } else {
           let queuelist = '';
+          const server = localStorage.getServer(msg.guild.id);
           for (let i = 0; i < queue.length; i++) {
-            if (i === servers[msg.guild.id].queueIndex) {
+            if (i === server.queueIndex) {
               queuelist += `--> \`${queue[i].title}\`\n`;
             } else {
               queuelist += `- \`${queue[i].title}\`\n`;
@@ -84,14 +78,6 @@ export default class Queue extends Command {
 
         return;
       }
-
-      if (!servers[msg.guild.id]) {
-        servers[msg.guild.id] = {
-          queueIndex: 0,
-          volume: 1,
-        };
-      }
-
       if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
         sqlHandler.addQueue(args[0], args[0], msg.guild.id).then((success) => {
           if (success) {

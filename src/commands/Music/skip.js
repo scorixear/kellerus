@@ -24,12 +24,6 @@ export default class Skip extends Command {
     } catch (err) {
       return;
     }
-    if (!servers[msg.guild.id]) {
-      servers[msg.guild.id] = {
-        queueIndex: 0,
-        volume: 1,
-      };
-    }
     sqlHandler.getQueue(msg.guild.id).then((queue) => {
       if (queue.length > 0) {
         if (msg.guild.voice.connection) {
