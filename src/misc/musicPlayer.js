@@ -16,7 +16,7 @@ import localStorage from './localStorage.js';
 async function setVolume(serverid, volume) {
   const server = localStorage.getServer(serverid);
   server.volume = volume;
-  if (!server.dispatcher) {
+  if (server.dispatcher) {
     server.dispatcher.setVolumeLogarithmic(volume);
   }
 }
@@ -31,7 +31,6 @@ async function setVolume(serverid, volume) {
 async function play(connection, voiceChannel, serverid, msgChannel) {
   const queue = await updateQueue(serverid);
   const server = localStorage.getServer(serverid);
-  console.log(server);
   let index = server.queueIndex;
   if (index >= queue.length) {
     index = 0;
