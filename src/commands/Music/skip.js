@@ -25,10 +25,8 @@ export default class Skip extends Command {
       return;
     }
     sqlHandler.getQueue(msg.guild.id).then((queue) => {
-      if (queue.length > 0) {
-        if (msg.guild.voice.connection) {
-          musicPlayer.stop(msg);
-        }
+      if (msg.guild.voice.connection) {
+        musicPlayer.stop(msg);
       }
     });
   }
