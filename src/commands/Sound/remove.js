@@ -15,6 +15,7 @@ export default class Remove extends Command {
     this.command = 'remove';
     this.description = () => language.commands.remove.description;
     this.example = 'remove badumts';
+    this.permissions = ['ATTACH_FILES', 'SEND_TTS_MESSAGES', 'VIEW_AUDIT_LOG'];
   }
   /**
    * Executes the command

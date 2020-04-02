@@ -15,6 +15,7 @@ export default class Play extends Command {
     this.command = 'play';
     this.description = () => language.commands.play.description;
     this.example = 'play badumtsss';
+    this.permissions = ['SEND_TTS_MESSAGES'];
   }
   /**
    * Executes the command
