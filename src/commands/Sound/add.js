@@ -16,6 +16,7 @@ export default class Add extends Command {
     this.command = 'add';
     this.description = () => language.commands.add.description;
     this.example = 'add badumtsss ';
+    this.permissions = ['ATTACH_FILES', 'SEND_TTS_MESSAGES', 'VIEW_AUDIT_LOG'];
   }
   /**
    * Executes the command

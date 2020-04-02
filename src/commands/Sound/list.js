@@ -14,6 +14,7 @@ export default class ListSounds extends Command {
     this.command = 'listsounds';
     this.description = () => language.commands.listSounds.description;
     this.example = 'listsounds';
+    this.permissions = ['SEND_TTS_MESSAGES'];
   }
   /**
    * Executes the command
