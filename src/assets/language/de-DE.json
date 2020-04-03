@@ -64,6 +64,18 @@
         "author": "Autor"
       }
     },
+    "invite": {
+      "description": "Lädt ein Mitglied ein durch eine private Nachricht.",
+      "labels": {
+        "success": "Mitglied eingeladen"
+      },
+      "success": {
+        "voice": "Hi, $0 hat dich eingeladen mit auf `$1` zu joinen. $0 ist aktuell in `$2` online.",
+        "normal": "Hi, $0 hat dich eingeladen mit auf `$1` zu joinen.",
+        "approval": "`$0` wurde eingeladen."
+      },
+      "error": "Du kannst dich selber nicht einladen 🙈"
+    },
     "lang": {
       "description": "Stell die Sprache des Bots ein.",
       "labels": {

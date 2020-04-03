@@ -65,6 +65,18 @@
         "author": "Author"
       }
     },
+    "invite": {
+      "description": "Invites a player to join you via a private message.",
+      "labels": {
+        "success": "Player invited"
+      },
+      "success": {
+        "voice": "Hi, $0 has invited you to join him on `$1`. $0 is currently in the channel `$2` online.",
+        "normal": "Hi, $0 has invited you to join him on `$1`.",
+        "approval": "`$0` was invited to join you."
+      },
+      "error": "You cannot invite your self, duahh 🙈"
+    },
     "lang": {
       "description": "Switches the language of the bot.",
       "labels": {
