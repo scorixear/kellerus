@@ -17,7 +17,7 @@ export default class Invite extends Command {
    * Executes the command
    * @param {Array<String>} args the arguments fo the msg
    * @param {Discord.Message} msg the msg object
-   * @param {*} params added parameters and their argument
+   * @param {{}} params added parameters and their argument
    */
   executeCommand(args, msg, params) {
     try {
