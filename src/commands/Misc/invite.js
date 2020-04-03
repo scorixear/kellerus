@@ -7,10 +7,10 @@ import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 export default class Invite extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'invite @<user>';
+    this.usage = 'invite @<user> [--msg <message>]';
     this.command = 'invite';
     this.description = () => language.commands.invite.description;
-    this.example = 'invite @kellerus';
+    this.example = 'invite @kellerus --msg "hi you"';
     this.permissions = ['MOVE_MEMBERS'];
   }
   /**
@@ -52,19 +52,29 @@ export default class Invite extends Command {
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
-        description: language.commands.invite.error,
+        description: language.commands.invite.error.self_invite,
       });
       return;
     }
-    let promise;
+    let message;
     if (author.voice.channel) {
-      promise = targetuser.send(replaceArgs(language.commands.invite.success.voice,
-          [author.nickname, msg.guild.name, author.voice.channel.name]));
+      message = replaceArgs(language.commands.invite.success.voice,
+          [author.nickname, msg.guild.name, author.voice.channel.name]);
     } else {
-      promise = targetuser.send(replaceArgs(language.commands.invite.success.normal,
-          [author.nickname, msg.guild.name]));
+      message = replaceArgs(language.commands.invite.success.normal,
+          [author.nickname, msg.guild.name]);
     }
-    promise.then(() => msgHandler.sendRichTextDefault({
+    if (params.msg === '') {
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.commands.invite.error.msg_empty,
+      });
+      return;
+    } else if (params.msg) {
+      message += replaceArgs(language.commands.invite.labels.additional_message, [params.msg]);
+    }
+    targetuser.send(message).then(() => msgHandler.sendRichTextDefault({
       msg: msg,
       title: language.commands.invite.labels.success,
       description: replaceArgs(language.commands.invite.success.approval, [targetuser.nickname]),
