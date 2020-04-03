@@ -36,7 +36,8 @@ export default class Kick extends Command {
       return;
     }
     let reason;
-    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() ||
+    msg.guild.members.cache.find((g)=>g.nickname == args[0]));
     const user = msg.guild.member(msg.author);
 
     if (!targetuser) {

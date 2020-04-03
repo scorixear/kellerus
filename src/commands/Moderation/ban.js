@@ -1,5 +1,7 @@
 import Command from './../command.js';
 import msgHandler from '../../misc/messageHandler.js';
+// eslint-disable-next-line no-unused-vars
+import Discord from 'discord.js';
 import {dic as language} from '../../misc/languageHandler.js';
 
 export default class Ban extends Command {
@@ -14,7 +16,7 @@ export default class Ban extends Command {
   /**
    * Executes the command
    * @param {Array<String>} args the arguments fo the msg
-   * @param {Message} msg the msg object
+   * @param {Discord.Message} msg the msg object
    * @param {*} params added parameters and their argument
    */
   executeCommand(args, msg, params) {
@@ -36,7 +38,8 @@ export default class Ban extends Command {
       return;
     }
     let reason;
-    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() ||
+    msg.guild.members.cache.find((g)=>g.nickname == args[0]));
     const user = msg.guild.member(msg.author);
     if (!targetuser) {
       msgHandler.sendRichTextDefault({

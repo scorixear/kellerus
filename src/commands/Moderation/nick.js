@@ -37,7 +37,8 @@ export default class Nick extends Command {
     }
 
     let reason;
-    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() ||
+    msg.guild.members.cache.find((g)=>g.nickname == args[0]));
     const {nickname: oldNickname} = targetuser;
 
     if (!targetuser) {
