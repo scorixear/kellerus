@@ -79,6 +79,33 @@ async function addHonorCount(user) {
 }
 
 /**
+ * Adds one Honor to the users account
+ * @param {Discord.User} user
+ * @return {number} the updated honor count
+ */
+async function removeHonor(user) {
+  let conn;
+  let honorCount;
+  try {
+    conn = await pool.getConnection();
+    let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = ${conn.escape(user.id)}`);
+    if (rows && rows[0]) {
+      honorCount = rows[0].val - 1;
+      rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`);
+    } else {
+      honorCount = -1;
+      rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES (${conn.escape(user.id)}, -1)`);
+    }
+  } catch (err) {
+    honorCount = -1;
+    await conn.query(`INSERT INTO honor (user_id, val) VALUES (${conn.escape(user.id)}, -1)`);
+  } finally {
+    if (conn) await conn.end();
+  }
+  return honorCount;
+}
+
+/**
  * Creates a Queue table
  * @param {number} serverid
  * @param {mariadb.PoolConnection} conn
@@ -192,6 +219,7 @@ export default {
   initDB,
   getHonorCount,
   addHonorCount,
+  removeHonor,
   getQueue,
   addQueue,
   clearQueue,

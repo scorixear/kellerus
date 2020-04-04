@@ -24,6 +24,13 @@
         "self_award": "Du kannst dir selber keine `Ehre` verleihen."},
       "success": "$0 war `$1`-mal ehrenhaft."
     },
+    "unehre": {
+      "description": "Entfernt `Ehre` Punkte von einem Mitglied.",
+      "error": {
+        "self_award": "Du kannst dir keine `Ehre` abziehen"
+      },
+      "success": "$0 hat noch `$1` Ehre."
+    },
     "hi": {
       "description": "Sag Hi zu dem Bot!",
       "responses": ["Hi Freund", "O.O", ":3 Huhu", "Du schon wieder 😅", ""]

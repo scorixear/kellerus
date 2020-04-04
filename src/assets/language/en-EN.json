@@ -21,9 +21,16 @@
     "ehre": {
       "description": "Awards `Ehre` points to users, that did something honorable.",
       "error": {
-        "self_award": "You cannot award youself `Ehre`"
+        "self_award": "You cannot award yourself `Ehre`"
       },
       "success": "$0 was `$1` times honorable."
+    },
+    "unehre": {
+      "description": "Removes `Ehre` points from users.",
+      "error": {
+        "self_award": "You cannot remove your `Ehre`"
+      },
+      "success": "$0 still got `$1` Ehre left."
     },
     "hi": {
       "description": "Says Hi to the Bot!",
