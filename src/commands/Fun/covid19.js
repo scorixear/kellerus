@@ -94,7 +94,7 @@ export default class Covid19 extends Command {
     await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
 
     const table = await page.$('#main_table_countries_today > tbody:nth-child(2)');
-    const totalRow = await table.$('.total_row');
+    const totalRow = await table.$('.total_row_world');
 
     const totalNumber = await totalRow.$eval('td:nth-child(2)', (element) => {
       return element.innerHTML;
