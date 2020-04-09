@@ -93,36 +93,40 @@ export default class Covid19 extends Command {
     const page = await browser.newPage();
     await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
 
-    const table = await page.$('#main_table_countries_today > tbody:nth-child(2)');
-    const totalRow = await table.$('.total_row_world');
-
-    const totalNumber = await totalRow.$eval('td:nth-child(2)', (element) => {
+    const mainTable = await page.$('#main_table_countries_today > tbody:nth-child(2)');
+    const totalRows = await mainTable.$('tr:nth-child(1)');
+    const totalNumber = await totalRows.$eval('td:nth-child(2)', (element) => {
       return element.innerHTML;
     });
-    const totalDeaths = await totalRow.$eval('td:nth-child(4)', (element) => {
+    const totalDeaths = await totalRows.$eval('td:nth-child(4)', (element) => {
       return element.innerHTML;
     });
-    const totalHealed = await totalRow.$eval('td:nth-child(6)', (element) => {
+    const totalHealed = await totalRows.$eval('td:nth-child(6)', (element) => {
       return element.innerHTML;
     });
-    const rows = await table.$$('tr');
+    const rows = await mainTable.$$('tr');
 
     let topTenList = '';
-    for (let i = 1; i < 11; i++) {
-      const country = await rows[i].$eval('td:nth-child(1) > a', (element) => {
-        return element.innerHTML;
-      });
-      const number = await rows[i].$eval('td:nth-child(2)', (element) => {
-        return element.innerHTML;
-      });
-      const deaths = await rows[i].$eval('td:nth-child(4)', (element) => {
-        return element.innerHTML;
-      });
-      const healed = await rows[i].$eval('td:nth-child(6)', (element) => {
-        return element.innerHTML;
-      });
-      topTenList += replaceArgs(language.commands.covid19.success.topTen,
-          [i, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
+    let count = 0;
+    for (let i = 1; count <10; i++) {
+      const className = await rows[i].getProperty('className').then(p=>p.jsonValue());
+      if (className === 'even' || className === 'odd') {
+        count++;
+        const country = await rows[i].$eval('td:nth-child(1) > a', (element) => {
+          return element.innerHTML;
+        });
+        const number = await rows[i].$eval('td:nth-child(2)', (element) => {
+          return element.innerHTML;
+        });
+        const deaths = await rows[i].$eval('td:nth-child(4)', (element) => {
+          return element.innerHTML;
+        });
+        const healed = await rows[i].$eval('td:nth-child(6)', (element) => {
+          return element.innerHTML;
+        });
+        topTenList += replaceArgs(language.commands.covid19.success.topTen,
+            [i, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
+      }
     }
 
     await browser.close();
