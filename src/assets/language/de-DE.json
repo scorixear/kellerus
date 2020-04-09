@@ -7,7 +7,8 @@
         "loading2": "Lade... (Ich mach ja schon)",
         "stats": "Covid19 Statistiken",
         "topTen": "Top 10 Länder",
-        "retrieved": "Abgefragt von"
+        "retrieved": "Abgefragt von",
+        "date": "Zuletzt aktualisiert"
       },
       "success": {
         "total": "Fälle: `$0`\nTode: `$1`\nGeheilt: `$2`",

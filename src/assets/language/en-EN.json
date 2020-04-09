@@ -7,7 +7,8 @@
         "loading2": "Loading... (Give me a moment for fucks sake)",
         "stats": "Covid19 Statistics",
         "topTen": "Top Ten Countries",
-        "retrieved": "Retrieved from"
+        "retrieved": "Retrieved from",
+        "date": "Last updated"
       },
       "success": {
         "total": "Total Cases: `$0`\nDeaths: `$1`\nHealed: `$2`",
