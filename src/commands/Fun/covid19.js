@@ -125,7 +125,7 @@ export default class Covid19 extends Command {
           return element.innerHTML;
         });
         topTenList += replaceArgs(language.commands.covid19.success.topTen,
-            [i, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
+            [count, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
       }
     }
 
