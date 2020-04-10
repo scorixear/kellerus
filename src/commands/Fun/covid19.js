@@ -101,7 +101,7 @@ export default class Covid19 extends Command {
    */
   async crawlPageForData(force) {
     const now = new Date();
-    if (!this.tempData.lastDate|| (this.tempData.lastDate - now) >= (90*60*1000) || force) {
+    if (!this.tempData.lastDate || (now - this.tempData.lastDate ) >= (60*60*1000) || force) {
       const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
       const page = await browser.newPage();
       await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
