@@ -1,7 +1,6 @@
 import Command from './../command.js';
 import {dic as language} from './../../misc/languageHandler.js';
 import ytdl from 'ytdl-core';
-import mp3tag from 'mp3tag';
 import config from '../../../src/config';
 import fs from 'fs';
 import basedir from '../../../basedir';
