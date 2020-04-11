@@ -22,13 +22,15 @@
     "ehre": {
       "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas Ehrenhaftes getan haben.",
       "error": {
-        "self_award": "Du kannst dir selber keine `Ehre` verleihen."},
+        "self_award": "Du kannst dir selber keine `Ehre` verleihen.",
+        
+      },
       "success": "$0 war `$1`-mal ehrenhaft."
     },
     "unehre": {
       "description": "Entfernt `Ehre` Punkte von einem Mitglied.",
       "error": {
-        "self_award": "Du kannst dir keine `Ehre` abziehen"
+        "self_remove": "Du kannst dir selber keine `Ehre` entziehen."
       },
       "success": "$0 hat noch `$1` Ehre."
     },

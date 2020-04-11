@@ -29,7 +29,7 @@
     "unehre": {
       "description": "Removes `Ehre` points from users.",
       "error": {
-        "self_award": "You cannot remove your `Ehre`"
+        "self_remove": "You cannot remove `Ehre` from yourself. Stay in there buddy."
       },
       "success": "$0 still got `$1` Ehre left."
     },
