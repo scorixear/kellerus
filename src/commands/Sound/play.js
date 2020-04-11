@@ -3,18 +3,27 @@ import permHandler from '../../misc/permissionHandler.js';
 import config from '../../config';
 import fs from 'fs';
 import msgHandler from '../../misc/messageHandler';
+// eslint-disable-next-line no-unused-vars
+import {Message} from 'discord.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
+import localStorage from '../../misc/localStorage.js';
 
 export default class Play extends Command {
   constructor(category) {
     super(category);
     this.usage = `play <${language.general.title}> `;
     this.command = 'play';
-    this.description = language.commands.play.description;
+    this.description = () => language.commands.play.description;
     this.example = 'play badumtsss';
+    this.permissions = ['SEND_TTS_MESSAGES'];
   }
-
-  async executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg) {
     let voiceChannel;
     try {
       const {fileType} = config.commands.sound.add;
@@ -35,8 +44,9 @@ export default class Play extends Command {
         return;
       }
       voiceChannel.join().then((connection) => {
-        const dispatcher = connection.play(path);
-        dispatcher.on('finish', (finish)=> {
+        const server = localStorage.getServer(msg.guild.id);
+        const dispatcher = connection.play(path, {volume: server.volume});
+        dispatcher.on('finish', ()=> {
           voiceChannel.leave();
         });
       }).catch(() => {

@@ -19,7 +19,12 @@ class Rock extends Command {
     this.example = 'rock';
     this.permissions = [];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg) {
     let answer;
     switch (getAnswer()) {
@@ -56,6 +61,12 @@ class Paper extends Command {
     this.permissions = [];
   }
 
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg) {
     let answer;
     switch (getAnswer()) {
@@ -92,6 +103,12 @@ class Scissor extends Command {
     this.permissions = [];
   }
 
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg) {
     let answer;
     switch (getAnswer()) {

@@ -8,10 +8,15 @@ export default class Hi extends Command {
     super(category);
     this.usage = 'hi';
     this.command = 'hi';
-    this.description = language.commands.hi.description;
+    this.description = () => language.commands.hi.description;
     this.example = 'hi\nhi @Kellerus';
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);

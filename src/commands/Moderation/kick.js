@@ -7,11 +7,16 @@ export default class Kick extends Command {
     super(category);
     this.usage = `kick <${language.general.user}> [${language.general.reason}]`;
     this.command = 'kick';
-    this.description = language.commands.kick.description;
+    this.description = () => language.commands.kick.description;
     this.example = 'kick @kellerus\n kick @kellerus he is a bot';
     this.permissions = ['KICK_MEMBERS'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
@@ -19,7 +24,7 @@ export default class Kick extends Command {
       return;
     }
     if (!args || args.length == 0) {
-      messageHandler.sendRichTextDefault({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: language.error.invalid_usage,
@@ -31,7 +36,8 @@ export default class Kick extends Command {
       return;
     }
     let reason;
-    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() ||
+    msg.guild.members.cache.find((g)=>g.nickname == args[0]));
     const user = msg.guild.member(msg.author);
 
     if (!targetuser) {

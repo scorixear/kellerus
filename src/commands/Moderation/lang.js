@@ -8,11 +8,16 @@ export default class Lang extends Command {
     super(category);
     this.usage = 'lang <list/language>';
     this.command = 'lang';
-    this.description = language.commands.lang.description;
+    this.description = () => language.commands.lang.description;
     this.example = 'lang en-EN';
     this.permissions = ['MANAGE_ROLES'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);

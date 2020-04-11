@@ -14,10 +14,16 @@ export default class Add extends Command {
     super(category);
     this.usage = `add <${language.general.title}> {${language.commands.add.labels.append_soundfile}.mp3}`;
     this.command = 'add';
-    this.description = language.commands.add.description;
+    this.description = () => language.commands.add.description;
     this.example = 'add badumtsss ';
+    this.permissions = ['ATTACH_FILES', 'SEND_TTS_MESSAGES', 'VIEW_AUDIT_LOG'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   async executeCommand(args, msg) {
     try {
       const {fileType: allowedFileType, maxFileSize, allowedChars} = config.commands.sound.add;
