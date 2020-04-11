@@ -22,8 +22,7 @@
     "ehre": {
       "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas Ehrenhaftes getan haben.",
       "error": {
-        "self_award": "Du kannst dir selber keine `Ehre` verleihen.",
-        
+        "self_award": "Du kannst dir selber keine `Ehre` verleihen."
       },
       "success": "$0 war `$1`-mal ehrenhaft."
     },
