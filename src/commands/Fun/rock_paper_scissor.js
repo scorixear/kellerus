@@ -14,7 +14,7 @@ class Rock extends Command {
     super(category);
     this.command = 'rock';
     this.usage = 'rock';
-    this.description = replaceArgs(language.commands.rock_paper_scissor.description,
+    this.description = () => replaceArgs(language.commands.rock_paper_scissor.description,
         [language.commands.rock_paper_scissor.labels.rock]);
     this.example = 'rock';
     this.permissions = [];
@@ -54,7 +54,7 @@ class Paper extends Command {
   constructor(category) {
     super(category);
     this.command = 'paper';
-    this.description = replaceArgs(language.commands.rock_paper_scissor.description,
+    this.description = () => replaceArgs(language.commands.rock_paper_scissor.description,
         [language.commands.rock_paper_scissor.labels.paper]);
     this.usage = 'paper';
     this.example = 'paper';
@@ -97,7 +97,7 @@ class Scissor extends Command {
     super(category);
     this.command = 'scissor';
     this.usage = 'scissor';
-    this.description = replaceArgs(language.commands.rock_paper_scissor.description,
+    this.description = () => replaceArgs(language.commands.rock_paper_scissor.description,
         [language.commands.rock_paper_scissor.labels.scissor]);
     this.example = 'scissor';
     this.permissions = [];

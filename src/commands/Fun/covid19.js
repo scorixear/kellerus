@@ -16,7 +16,7 @@ export default class Covid19 extends Command {
     super(category);
     this.usage = 'covid19';
     this.command = 'covid19';
-    this.description = language.commands.covid19.description; // language.commands.ehre.description;
+    this.description = () => language.commands.covid19.description; // language.commands.ehre.description;
     this.example = 'covid19 [total] [--force]';
     this.tempData={};
   }
