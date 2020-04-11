@@ -8,18 +8,22 @@ export default class Join extends Command {
     super(category);
     this.usage = 'join';
     this.command = 'join';
-    this.description = language.commands.join.description;
+    this.description = () => language.commands.join.description;
     this.example = 'join';
     this.permissions = ['MOVE_MEMBERS'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
-
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join().then((connection) => {
         musicPlayer.play(connection, msg.member.voice.channel, msg.guild.id, msg.channel);

@@ -12,11 +12,17 @@ export default class ListSounds extends Command {
     super(category);
     this.usage = `listsounds`;
     this.command = 'listsounds';
-    this.description = language.commands.listSounds.description;
+    this.description = () => language.commands.listSounds.description;
     this.example = 'listsounds';
+    this.permissions = ['SEND_TTS_MESSAGES'];
   }
-
-  async executeCommand(args, msg, params) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
     } catch (err) {

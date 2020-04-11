@@ -8,28 +8,25 @@ export default class Skip extends Command {
     super(category);
     this.usage = 'skip';
     this.command = 'skip';
-    this.description = language.commands.skip.description;
+    this.description = () => language.commands.skip.description;
     this.example = 'skip';
     this.permissions = ['MOVE_MEMBERS'];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg, params) {
     try {
       super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
-    if (!servers[msg.guild.id]) {
-      servers[msg.guild.id] = {
-        queueIndex: 0,
-        volume: 1,
-      };
-    }
     sqlHandler.getQueue(msg.guild.id).then((queue) => {
-      if (queue.length > 0) {
-        if (msg.guild.voice.connection) {
-          musicPlayer.stop(msg);
-        }
+      if (msg.guild.voice.connection) {
+        musicPlayer.stop(msg);
       }
     });
   }

@@ -13,13 +13,19 @@ export default class Remove extends Command {
     super(category);
     this.usage = `remove <${language.general.title}>`;
     this.command = 'remove';
-    this.description = language.commands.remove.description;
+    this.description = () => language.commands.remove.description;
     this.example = 'remove badumts';
+    this.permissions = ['ATTACH_FILES', 'SEND_TTS_MESSAGES', 'VIEW_AUDIT_LOG'];
   }
-
-  async executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg) {
     try {
-      const {fileType} = config.commands.sound.add;
+      const {fileType, allowedChars} = config.commands.sound.add;
       const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
       if (hasPermission === false) {
         return;

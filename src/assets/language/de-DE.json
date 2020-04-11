@@ -1,5 +1,21 @@
 {
   "commands": {
+    "covid19": {
+      "description": "Gibt aktuelle Statistiken über die Corona Pandemie zurück.",
+      "labels": {
+        "loading": "Lade...",
+        "loading2": "Lade... (Ich mach ja schon)",
+        "stats": "Covid19 Statistiken",
+        "topTen": "Top 10 Länder",
+        "retrieved": "Abgefragt von",
+        "date": "Zuletzt aktualisiert"
+      },
+      "success": {
+        "total": "Fälle: `$0`\nTode: `$1`\nGeheilt: `$2`",
+        "topTen": "$0. **$1** - Fälle: `$2` - Tode: `$3` - Geheilt: `$4`"
+      },
+      "error": "Ein Fehler ist aufgetreten. Covid19 Zahlen konnten nicht empfangen werden."
+    },
     "cycle": {
       "description": "Frage den Bot, ob er TheCycle spielen möchte!"
     },
@@ -8,6 +24,13 @@
       "error": {
         "self_award": "Du kannst dir selber keine `Ehre` verleihen."},
       "success": "$0 war `$1`-mal ehrenhaft."
+    },
+    "unehre": {
+      "description": "Entfernt `Ehre` Punkte von einem Mitglied.",
+      "error": {
+        "self_award": "Du kannst dir keine `Ehre` abziehen"
+      },
+      "success": "$0 hat noch `$1` Ehre."
     },
     "hi": {
       "description": "Sag Hi zu dem Bot!",
@@ -47,6 +70,22 @@
         "version": "Version",
         "repository": "Repository",
         "author": "Autor"
+      }
+    },
+    "invite": {
+      "description": "Lädt ein Mitglied ein durch eine private Nachricht.",
+      "labels": {
+        "success": "Mitglied eingeladen",
+        "additional_message": "\nEr/sie hat eine zusätzliche Nachricht mir mitgegeben: \"$0\""
+      },
+      "success": {
+        "voice": "Hi, $0 hat dich eingeladen mit auf `$1` zu joinen. $0 ist aktuell in `$2` online.",
+        "normal": "Hi, $0 hat dich eingeladen mit auf `$1` zu joinen.",
+        "approval": "`$0` wurde eingeladen."
+      },
+      "error": {
+        "self_invite": "Du kannst dich selber nicht einladen 🙈",
+        "msg_empty": "Der `--msg` Parameter erfordert ein Argument!"
       }
     },
     "lang": {
@@ -204,9 +243,9 @@
     },
     "musicPlayer": {
       "labels": {
-        "playing": "Spiele",
+        "playing": "Nächster Titel",
         "volume": "Lautstärke",
-        "currently_playing": "Aktuell wird gespielt:",
+        "currently_playing": "Aktuell wird gespielt",
         "disconnected": "Verbindung getrennt",
         "disconnecting_emptyChannel": "Habe den Kanal verlassen, weil keiner mehr zugehört hat :(",
         "disconnecting_emptyQueue": "Queue leer! Verbindung getrennt."
