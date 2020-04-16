@@ -190,7 +190,7 @@
         "no_attachment": "`Kein Anhang gefunden`\nDu bist kein Jedi, Anhänge sind nicht verboten",
         "file_size": "`Dateigröße überschritt das Maximum`\nUm eine berühmte Schauspielerin zu zitieren: \"Es ist zu groß 😲\"",
         "invalid_format": "`Datei ist nicht im MP3-Format`\nMP4 und MP5 sind auch verboten",
-        "already_exists": "`Dieser Titel existiert bereits`\nVersuche es unter einem anderen Namen zu speichern, oder überschreibe den Titel mit dem Befehl `$0$1 $2 overwrite`",
+        "already_exists": "`Dieser Titel existiert bereits`\nVersuche es unter einem anderen Namen zu speichern, oder überschreibe den Titel mit dem Befehl `$0 --overwrite`",
         "file_saving": "Etwas ist schief gelaufen :/",
         "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
       },

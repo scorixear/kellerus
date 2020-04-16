@@ -190,7 +190,7 @@
         "no_attachment": "`No attachment found`\nYou're not a Jedi, attachments are not forbidden",
         "file_size": "`Filesize exceeds maximum`\nQuoting a famous actress: \"It's too big 😲\"",
         "invalid_format": "`File is not in mp3 format`\nmp4 and mp5 are forbidden, too",
-        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0$1 $2 overwrite`",
+        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0 --overwrite`",
         "file_saving": "Something went wrong :/",
         "generic_error": "`Unexpected Error`\nLuca expected every possible error. But you ... you managed to find another one"
       },

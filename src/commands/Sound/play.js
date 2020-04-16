@@ -30,21 +30,26 @@ export default class Play extends Command {
       } catch (err) {
         return;
       }
+      const {fileType} = config.commands.sound.add;
       const title = args[0].toLowerCase() +'.'+fileType;
-      if (params.cat && params.cat != '' && fs.existsSync('./resources/soundeffect/'+params.cat+'/'+title)) {
-        playFile('./resources/soundeffect/'+params.cat+'/'+title, msg);
-        return;
-      } else if (fs.existsSync('./resources/soundeffect/'+title)) {
-        playFile('./resources/soundeffect/'+title, msg);
-        return;
+      const base = './resources/soundeffects/';
+      let path = base;
+      if (params.cat && params.cat != '' && fs.existsSync(base + params.cat+'/'+title)) {
+        path += params.cat + '/' + title;
+      } else if (fs.existsSync(base + title)) {
+        path += title;
       } else {
-        const folders = fs.readdirSync('./resources/soundeffects/').filter((x)=>fs.lstatSync('./resources/soundeffects/'+x).isDirectory());
+        const folders = fs.readdirSync(base).filter((x)=>fs.lstatSync(base+x).isDirectory());
         for (const folder of folders) {
-          if (fs.existsSync('./resources/soundeffects/'+folder+'/'+title)) {
-            playFile('./resources/soundeffects/'+folder+'/'+title);
-            return;
+          if (fs.existsSync(base+folder+'/'+title)) {
+            path += folder + '/' + title;
+            break;
           }
         }
+      }
+      if (path !== base) {
+        this.playFile(path, msg);
+        return;
       }
       msgHandler.sendRichTextDefault({
         msg,
@@ -53,7 +58,8 @@ export default class Play extends Command {
       });
       return;
     } catch (err) {
-      if (voiceChannel) voiceChannel.leave();
+      console.log(err);
+      if (msg.member.voice.channel) msg.member.voice.channel.leave();
     }
   }
 
@@ -62,10 +68,10 @@ export default class Play extends Command {
       const server = localStorage.getServer(msg.guild.id);
       const dispatcher = connection.play(path, {volume: server.volume});
       dispatcher.on('finish', ()=> {
-        voiceChannel.leave();
+        msg.member.voice.channel.leave();
       });
     }).catch(() => {
-      if (voiceChannel) voiceChannel.leave();
+      if (msg.member.voice.channel) msg.member.voice.channel.leave();
     });
   }
 }
