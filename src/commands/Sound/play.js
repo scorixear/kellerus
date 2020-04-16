@@ -31,7 +31,7 @@ export default class Play extends Command {
       if (hasPermission === false) {
         return;
       }
-      const title = args[0] +'.'+fileType;
+      const title = args[0].toLowerCase() +'.'+fileType;
       voiceChannel = msg.member.voice.channel;
       const path = './resources/soundeffects/' + title;
       const exists = fs.existsSync(path);

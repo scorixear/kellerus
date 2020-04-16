@@ -30,7 +30,7 @@ export default class Remove extends Command {
       if (hasPermission === false) {
         return;
       }
-      const title = args[0];
+      const title = args[0].toLowerCase();
 
       if (title == null) {
         msgHandler.sendRichTextDefault({msg,

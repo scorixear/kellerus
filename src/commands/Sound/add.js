@@ -31,7 +31,7 @@ export default class Add extends Command {
       if (hasPermission === false) {
         return;
       }
-      const title = args[0];
+      const title = args[0].toLowerCase();
       const overwrite = args[1];
 
       if (title == null || title.length < 3 || title.length > 20) {
