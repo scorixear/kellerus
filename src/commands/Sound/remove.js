@@ -54,6 +54,7 @@ export default class Remove extends Command {
           title: language.commands.remove.labels.removed,
           description: replaceArgs(language.commands.remove.success, [title]),
         });
+        fs.unlinkSync(path);
         return;
       } catch (err) {
         console.error(err);
