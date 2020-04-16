@@ -43,16 +43,19 @@ export default class Remove extends Command {
       try {
         if (params.cat && params.cat !== '' && fs.existsSync('./resources/soundeffects/'+params.cat+'/'+title)) {
           fs.unlinkSync('./resources/soundeffects/'+params.cat+'/'+title);
+          if (!fs.readdirSync('./resources/soundeffects/'+params.cat).length) {
+            fs.rmdirSync('./resources/soundeffects/'+params.cat);
+          }
           msgHandler.sendRichTextDefault({msg,
             title: language.commands.remove.labels.removed,
-            description: replaceArgs(language.commands.remove.success, [title]),
+            description: replaceArgs(language.commands.remove.success, [args[0].toLowerCase()]),
           });
           return;
         } else if (fs.existsSync('./resources/soundeffects/'+title)) {
           fs.unlinkSync('./resources/soundeffects/'+title);
           msgHandler.sendRichTextDefault({msg,
             title: language.commands.remove.labels.removed,
-            description: replaceArgs(language.commands.remove.success, [title]),
+            description: replaceArgs(language.commands.remove.success, [args[0].toLowerCase()]),
           });
           return;
         } else {
@@ -60,9 +63,12 @@ export default class Remove extends Command {
           for (const folder of folders) {
             if (fs.existsSync('./resources/soundeffects/'+folder+'/'+title)) {
               fs.unlinkSync('./resources/soundeffects/'+folder+'/'+title);
+              if (!fs.readdirSync('./resources/soundeffects/'+folder).length) {
+                fs.rmdirSync('./resources/soundeffects/'+folder);
+              }
               msgHandler.sendRichTextDefault({msg,
                 title: language.commands.remove.labels.removed,
-                description: replaceArgs(language.commands.remove.success, [title]),
+                description: replaceArgs(language.commands.remove.success, [args[0].toLowerCase()]),
               });
               return;
             }
