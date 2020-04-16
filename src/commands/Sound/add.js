@@ -24,11 +24,12 @@ export default class Add extends Command {
    * @param {Message} msg the msg object
    * @param {*} params added parameters and their argument
    */
-  async executeCommand(args, msg) {
+  async executeCommand(args, msg, params) {
     try {
       const {fileType: allowedFileType, maxFileSize, allowedChars} = config.commands.sound.add;
-      const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-      if (hasPermission === false) {
+      try {
+        super.executeCommand(args, msg, params);
+      } catch (err) {
         return;
       }
       const title = args[0].toLowerCase();
@@ -68,7 +69,15 @@ export default class Add extends Command {
         });
         return;
       }
-      const path = `./resources/soundeffects/${title}.${fileType}`;
+      let path;
+      if (params.cat&&params.cat !== '') {
+        if (!fs.existsSync('./resources/soundeffects/'+cat)) {
+          fs.mkdirSync('./resources/soundeffects/'+cat);
+        }
+        path = `./resources/soundeffects/${cat}/${title}.${fileType}`;
+      } else {
+        path = `./resources/soundeffects/${title}.${fileType}`;
+      }
       const exists = fs.existsSync(path);
       if (exists && overwrite !== 'overwrite') {
         msgHandler.sendRichTextDefault({msg,
@@ -78,7 +87,6 @@ export default class Add extends Command {
         return;
       }
       const added = await Add.download(url, path);
-      console.log(added);
       if (added) {
         msgHandler.sendRichTextDefault({msg,
           title: language.commands.add.labels.command_added,

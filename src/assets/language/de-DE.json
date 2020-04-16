@@ -201,7 +201,8 @@
       "labels": {
         "header": "Hier sind deine Titel 🎶🎵",
         "templateEntry": "$0. `$1`\n",
-        "no_sounds": "Keine Sound-Dateien gefunden"
+        "no_sounds": "Keine Sound-Dateien gefunden",
+        "noCategory": "Nicht Kategorisiert"
       },
       "error": {
         "internal_error": "`Etwas ist schiefgelaufen 😫😫`"

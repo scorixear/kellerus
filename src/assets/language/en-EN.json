@@ -201,7 +201,8 @@
       "labels": {
         "header": "Here are your Sounds 🎶🎵",
         "templateEntry": "$0. `$1`\n",
-        "no_sounds": "No Sound files found"
+        "no_sounds": "No Sound files found",
+        "noCategory": "Uncategorized"
       },
       "error": {
         "internal_error": "`Something bad happened 😫😫`"
