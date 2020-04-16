@@ -40,7 +40,7 @@ export default class ListSounds extends Command {
       const noCategory = ({
         title: language.commands.listSounds.labels.noCategory,
         text: '',
-        inline: false,
+        inline: true,
       });
       let counter = 0;
       const {fileType} = config.commands.sound.add;
@@ -57,7 +57,7 @@ export default class ListSounds extends Command {
               const newCat = {
                 title: f,
                 text: '',
-                inline: false,
+                inline: true,
               };
               const newFiles = fs.readdirSync('./resources/soundeffects/'+f+'/');
               newFiles.sort();
