@@ -64,14 +64,16 @@ export default class Play extends Command {
   }
 
   playFile(path, msg) {
-    msg.member.voice.channel.join().then((connection) => {
-      const server = localStorage.getServer(msg.guild.id);
-      const dispatcher = connection.play(path, {volume: server.volume});
-      dispatcher.on('finish', ()=> {
-        msg.member.voice.channel.leave();
+    if (msg.member.voice.channel) {
+      msg.member.voice.channel.join().then((connection) => {
+        const server = localStorage.getServer(msg.guild.id);
+        const dispatcher = connection.play(path, {volume: server.volume});
+        dispatcher.on('finish', ()=> {
+          msg.member.voice.channel.leave();
+        });
+      }).catch(() => {
+        if (msg.member.voice.channel) msg.member.voice.channel.leave();
       });
-    }).catch(() => {
-      if (msg.member.voice.channel) msg.member.voice.channel.leave();
-    });
+    }
   }
 }

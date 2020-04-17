@@ -38,7 +38,7 @@ export default class Covid19 extends Command {
     timeout = setTimeout(async () => {
       await msg.channel.bulkDelete(1);
       msg.channel.send(language.commands.covid19.labels.loading2);
-    }, 1000);
+    }, 2000);
 
     try {
       await this.crawlPageForData(params.force!==undefined);
