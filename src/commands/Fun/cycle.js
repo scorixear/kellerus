@@ -5,13 +5,19 @@ export default class Cycle extends Command {
     super(category);
     this.usage = 'cycle';
     this.command = 'cycle';
-    this.description = language.commands.cycle.description;
+    this.description = () => language.commands.cycle.description;
     this.example = 'cycle';
   }
 
-  executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }

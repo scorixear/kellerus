@@ -8,13 +8,18 @@ export default class Info extends Command {
     super(category);
     this.usage = 'info';
     this.command = 'info';
-    this.description = language.commands.info.description;
+    this.description = () => language.commands.info.description;
     this.example = 'info';
   }
-
-  executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
@@ -26,7 +31,7 @@ export default class Info extends Command {
     };
     categories[1] = {
       title: language.commands.info.labels.repository,
-      text: config.repo,
+      text: config.repository,
       inline: true,
     };
     categories[2] = {

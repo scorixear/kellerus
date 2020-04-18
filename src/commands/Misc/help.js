@@ -10,13 +10,18 @@ export default class Help extends Command {
     super(category);
     this.usage = `help [${language.commands.help.labels.command.toLowerCase()}]`;
     this.command = 'help';
-    this.description = language.commands.help.description;
+    this.description = () => language.commands.help.description;
     this.example = 'help\nhelp hi';
   }
-
-  executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
@@ -39,11 +44,12 @@ export default class Help extends Command {
           categories: [{
             title: language.commands.help.labels.command,
             text: `\`${config.botPrefix}${command.command}\``,
-            inline: false,
+            inline: true,
           },
           {
             title: language.general.description,
-            text: command.description,
+            text: command.description(),
+            inline: true,
           },
           {
             title: language.general.usage,

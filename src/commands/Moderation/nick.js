@@ -7,19 +7,24 @@ export default class Nick extends Command {
     super(category);
     this.usage = `nick <${language.general.user}> <nick> [${language.general.reason}]`;
     this.command = 'nick';
-    this.description = language.commands.nick.description;
+    this.description = () => language.commands.nick.description;
     this.example = 'nick @kellerus Bot';
     this.permissions = ['MANAGE_NICKNAMES', 'CHANGE_NICKNAME'];
   }
-
-  executeCommand(args, msg) {
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
+  executeCommand(args, msg, params) {
     try {
-      super.executeCommand(args, msg);
+      super.executeCommand(args, msg, params);
     } catch (err) {
       return;
     }
     if (!args || args.length < 2) {
-      return messageHandler.sendRichTextDefault({
+      msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.general.error,
         description: language.error.invalid_usage,
@@ -28,10 +33,12 @@ export default class Nick extends Command {
           text: `\`${this.usage}\``,
         }],
       });
+      return;
     }
 
     let reason;
-    const targetuser = msg.guild.member(msg.mentions.users.first() || msg.guild.member.get(args[0]));
+    const targetuser = msg.guild.member(msg.mentions.users.first() ||
+    msg.guild.members.cache.find((g)=>g.nickname == args[0]));
     const {nickname: oldNickname} = targetuser;
 
     if (!targetuser) {

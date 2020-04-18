@@ -1,5 +1,10 @@
-// Calculate the Levenshtein Distance between two strings (the number of insertions,
-// deletions, and substitutions needed to transform the first string into the second)
+/**
+ * Calculate the Levenshtein Distance between two strings (the number of insertions,
+/* deletions, and substitutions needed to transform the first string into the second)
+ * @param {string} search the string to search for
+ * @param {Array<string>} results the results to search in
+ * @return {Array<string>} an array of closest matches.
+ */
 function findClosestMatch(search, results) {
   const returnArray = [];
   for (let i = 0; i<results.length; i++) {
@@ -11,6 +16,12 @@ function findClosestMatch(search, results) {
   return returnArray;
 }
 
+/**
+ * Returns the LevnshteinDistance (number of string changes) between two strings
+ * @param {string} a
+ * @param {string} b
+ * @return {number}
+ */
 function calculateLevenshteinDistance(a, b) {
   if (a.length == 0) return b.length;
   if (b.length == 0) return a.length;

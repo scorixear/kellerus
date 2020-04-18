@@ -14,7 +14,8 @@ export function changeLanguage(lang) {
   } else {
     dic = JSON.parse(fs.readFileSync(`./src/assets/language/${lang}.json`));
     config.language = lang;
-    fs.writeFileSync('./src/config.json', JSON.stringify(config));
+    fs.writeFileSync('./src/config.json', JSON.stringify(config, null, 2));
+    languageTag = lang;
     return true;
   }
 }

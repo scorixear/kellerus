@@ -4,6 +4,7 @@
   "youtubeApiKey": "your_key",
   "repository": "https://github.com/scorixear/kellerus",
   "botPrefix": "!",
+  "playPrefix": ".",
   "language": "en-EN",
   "dbhost": "127.0.0.1",
   "dbuser": "username",

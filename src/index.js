@@ -3,9 +3,6 @@ import DiscordHandler from './misc/discordHandler.js';
 import sqlHandler from './misc/sqlHandler.js';
 import config from './config.js';
 
-
-global.servers = {};
-
 DiscordHandler.client.on('ready', () => {
   console.log('Kellerus is online!');
 });

@@ -1,14 +1,37 @@
 {
   "commands": {
+    "covid19": {
+      "description": "Returns live statistics about the corona pandemic.",
+      "labels": {
+        "loading": "Loading...",
+        "loading2": "Loading... (Give me a moment for fucks sake)",
+        "stats": "Covid19 Statistics",
+        "topTen": "Top Ten Countries",
+        "retrieved": "Retrieved from",
+        "date": "Last updated"
+      },
+      "success": {
+        "total": "Total Cases: `$0`\nDeaths: `$1`\nHealed: `$2`",
+        "topTen": "$0. **$1** - Total Cases: `$2` - Deaths: `$3` - Healed: `$4`"
+      },
+      "error": "There was an error retrieving informations about Covid19"
+    },
     "cycle": {
       "description": "Asks the bot, if he wants to play TheCycle!"
     },
     "ehre": {
       "description": "Awards `Ehre` points to users, that did something honorable.",
       "error": {
-        "self_award": "You cannot award youself `Ehre`"
+        "self_award": "You cannot award yourself `Ehre`"
       },
       "success": "$0 was `$1` times honorable."
+    },
+    "unehre": {
+      "description": "Removes `Ehre` points from users.",
+      "error": {
+        "self_remove": "You cannot remove `Ehre` from yourself. Stay in there buddy."
+      },
+      "success": "$0 still got `$1` Ehre left."
     },
     "hi": {
       "description": "Says Hi to the Bot!",
@@ -49,6 +72,33 @@
         "repository": "Repository",
         "author": "Author"
       }
+    },
+    "invite": {
+      "description": "Invites a player to join you via a private message.",
+      "labels": {
+        "success": "Player invited",
+        "additional_message": "\nHe/she gave me a message to deliver to you: \"$0\""
+      },
+      "success": {
+        "voice": "Hi, $0 has invited you to join him on `$1`. $0 is currently in the channel `$2` online.",
+        "normal": "Hi, $0 has invited you to join him on `$1`.",
+        "approval": "`$0` was invited to join you."
+      },
+      "error": {
+        "self_invite": "You cannot invite your self, duahh 🙈",
+        "msg_empty": "The `--msg` parameter requires an argument!"
+      }
+    },
+    "lang": {
+      "description": "Switches the language of the bot.",
+      "labels": {
+        "list": "Available Languages",
+        "success": "Language changed"
+      },
+      "error": {
+        "not_found": "Language not found. Here is a list of the available languages:"
+      },
+      "success": "Changed the language to `$0`!"
     },
     "ping": {
       "description": "Tests the Ping of the bot."
@@ -140,11 +190,23 @@
         "no_attachment": "`No attachment found`\nYou're not a Jedi, attachments are not forbidden",
         "file_size": "`Filesize exceeds maximum`\nQuoting a famous actress: \"It's too big 😲\"",
         "invalid_format": "`File is not in mp3 format`\nmp4 and mp5 are forbidden, too",
-        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0$1 $2 overwrite`",
+        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0 --overwrite`",
         "file_saving": "Something went wrong :/",
         "generic_error": "`Unexpected Error`\nLuca expected every possible error. But you ... you managed to find another one"
       },
       "success": "Command `$0` added :D"
+    },
+    "listSounds": {
+      "description":"Lists all stored Sound files",
+      "labels": {
+        "header": "Here are your Sounds 🎶🎵",
+        "templateEntry": "$0. `$1`\n",
+        "no_sounds": "No Sound files found",
+        "noCategory": "Uncategorized"
+      },
+      "error": {
+        "internal_error": "`Something bad happened 😫😫`"
+      }
     },
     "play": {
       "description":  "Plays a SoundFile",
@@ -168,7 +230,10 @@
     "command": {
       "error": {
         "unknown": "This command is unknown. Use `$0help` for a list of commands.",
-        "generic_error": "There was an Error executing the command `$0$1`."
+        "generic_error": "There was an Error executing the command `$0$1`.",
+        "general_format": "Your command is not well formated:\n`$0<Command> [args] [--<option> [option-arg]]`",
+        "args_format": "Your arguments are not well formated.\n*Hint: Arguments with spaces must be surrounded by one \" and cannot contain any additional \"*",
+        "params_format": "Your options are not well formated.\n*Hint: Options must start with '--' and __can__ contain one additional argument.*"
       }
     },
     "emoji": {

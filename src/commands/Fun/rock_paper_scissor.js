@@ -14,12 +14,17 @@ class Rock extends Command {
     super(category);
     this.command = 'rock';
     this.usage = 'rock';
-    this.description = replaceArgs(language.commands.rock_paper_scissor.description,
+    this.description = () => replaceArgs(language.commands.rock_paper_scissor.description,
         [language.commands.rock_paper_scissor.labels.rock]);
     this.example = 'rock';
     this.permissions = [];
   }
-
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg) {
     let answer;
     switch (getAnswer()) {
@@ -49,13 +54,19 @@ class Paper extends Command {
   constructor(category) {
     super(category);
     this.command = 'paper';
-    this.description = replaceArgs(language.commands.rock_paper_scissor.description,
+    this.description = () => replaceArgs(language.commands.rock_paper_scissor.description,
         [language.commands.rock_paper_scissor.labels.paper]);
     this.usage = 'paper';
     this.example = 'paper';
     this.permissions = [];
   }
 
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg) {
     let answer;
     switch (getAnswer()) {
@@ -86,12 +97,18 @@ class Scissor extends Command {
     super(category);
     this.command = 'scissor';
     this.usage = 'scissor';
-    this.description = replaceArgs(language.commands.rock_paper_scissor.description,
+    this.description = () => replaceArgs(language.commands.rock_paper_scissor.description,
         [language.commands.rock_paper_scissor.labels.scissor]);
     this.example = 'scissor';
     this.permissions = [];
   }
 
+  /**
+   * Executes the command
+   * @param {Array<String>} args the arguments fo the msg
+   * @param {Message} msg the msg object
+   * @param {*} params added parameters and their argument
+   */
   executeCommand(args, msg) {
     let answer;
     switch (getAnswer()) {
