@@ -23,37 +23,57 @@ export default class Play extends Command {
    * @param {Message} msg the msg object
    * @param {*} params added parameters and their argument
    */
-  executeCommand(args, msg) {
-    let voiceChannel;
+  executeCommand(args, msg, params) {
     try {
+      try {
+        super.executeCommand(args, msg, params);
+      } catch (err) {
+        return;
+      }
       const {fileType} = config.commands.sound.add;
-      const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-      if (hasPermission === false) {
+      const title = args[0].toLowerCase() +'.'+fileType;
+      const base = './resources/soundeffects/';
+      let path = base;
+      if (params.cat && params.cat != '' && fs.existsSync(base + params.cat+'/'+title)) {
+        path += params.cat + '/' + title;
+      } else if (fs.existsSync(base + title)) {
+        path += title;
+      } else {
+        const folders = fs.readdirSync(base).filter((x)=>fs.lstatSync(base+x).isDirectory());
+        for (const folder of folders) {
+          if (fs.existsSync(base+folder+'/'+title)) {
+            path += folder + '/' + title;
+            break;
+          }
+        }
+      }
+      if (path !== base) {
+        this.playFile(path, msg);
         return;
       }
-      const title = args[0] +'.'+fileType;
-      voiceChannel = msg.member.voice.channel;
-      const path = './resources/soundeffects/' + title;
-      const exists = fs.existsSync(path);
-      if (!exists) {
-        msgHandler.sendRichTextDefault({
-          msg,
-          title: language.general.error,
-          description: replaceArgs(language.commands.play.error, [args[0]]),
-        });
-        return;
-      }
-      voiceChannel.join().then((connection) => {
+      msgHandler.sendRichTextDefault({
+        msg,
+        title: language.general.error,
+        description: replaceArgs(language.commands.play.error, [args[0]]),
+      });
+      return;
+    } catch (err) {
+      console.log(err);
+      if (msg.member.voice.channel) msg.member.voice.channel.leave();
+    }
+  }
+
+  playFile(path, msg) {
+    if (msg.member.voice.channel) {
+      msg.member.voice.channel.join().then((connection) => {
         const server = localStorage.getServer(msg.guild.id);
         const dispatcher = connection.play(path, {volume: server.volume});
         dispatcher.on('finish', ()=> {
-          voiceChannel.leave();
+          msg.member.voice.channel.leave();
         });
       }).catch(() => {
-        if (voiceChannel) voiceChannel.leave();
+        if (msg.member.voice.channel) msg.member.voice.channel.leave();
       });
-    } catch (err) {
-      if (voiceChannel) voiceChannel.leave();
     }
   }
 }
