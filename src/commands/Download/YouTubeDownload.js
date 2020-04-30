@@ -23,7 +23,7 @@ export default class YouTubeDownload extends Command {
 
   /**
    *
-   * @param {{}} args
+   * @param {Array} args
    * @param {{}} msg
    * @param {{interpret: string, title: string}} params
    */
@@ -112,7 +112,6 @@ export default class YouTubeDownload extends Command {
     }
     catch (err) {
       console.log(err);
-      throw new Error("Download failed");
       msgHandler.sendRichTextDefault({ msg, title: language.commands.download.error.download_failed});
       YouTubeDownload.deleteFile(path);
     }
