@@ -235,7 +235,7 @@
         "unknown_download_format": "Download format `$0` unknown. See `$1help $2` for allowed formats"
       },
       "download_started": "Download has started! This may take some time 📡⏳",
-      "download_completed": "Download has finished! Here's your file 💽",
+      "download_completed": "Download has finished! Here's your file 💽"
     }
   },
   "handlers": {
