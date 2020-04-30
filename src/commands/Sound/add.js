@@ -1,5 +1,4 @@
 import Command from './../command.js';
-import permHandler from '../../misc/permissionHandler.js';
 import https from 'https';
 import config from '../../config';
 import fs from 'fs';
@@ -12,7 +11,7 @@ import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 export default class Add extends Command {
   constructor(category) {
     super(category);
-    this.usage = `add <${language.general.title}> {${language.commands.add.labels.append_soundfile}.mp3}`;
+    this.usage = `add <${language.general.title}> [--overwrite, --cat "<category>"] {${language.commands.add.labels.append_soundfile}.mp3}`;
     this.command = 'add';
     this.description = () => language.commands.add.description;
     this.example = 'add badumtsss ';
@@ -24,15 +23,16 @@ export default class Add extends Command {
    * @param {Message} msg the msg object
    * @param {*} params added parameters and their argument
    */
-  async executeCommand(args, msg) {
+  async executeCommand(args, msg, params) {
     try {
       const {fileType: allowedFileType, maxFileSize, allowedChars} = config.commands.sound.add;
-      const hasPermission = permHandler.checkPermissions(this.permissions, msg, this.command);
-      if (hasPermission === false) {
+      try {
+        super.executeCommand(args, msg, params);
+      } catch (err) {
         return;
       }
-      const title = args[0];
-      const overwrite = args[1];
+      const title = args[0].toLowerCase();
+      const overwrite = params.overwrite;
 
       if (title == null || title.length < 3 || title.length > 20) {
         msgHandler.sendRichTextDefault({msg,
@@ -68,17 +68,24 @@ export default class Add extends Command {
         });
         return;
       }
-      const path = `./resources/soundeffects/${title}.${fileType}`;
+      let path;
+      if (params.cat&&params.cat !== '') {
+        if (!fs.existsSync('./resources/soundeffects/'+params.cat)) {
+          fs.mkdirSync('./resources/soundeffects/'+params.cat);
+        }
+        path = `./resources/soundeffects/${params.cat}/${title}.${fileType}`;
+      } else {
+        path = `./resources/soundeffects/${title}.${fileType}`;
+      }
       const exists = fs.existsSync(path);
-      if (exists && overwrite !== 'overwrite') {
+      if (exists && overwrite !== '') {
         msgHandler.sendRichTextDefault({msg,
           title: language.general.error,
-          description: replaceArgs(language.commands.add.error.already_exists, [config.botPrefix, this.command, title]),
+          description: replaceArgs(language.commands.add.error.already_exists, [msg.content]),
         });
         return;
       }
       const added = await Add.download(url, path);
-      console.log(added);
       if (added) {
         msgHandler.sendRichTextDefault({msg,
           title: language.commands.add.labels.command_added,

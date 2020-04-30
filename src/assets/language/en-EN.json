@@ -29,7 +29,7 @@
     "unehre": {
       "description": "Removes `Ehre` points from users.",
       "error": {
-        "self_award": "You cannot remove your `Ehre`"
+        "self_remove": "You cannot remove `Ehre` from yourself. Stay in there buddy."
       },
       "success": "$0 still got `$1` Ehre left."
     },
@@ -190,7 +190,7 @@
         "no_attachment": "`No attachment found`\nYou're not a Jedi, attachments are not forbidden",
         "file_size": "`Filesize exceeds maximum`\nQuoting a famous actress: \"It's too big 😲\"",
         "invalid_format": "`File is not in mp3 format`\nmp4 and mp5 are forbidden, too",
-        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0$1 $2 overwrite`",
+        "already_exists": "`This command already exists`\nTry to save it under another command, or overwrite this command using `$0 --overwrite`",
         "file_saving": "Something went wrong :/",
         "generic_error": "`Unexpected Error`\nLuca expected every possible error. But you ... you managed to find another one"
       },
@@ -201,7 +201,8 @@
       "labels": {
         "header": "Here are your Sounds 🎶🎵",
         "templateEntry": "$0. `$1`\n",
-        "no_sounds": "No Sound files found"
+        "no_sounds": "No Sound files found",
+        "noCategory": "Uncategorized"
       },
       "error": {
         "internal_error": "`Something bad happened 😫😫`"
