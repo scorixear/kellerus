@@ -224,6 +224,18 @@
         "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
       },
       "success": "Titel `$0` entfernt"
+    },
+    "download": {
+      "description": "Lädt eine Datei von DuRöhre herunter und pfostiert sie in diesem Kanal",
+      "error": {
+        "invalid_link": "`Link ist unbrauchbar`",
+        "download_failed": "Herunterladen ging schief",
+        "invalid_param": "Parameter sind falsch",
+        "unexpected_error": "Etwas Unerwartetes ging schief 🎈",
+        "unknown_download_format": "Download-Format `$0` unbekannt. Siehe `$1help $2` für erlaubte Formate"
+      },
+      "download_started": "Herunterladen gestartet. Dies kann einen Moment dauern 📡⏳",
+      "download_completed": "Herunterladen fertig. Hier ist deine Datei 💽"
     }
   },
   "handlers": {
