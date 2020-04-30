@@ -1,4 +1,4 @@
-import fs from 'fs';
+const fs = require('fs');
 
 const config = JSON.parse(fs.readFileSync('./src/config.json'));
 config.commands = JSON.parse(fs.readFileSync('./src/commands.json'));
