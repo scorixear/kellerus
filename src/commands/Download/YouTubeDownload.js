@@ -1,11 +1,11 @@
 import Command from './../command.js';
 import {dic as language} from './../../misc/languageHandler.js';
 import ytdl from 'ytdl-core';
-import config from '../../../src/config';
+import config from '../../config';
 import fs from 'fs';
-const { MessageAttachment } = require('discord.js');
+import {MessageAttachment} from 'discord.js';
 import msgHandler from '../../misc/messageHandler';
-import {replaceArgs} from "./../../misc/languageHandler";
+import {replaceArgs} from '../../misc/languageHandler';
 
 /**
  * Downloads a video from youtube and uploads to discord
@@ -48,11 +48,11 @@ export default class YouTubeDownload extends Command {
    * @param {string} link
    * @param {string} type
    * @param {{title, interpret, artist, filename}} params
-   * @returns {Promise<void>}
+   * @return {Promise<void>}
    */
   async download(msg, link, type, params = {}) {
     try {
-      if(type == null || type.length <= 1) {
+      if (type == null || type.length <= 1) {
         type = config.commands.download.ytdownload.defaultFormat;
       }
 
@@ -61,20 +61,22 @@ export default class YouTubeDownload extends Command {
       // get options for audio or video download
       try {
         ytOptions = this.getOptions(msg, type);
-      } catch (e) {return;}
+      } catch (e) {
+        return;
+      }
 
       // retrieve file tags
       const fileTags = YouTubeDownload.resolveParams(params, 'fileTags') || {};
 
       // allow audioTags when audio
       let audioTags = false;
-      if(type === 'audio') audioTags = YouTubeDownload.resolveParams(params);
+      if (type === 'audio') audioTags = YouTubeDownload.resolveParams(params);
 
       // get infos from youtube
       const infos = await ytdl.getInfo(link);
       // set filename
       let filename = fileTags? fileTags.filename : null;
-      if(filename == null || filename === '') {
+      if (filename == null || filename === '') {
         filename = infos.title;
       }
 
@@ -86,33 +88,32 @@ export default class YouTubeDownload extends Command {
       const path = dirpath + filename;
 
       // Confirm that download starts
-      msgHandler.sendRichTextDefault({ msg, title: language.commands.download.download_started });
+      msgHandler.sendRichTextDefault({msg, title: language.commands.download.download_started});
       // start download
       const promiseDownload = await new Promise((resolve, reject) => {
         try {
           ytdl(link, ytOptions.options).pipe(
-            fs.createWriteStream(path)
-              .on('finish', () => {
-                resolve(true);
-              })
-              .on('error', () => {
-                resolve(false);
-              }));
+              fs.createWriteStream(path)
+                  .on('finish', () => {
+                    resolve(true);
+                  })
+                  .on('error', () => {
+                    resolve(false);
+                  }));
         } catch (err) {
           reject(err);
         }
       });
       // if download successful, send file to user
-      if(promiseDownload) {
+      if (promiseDownload) {
         this.sendFile(msg, path, filename);
         return;
       }
-      msgHandler.sendRichTextDefault({ msg, title: language.commands.download.error.download_failed});
+      msgHandler.sendRichTextDefault({msg, title: language.commands.download.error.download_failed});
       return;
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
-      msgHandler.sendRichTextDefault({ msg, title: language.commands.download.error.download_failed});
+      msgHandler.sendRichTextDefault({msg, title: language.commands.download.error.download_failed});
       YouTubeDownload.deleteFile(path);
     }
   }
@@ -120,10 +121,10 @@ export default class YouTubeDownload extends Command {
   /**
    * Sends the file to the chat
    * deletes file afterwards
-   * @param msg
-   * @param path
-   * @param filename
-   * @returns {Promise<Boolean>}
+   * @param {*} msg
+   * @param {string} path
+   * @param {string} filename
+   * @return {Promise<Boolean>}
    */
   async sendFile(msg, path, filename) {
     try {
@@ -141,28 +142,29 @@ export default class YouTubeDownload extends Command {
 
   /**
    * Gets options for download type
-   * @param msg
-   * @param type
+   * @param {*} msg
+   * @param {*} type
+   * @return {{}}
    */
   getOptions(msg, type) {
     try {
       const obj = config.commands.download.ytdownload.downloadFormat[type];
-      if(obj == null || Object.keys(obj).length === 0) {
+      if (obj == null || Object.keys(obj).length === 0) {
         throw new Error(`No matching download format found for ${type || ''}`);
       }
       return obj;
     } catch (err) {
-      const message = replaceArgs(language.commands.download.error.unknown_download_format, [type, config.botPrefix, this.command])
+      const message = replaceArgs(language.commands.download.error.unknown_download_format, [type, config.botPrefix, this.command]);
       msgHandler.sendRichTextDefault({msg, title: message});
-      throw new Error(`No matching download format found for ${type || ''}`)
+      throw new Error(`No matching download format found for ${type || ''}`);
     }
   }
 
   /**
    * resolves params object using config file
-   * @param params
-   * @param paramType
-   * @returns {{}|null}
+   * @param {{}} params
+   * @param {string} paramType
+   * @return {{}|null}
    */
   static resolveParams(params = {}, paramType = 'audioTags') {
     try {
@@ -171,10 +173,11 @@ export default class YouTubeDownload extends Command {
       const allowedTags = config.commands.download.ytdownload[paramType] || {};
 
       // get each key, check if under that key exists sth in params obj. if exists store in tags obj
-      for(let key in allowedTags) {
+      // eslint-disable-next-line guard-for-in
+      for (const key in allowedTags) {
         const value = allowedTags[key];
         const userTag = params[`${key}`];
-        if(userTag && userTag.length > 0) {
+        if (userTag && userTag.length > 0) {
           myTags[value] = userTag;
         }
       }
@@ -188,15 +191,15 @@ export default class YouTubeDownload extends Command {
 
   /**
    * deletes file if exists
-   * @param path
+   * @param {string} path
    */
   static deleteFile(path) {
     try {
-      if(fs.existsSync(path)) {
+      if (fs.existsSync(path)) {
         fs.unlinkSync(path);
       }
     } catch (err) {
-      console.error("Error deleting File: "+JSON.stringify(err));
+      console.error('Error deleting File: '+JSON.stringify(err));
     }
   }
 }
