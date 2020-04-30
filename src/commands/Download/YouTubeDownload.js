@@ -3,7 +3,6 @@ import {dic as language} from './../../misc/languageHandler.js';
 import ytdl from 'ytdl-core';
 import config from '../../../src/config';
 import fs from 'fs';
-import basedir from '../../../basedir';
 const { MessageAttachment } = require('discord.js');
 import msgHandler from '../../misc/messageHandler';
 import {replaceArgs} from "./../../misc/languageHandler";
@@ -18,13 +17,13 @@ export default class YouTubeDownload extends Command {
     this.usage = 'download <youtube-link> <[audio, video]> [params]';
     this.command = 'download';
     this.description = language.commands.download.description;
-    this.example = 'download https://www.youtube.com/watch?v=dQw4w9WgXcQ audio --filename "Rick Astley- Never gonna give you up"' +
+    this.example = 'download https://www.youtube.com/watch?v=dQw4w9WgXcQ audio --filename "Rick Astley- Never gonna give you up"\n' +
         'download https://www.youtube.com/watch?v=dQw4w9WgXcQ video';
   }
 
   /**
    *
-   * @param {Array} args
+   * @param {{}} args
    * @param {{}} msg
    * @param {{interpret: string, title: string}} params
    */
@@ -53,7 +52,7 @@ export default class YouTubeDownload extends Command {
    */
   async download(msg, link, type, params = {}) {
     try {
-      const dirpath = basedir + config.commands.download.ytdownload.path + '/';
+      const dirpath = `./${config.commands.download.ytdownload.path}/`;
       let ytOptions;
       // get options for audio or video download
       try {
