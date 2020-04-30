@@ -236,7 +236,6 @@
       },
       "download_started": "Download has started! This may take some time 📡⏳",
       "download_completed": "Download has finished! Here's your file 💽",
-      "success": "Here's your download 🌞"
     }
   },
   "handlers": {

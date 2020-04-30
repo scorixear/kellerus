@@ -236,7 +236,6 @@
       },
       "download_started": "Herunterladen hat gestartet. Dies dauert kann einen Moment dauern 📡⏳",
       "download_completed": "Herunterladen fertig. Hier ist deine Datei 💽",
-      "success": "Hier ist dein Herunterlad 🌞"
     }
   },
   "handlers": {

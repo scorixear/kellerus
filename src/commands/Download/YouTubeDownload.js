@@ -16,7 +16,7 @@ export default class YouTubeDownload extends Command {
     super(category);
     this.usage = 'download <youtube-link> <[audio, video]> [params]';
     this.command = 'download';
-    this.description = language.commands.download.description;
+    this.description = () => language.commands.download.description;
     this.example = 'download https://www.youtube.com/watch?v=dQw4w9WgXcQ audio --filename "Rick Astley- Never gonna give you up"\n' +
         'download https://www.youtube.com/watch?v=dQw4w9WgXcQ video';
   }
@@ -38,7 +38,7 @@ export default class YouTubeDownload extends Command {
       const type = args[1];
       this.download(msg, link, type, params);
     } catch (err) {
-      msgHandler.sendRichTextDefault({msg, title: language.commands.download.error.unexpected_error});
+      msgHandler.sendRichTextDefault({msg, title: () => language.commands.download.error.unexpected_error});
     }
   }
 
@@ -82,7 +82,7 @@ export default class YouTubeDownload extends Command {
       const path = dirpath + filename;
 
       // Confirm that download starts
-      msgHandler.sendRichTextDefault({msg, title: language.commands.download.download_started});
+      msgHandler.sendRichTextDefault({msg, title: () => language.commands.download.download_started});
       // start download
       const promiseDownload = await new Promise((resolve, reject) => {
         try {
@@ -103,13 +103,13 @@ export default class YouTubeDownload extends Command {
         this.sendFile(msg, path, filename);
         return;
       }
-      msgHandler.sendRichTextDefault({ msg, title: language.commands.download.error.download_failed});
+      msgHandler.sendRichTextDefault({ msg, title: () => language.commands.download.error.download_failed});
       return;
     }
     catch (err) {
       console.log(err);
       throw new Error("Download failed");
-      msgHandler.sendRichTextDefault({ msg, title: language.commands.download.error.download_failed});
+      msgHandler.sendRichTextDefault({ msg, title: () => language.commands.download.error.download_failed});
       YouTubeDownload.deleteFile(path);
     }
   }
@@ -120,20 +120,20 @@ export default class YouTubeDownload extends Command {
    * @param msg
    * @param path
    * @param filename
-   * @returns {Promise<void>}
+   * @returns {Promise<Boolean>}
    */
   async sendFile(msg, path, filename) {
     try {
       const buffer = fs.readFileSync(path);
       const attachment = new MessageAttachment(buffer, filename);
-      await msg.channel.send(language.commands.download.download_finished, attachment);
+      await msg.channel.send(() => language.commands.download.download_finished, attachment);
       fs.unlinkSync(path);
-      return;
+      return true;
     } catch (err) {
       YouTubeDownload.deleteFile(path);
-      console.log('Error sending file: '+JSON.stringify(err));
+      console.log(`Error sending file: ${err}`);
+      return false;
     }
-
   }
 
   /**
@@ -149,7 +149,7 @@ export default class YouTubeDownload extends Command {
       }
       return obj;
     } catch (err) {
-      const message = replaceArgs(language.commands.download.error.unknown_download_format, [type, config.botPrefix, this.command])
+      const message = replaceArgs(() => language.commands.download.error.unknown_download_format, [type, config.botPrefix, this.command])
       msgHandler.sendRichTextDefault({msg, title: message});
       throw new Error(`No matching download format found for ${type || ''}`)
     }

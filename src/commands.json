@@ -1,0 +1,38 @@
+{
+  "sound": {
+    "add": {
+      "fileType": "mp3",
+      "maxFileSize": 2097152,
+      "allowedChars": "/^[A-Za-z0-9#+_?]*$/"
+    }
+  },
+  "download": {
+    "ytdownload": {
+      "downloadFormat": {
+        "audio": {
+          "options": {
+            "quality": "highestaudio",
+            "filter": "audioonly"
+          },
+          "fileType": "mp3"
+        },
+        "video": {
+          "options": {
+            "quality": "highest",
+            "filter": "audioandvideo"
+          },
+          "fileType": "mp4"
+        }
+      },
+      "audioTags": {
+        "title": "TIT1",
+        "interpret": "TPE1",
+        "artist": "TPE1"
+      },
+      "fileTags": {
+        "filename": "filename"
+      },
+      "path": "/resources/ytdownload"
+    }
+  }
+}
