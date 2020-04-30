@@ -234,7 +234,7 @@
         "unexpected_error": "Etwas Unerwartetes ging schief 🎈",
         "unknown_download_format": "Download-Format `$0` unbekannt. Siehe `$1help $2` für erlaubte Formate"
       },
-      "download_started": "Herunterladen hat gestartet. Dies dauert kann einen Moment dauern 📡⏳",
+      "download_started": "Herunterladen gestartet. Dies kann einen Moment dauern 📡⏳",
       "download_completed": "Herunterladen fertig. Hier ist deine Datei 💽"
     }
   },
