@@ -121,6 +121,38 @@ function stop(msg) {
 }
 
 /**
+ * Requests the Name of an youtube url
+ * @param {string} url the url to request the name from
+ * @param {Discord.Message} msg
+ * @return {Promise<string>}
+ */
+function getNameFromUrl(url, msg) {
+  if (!url.startsWith('https://www.youtube.com/watch?v=')) {
+    throw new Error('Invalid url');
+  }
+  const id = url.substr('https://www.youtube.com/watch?v='.length, url.length - 'https://www.youtube.com/watch?v='.length);
+  const requestUrl = 'https://www.googleapis.com/youtube/v3/videos' +
+    `?id=${escape(id)}&key=${config.youtubeApiKey}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics`;
+  return new Promise(function(resolve, reject) {
+    request.get(requestUrl).end((error, response)=> {
+      if (!error && response.statusCode == 200) {
+        const body = response.body;
+        if (!body.items ||body.items.length == 0) {
+          console.log('Your search gave 0 results');
+          reject(new Error(''));
+        } else {
+          resolve(body.items[0].snippet.title);
+        }
+      } else {
+        console.log('Unexpected error when searching YouTube');
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject(null);
+      }
+    });
+  });
+}
+
+/**
  * Finds a url for a given search string
  * @param {string} searchKeywords
  * @param {Discord.Message} msg
@@ -183,6 +215,7 @@ async function updateQueue(serverid) {
 export default {
   play,
   skipQueue,
+  getNameFromUrl,
   stop,
   youtubeSearch,
   updateQueue,

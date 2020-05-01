@@ -64,9 +64,9 @@ export default class Queue extends Command {
           const server = localStorage.getServer(msg.guild.id);
           for (let i = 0; i < queue.length; i++) {
             if (i === server.queueIndex) {
-              queuelist += `-->${i}. \`${queue[i].title}\`\n`;
+              queuelist += `--> ${i+1}. \`${queue[i].title}\`\n`;
             } else {
-              queuelist += `${i}. \`${queue[i].title}\`\n`;
+              queuelist += `${i+1}. \`${queue[i].title}\`\n`;
             }
           }
           msgHandler.sendRichTextDefault({
@@ -79,18 +79,36 @@ export default class Queue extends Command {
         return;
       }
       if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
-        sqlHandler.addQueue(args[0], args[0], msg.guild.id).then((success) => {
-          if (success) {
+        musicPlayer.getNameFromUrl(args[0], msg).then((title) => {
+          sqlHandler.addQueue(title, args[0], msg.guild.id).then((success) => {
+            if (success) {
+              msgHandler.sendRichTextDefault({
+                msg: msg,
+                title: 'Queue',
+                description: replaceArgs(language.commands.queue.success.added, [title]),
+              });
+            } else {
+              msgHandler.sendRichTextDefault({
+                msg: msg,
+                title: 'Queue',
+                description: replaceArgs(language.commands.queue.error.added, [title]),
+              });
+            }
+          });
+        }).catch((error)=> {
+          if (err) {
             msgHandler.sendRichTextDefault({
               msg: msg,
               title: 'Queue',
-              description: replaceArgs(language.commands.queue.success.added, [args[0]]),
+              description: language.commands.queue.error.no_results,
+              color: 0xCC0000,
             });
           } else {
             msgHandler.sendRichTextDefault({
               msg: msg,
-              title: 'Queue',
-              description: replaceArgs(language.commands.queue.error.added, [args[0]]),
+              title: language.general.error,
+              description: language.commands.queue.error.unknown_error,
+              color: 0xCC0000,
             });
           }
         });
