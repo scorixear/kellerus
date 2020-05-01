@@ -64,9 +64,9 @@ export default class Queue extends Command {
           const server = localStorage.getServer(msg.guild.id);
           for (let i = 0; i < queue.length; i++) {
             if (i === server.queueIndex) {
-              queuelist += `--> \`${queue[i].title}\`\n`;
+              queuelist += `-->${i}. \`${queue[i].title}\`\n`;
             } else {
-              queuelist += `- \`${queue[i].title}\`\n`;
+              queuelist += `${i}. \`${queue[i].title}\`\n`;
             }
           }
           msgHandler.sendRichTextDefault({

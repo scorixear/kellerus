@@ -22,6 +22,16 @@ async function setVolume(serverid, volume) {
 }
 
 /**
+ * Skips to a title
+ * @param {Number} skipNumber amount to skip
+ * @param {Discord.Message} msg message so send
+ */
+function skipQueue(skipNumber, msg) {
+  localStorage.getServer(msg.guild.id).queueIndex += skipNumber - 1;
+  stop(msg);
+}
+
+/**
  * Starts the stream of queued titles
  * @param {Discord.VoiceConnection} connection
  * @param {Discord.VoiceChannel} voiceChannel
@@ -33,8 +43,12 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
   const server = localStorage.getServer(serverid);
   let index = server.queueIndex;
   if (index >= queue.length) {
-    index = 0;
-    server.queueIndex = 0;
+    index = index % queue.length;
+    server.queueIndex = index;
+  } else if (index < 0) {
+    const minusAmount = (index * -1)%queue.length;
+    index = queue.length - minusAmount;
+    server.queueIndex = index;
   }
 
   if (queue.length > 0) {
@@ -168,6 +182,7 @@ async function updateQueue(serverid) {
 
 export default {
   play,
+  skipQueue,
   stop,
   youtubeSearch,
   updateQueue,

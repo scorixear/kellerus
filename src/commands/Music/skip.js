@@ -24,9 +24,14 @@ export default class Skip extends Command {
     } catch (err) {
       return;
     }
+    let skipNumber = 1;
+    if (args && !isNaN(args[0])) {
+      skipNumber = args[0];
+    }
+
     sqlHandler.getQueue(msg.guild.id).then((queue) => {
       if (msg.guild.voice.connection) {
-        musicPlayer.stop(msg);
+        musicPlayer.skipQueue(skipNumber, msg);
       }
     });
   }
