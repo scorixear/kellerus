@@ -7,6 +7,9 @@ import sqlHandler from './sqlHandler.js';
 import Discord from 'discord.js';
 import {dic as language} from './languageHandler';
 import localStorage from './localStorage.js';
+import queueHandler from './queueHandler.js';
+
+const youtubeVideoStart = 'https://www.youtube.com/watch?v=';
 
 /**
  * Set the volume of the server bot
@@ -127,10 +130,10 @@ function stop(msg) {
  * @return {Promise<string>}
  */
 function getNameFromUrl(url, msg) {
-  if (!url.startsWith('https://www.youtube.com/watch?v=')) {
+  if (!url.startsWith(youtubeVideoStart)) {
     throw new Error('Invalid url');
   }
-  const id = url.substr('https://www.youtube.com/watch?v='.length, url.length - 'https://www.youtube.com/watch?v='.length);
+  const id = url.substr(youtubeVideoStart.length, url.length - youtubeVideoStart.length);
   const requestUrl = 'https://www.googleapis.com/youtube/v3/videos' +
     `?id=${escape(id)}&key=${config.youtubeApiKey}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics`;
   return new Promise(function(resolve, reject) {
@@ -155,10 +158,9 @@ function getNameFromUrl(url, msg) {
 /**
  * Finds a url for a given search string
  * @param {string} searchKeywords
- * @param {Discord.Message} msg
- * @return {Promise<string>} the found url
+ * @return {Promise<{title: string, url: string}>} the found url
  */
-function youtubeSearch(searchKeywords, msg) {
+function youtubeSearch(searchKeywords) {
   const requestUrl = 'https://www.googleapis.com/youtube/v3/search' +
     `?part=snippet&q=${escape(searchKeywords)}&key=${config.youtubeApiKey}`;
   return new Promise(function(resolve, reject) {
@@ -171,7 +173,7 @@ function youtubeSearch(searchKeywords, msg) {
         } else {
           for (const item of body.items) {
             if (item.id.kind === 'youtube#video') {
-              queueYtAudioStream(item.id.videoId, item.snippet.title, msg).then((url) => resolve(url));
+              resolve({title: item.snippet.title, url: youtubeVideoStart+item.id.videoId});
               break;
             }
           }
@@ -185,39 +187,11 @@ function youtubeSearch(searchKeywords, msg) {
   });
 }
 
-/**
- * Queues a Youtube Audio Stream
- * @param {string} videoId
- * @param {string} title
- * @param {Discord.Message} msg
- * @return {string} returns the title ofr '$$$$ignore' + title if not successfull
- */
-async function queueYtAudioStream(videoId, title, msg) {
-  const streamUrl = `https://www.youtube.com/watch?v=${videoId}`;
-  const success = await sqlHandler.addQueue(title, streamUrl, msg.guild.id);
-
-  if (success) {
-    return title;
-  } else {
-    return '$$$$ignore' + title;
-  }
-}
-
-/**
- * Returns the Queue of a server
- * @param {number} serverid
- * @return {Promise<Array<{url: string, title: string}>>}
- */
-async function updateQueue(serverid) {
-  return await sqlHandler.getQueue(serverid);
-}
-
 export default {
   play,
   skipQueue,
   getNameFromUrl,
   stop,
   youtubeSearch,
-  updateQueue,
   setVolume,
 };

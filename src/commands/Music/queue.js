@@ -3,6 +3,7 @@ import config from '../../config.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
 import sqlHandler from '../../misc/sqlHandler.js';
+import queueHandler from '../../misc/queueHandler';
 // eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
@@ -29,122 +30,17 @@ export default class Queue extends Command {
     } catch (err) {
       return;
     }
-
-
     if (args && args.length > 0) {
       if (args[0] === 'clear' && args.length === 1) {
-        sqlHandler.clearQueue(msg.guild.id).then((success) => {
-          if (success) {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: 'Queue',
-              description: language.commands.queue.success.clear,
-            });
-          } else {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: 'Queue',
-              description: language.commands.queue.error.clear,
-              color: 0xcc0000,
-            });
-          }
-        });
+        this.clearQueue(msg, params);
         return;
       }
       if (args[0] === 'list' && args.length === 1) {
-        const queue = await musicPlayer.updateQueue(msg.guild.id);
-        if (queue.length === 0) {
-          msgHandler.sendRichTextDefault({
-            msg: msg,
-            title: 'Queue List',
-            description: language.commands.queue.success.empty_queue,
-          });
-        } else {
-          let queuelist = '';
-          const server = localStorage.getServer(msg.guild.id);
-          for (let i = 0; i < queue.length; i++) {
-            if (i === server.queueIndex) {
-              queuelist += `--> ${i+1}. \`${queue[i].title}\`\n`;
-            } else {
-              queuelist += `${i+1}. \`${queue[i].title}\`\n`;
-            }
-          }
-          msgHandler.sendRichTextDefault({
-            msg: msg,
-            title: language.commands.queue.labels.list,
-            description: queuelist,
-          });
-        }
-
+        await this.listQueue(msg, args, params);
         return;
       }
-      if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
-        musicPlayer.getNameFromUrl(args[0], msg).then((title) => {
-          sqlHandler.addQueue(title, args[0], msg.guild.id).then((success) => {
-            if (success) {
-              msgHandler.sendRichTextDefault({
-                msg: msg,
-                title: 'Queue',
-                description: replaceArgs(language.commands.queue.success.added, [title]),
-              });
-            } else {
-              msgHandler.sendRichTextDefault({
-                msg: msg,
-                title: 'Queue',
-                description: replaceArgs(language.commands.queue.error.added, [title]),
-              });
-            }
-          });
-        }).catch((error)=> {
-          if (err) {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: 'Queue',
-              description: language.commands.queue.error.no_results,
-              color: 0xCC0000,
-            });
-          } else {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: language.general.error,
-              description: language.commands.queue.error.unknown_error,
-              color: 0xCC0000,
-            });
-          }
-        });
-      } else {
-        musicPlayer.youtubeSearch(args, msg).then((title) => {
-          if (title.startsWith('$$$$ignore')) {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: 'Queue',
-              description: replaceArgs(language.commands.queue.error.added, [title.substring(10)]),
-            });
-          } else {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: 'Queue',
-              description: replaceArgs(language.commands.queue.success.added, [title]),
-            });
-          }
-        }).catch((err) => {
-          if (err) {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: 'Queue',
-              description: language.commands.queue.error.no_results,
-              color: 0xCC0000,
-            });
-          } else {
-            msgHandler.sendRichTextDefault({
-              msg: msg,
-              title: language.general.error,
-              description: language.commands.queue.error.unknown_error,
-              color: 0xCC0000,
-            });
-          }
-        });
-      }
+      this.queueUp(msg, args, params);
+      return;
     } else {
       msgHandler.sendRichTextDefault({
         msg: msg,
@@ -153,5 +49,146 @@ export default class Queue extends Command {
         color: 0xCC0000,
       });
     }
+  }
+
+  async listQueue(msg, args, params) {
+    let name = config.default_queue;
+    if (params && params.name && params.name.trim() !== '') {
+      name = params.name.trim();
+    }
+    const queue = await queueHandler.addOrGetQueue(msg.guild.id, name);
+
+    if (queue.length === 0) {
+      const description = replaceArgs(language.commands.queue.success.empty_queue, [name]);
+      if (name === config.default_queue) {
+        description = language.commands.queue.success.empty_queue_default;
+      }
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: 'Queue List',
+        description: description,
+      });
+    } else {
+      let queuelist = '';
+      const server = localStorage.getServer(msg.guild.id);
+      for (let i = 0; i < queue.length; i++) {
+        if (i === server.queueIndex && server.queueName === name) {
+          queuelist += `--> ${i+1}. \`${queue[i].title}\`\n`;
+        } else {
+          queuelist += `${i+1}. \`${queue[i].title}\`\n`;
+        }
+      }
+      const title = replaceArgs(language.commands.queue.labels.list, [name]);
+      if (name === config.default_queue) {
+        title = language.commands.queue.labels.list_default;
+      }
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: title,
+        description: queuelist,
+      });
+    }
+
+    return;
+  }
+
+  queueUp(msg, args, params) {
+    let name = config.default_queue;
+    let msgTitle = 'Queue';
+    if (params && params.name && params.name.trim() !== '') {
+      name = params.name.trim();
+      msgTitle = 'Queue '+name;
+    }
+    if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
+      musicPlayer.getNameFromUrl(args[0], msg).then((title) => {
+        this.addTitleToQueue(name, title, url, msg, msgTitle);
+      }).catch((error)=> {
+        if (err) {
+          msgHandler.sendRichTextDefault({
+            msg: msg,
+            title: msgTitle,
+            description: language.commands.queue.error.no_results,
+            color: 0xCC0000,
+          });
+        } else {
+          msgHandler.sendRichTextDefault({
+            msg: msg,
+            title: language.general.error,
+            description: language.commands.queue.error.unknown_error,
+            color: 0xCC0000,
+          });
+        }
+      });
+    } else {
+      musicPlayer.youtubeSearch(args).then(({title: title, url: url}) => {
+        this.addTitleToQueue(name, title, url, msg, msgTitle);
+      }).catch((err) => {
+        if (err) {
+          msgHandler.sendRichTextDefault({
+            msg: msg,
+            title: 'Queue',
+            description: language.commands.queue.error.no_results,
+            color: 0xCC0000,
+          });
+        } else {
+          msgHandler.sendRichTextDefault({
+            msg: msg,
+            title: language.general.error,
+            description: language.commands.queue.error.unknown_error,
+            color: 0xCC0000,
+          });
+        }
+      });
+    }
+  }
+
+  addTitleToQueue(name, title, url, msg, msgTitle) {
+    queueHandler.addTitle(name, title, url, msg.guild.id).then((success) => {
+      if (success) {
+        msgHandler.sendRichTextDefault({
+          msg: msg,
+          title: msgTitle,
+          description: replaceArgs(language.commands.queue.success.added, [title]),
+        });
+      } else {
+        msgHandler.sendRichTextDefault({
+          msg: msg,
+          title: msgTitle,
+          description: replaceArgs(language.commands.queue.error.added, [title]),
+        });
+      }
+    });
+  }
+
+  clearQueue(msg, params) {
+    let name = config.default_queue;
+    if (params && params.name && params.name.trim() !== '') {
+      name = params.name.trim();
+    }
+    queueHandler.clearQueue(msg.guild.id, name).then((success) => {
+      if (success) {
+        let description = replaceArgs(language.commands.queue.success.clear, [name]);
+        if (name === config.default_queue) {
+          description = language.commands.queue.success.clear_default;
+        }
+        msgHandler.sendRichTextDefault({
+          msg: msg,
+          title: 'Queue',
+          description: description,
+        });
+      } else {
+        let description = replaceArgs(language.commands.queue.error.clear, [name]);
+        if (name === config.default_queue) {
+          description = language.commands.queue.error.clear_default;
+        }
+        msgHandler.sendRichTextDefault({
+          msg: msg,
+          title: 'Queue',
+          description: description,
+          color: 0xcc0000,
+        });
+      }
+    });
+    return;
   }
 }
