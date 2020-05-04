@@ -35,7 +35,7 @@ export default class Queue extends Command {
         return;
       }
       if (args[0] === 'list' && args.length === 1) {
-        await this.listQueue(msg, args, params);
+        await this.listQueue(msg, params);
         return;
       }
       if ((args[0] === 'listqueues' || args[0] === 'listq') && args.length === 1) {
@@ -57,10 +57,9 @@ export default class Queue extends Command {
   /**
    * List queue titles
    * @param {Discord.Message} msg
-   * @param {string[]} args
    * @param {{name: string}} params
    */
-  async listQueue(msg, args, params) {
+  async listQueue(msg, params) {
     let name = config.default_queue;
     if (params && params.name && params.name.trim() !== '') {
       name = params.name.trim();
@@ -167,16 +166,24 @@ export default class Queue extends Command {
   addTitleToQueue(name, title, url, msg, msgTitle) {
     queueHandler.addTitle(name, title, url, msg.guild.id).then((success) => {
       if (success) {
+        let description = replaceArgs(language.commands.queue.success.added_default, [title]);
+        if (name===config.default_queue) {
+          description = replaceArgs(language.commands.queue.success.added, [title, name]);
+        }
         msgHandler.sendRichTextDefault({
           msg: msg,
           title: msgTitle,
-          description: replaceArgs(language.commands.queue.success.added, [title]),
+          description: description,
         });
       } else {
+        let description = replaceArgs(language.commands.queue.error.added_default, [title]);
+        if (name===config.default_queue) {
+          description = replaceArgs(language.commands.queue.error.added, [title, name]);
+        }
         msgHandler.sendRichTextDefault({
           msg: msg,
           title: msgTitle,
-          description: replaceArgs(language.commands.queue.error.added, [title]),
+          description: description,
         });
       }
     });

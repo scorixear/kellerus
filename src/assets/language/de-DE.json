@@ -148,21 +148,28 @@
     },
     "queue": {
       "description": "Stellt ein Titel in die Queue, listet alle Titel in der Queue auf oder löscht die Queue.\nTitel können per Sucheingabe oder Youtube URL eingereiht werden.",
-      "example": "queue list\nqueue clear\nqueue Titel\nqueue https://www.youtube.com/watch?v=video_id",
+      "example": "queue list\nqueue clear\nqueue listqueues\nqueue Titel\nqueue https://www.youtube.com/watch?v=video_id",
       "labels": {
-        "list": "Queue Liste"
+        "list_default": "Queue Liste",
+        "list": "$0 Liste",
+        "queues": "Liste aller Queues"
       },
       "error": {
-        "clear": "Queue konnte nicht gelöscht werden",
-        "added": "Titel `$0` ist bereits in der Queue.",
+        "clear_default": "Queue konnte nicht gelöscht werden",
+        "clear": "Queue $0 konnte nicht gelöscht werden",
+        "added_default": "Titel `$0` ist bereits in der Queue.",
+        "added": "Title `$0` ist bereits in $1.",
         "no_results": "Keine Ergebnisse gefunden!",
         "unknown_error": "Unerwartetes Ergebnis beim Kontaktieren der Youtube Search API.",
         "usage":"Kein Titel angegeben! Nutze `$0$1` um einen Titel in die Queue zu stellen."
       },
       "success": {
-        "clear": "Queue gelöscht",
-        "empty_queue": "Leere Queue",
-        "added": "Titel `$0` hinzugefügt."
+        "clear_default": "Queue gelöscht",
+        "clear": "Queue $0 gelöscht",
+        "empty_queue_default": "Leere Queue",
+        "empty_queue": "$0 is leer",
+        "added_default": "Titel `$0` hinzugefügt.",
+        "added": "Title `$0` zu $1 hinzugefügt."
       }
     },
     "skip": {

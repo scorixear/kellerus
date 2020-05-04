@@ -147,22 +147,29 @@
       "error" : "I must be in a voice channel to be banished!"
     },
     "queue": {
-      "description": "Queues a song, lists all songs in the queue or clears the queue.\nSongs can be queued by entering the youtube url or a specific search string.",
-      "example": "queue list\nqueue clear\nqueue Song_Title\nqueue https://www.youtube.com/watch?v=video_id",
+      "description": "Queues a song, lists all songs in a queue or clears a queue.\nSongs can be queued by entering the youtube url or a specific search string.",
+      "example": "queue list\nqueue clear\nqueue listqueues\nqueue Song_Title\nqueue https://www.youtube.com/watch?v=video_id",
       "labels": {
-        "list": "Queue List"
+        "list_default": "Queue List",
+        "list": "$0 List",
+        "queues": "List of Queues"
       },
       "error": {
-        "clear": "Queue could not be cleared",
-        "added": "Title `$0` is already in the queue.",
+        "clear_default": "Queue could not be cleared",
+        "clear": "Queue $0 could not be cleared",
+        "added_default": "Title `$0` is already in the queue.",
+        "added": "Title `$0` is alread in $1.",
         "no_results": "No Results found!",
         "unknown_error": "Unexpected Result while connecting to the Youtube API.",
         "usage":"No title given! Use `$0$1` to queue a title."
       },
       "success": {
-        "clear": "Queue cleared",
-        "empty_queue": "Empty Queue",
-        "added": "Title `$0` added."
+        "clear_default": "Queue cleared",
+        "clear": "Queue $0 cleared",
+        "empty_queue_default": "Empty Queue",
+        "empty_queue": "$0 is empty",
+        "added_default": "Title `$0` added.",
+        "added": "Title `$0` added to $1"
       }
     },
     "skip": {
