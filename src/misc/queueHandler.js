@@ -9,6 +9,11 @@ async function initQueues(serverid, conn) {
   }
 }
 
+/**
+ * Returns all queues
+ * @param {number} serverid
+ * @return {string[]}
+ */
 async function getQueues(serverid) {
   let conn;
   const queues = [];

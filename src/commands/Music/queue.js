@@ -2,7 +2,6 @@ import Command from './../command.js';
 import config from '../../config.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
-import sqlHandler from '../../misc/sqlHandler.js';
 import queueHandler from '../../misc/queueHandler';
 // eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
@@ -22,7 +21,7 @@ export default class Queue extends Command {
    * Executes the command
    * @param {Array<String>} args the arguments fo the msg
    * @param {Discord.Message} msg the msg object
-   * @param {{}} params added parameters and their argument
+   * @param {{name: string}} params added parameters and their argument
    */
   async executeCommand(args, msg, params) {
     try {
@@ -39,6 +38,10 @@ export default class Queue extends Command {
         await this.listQueue(msg, args, params);
         return;
       }
+      if ((args[0] === 'listqueues' || args[0] === 'listq') && args.length === 1) {
+        await this.listQueues(msg);
+        return;
+      }
       this.queueUp(msg, args, params);
       return;
     } else {
@@ -51,6 +54,12 @@ export default class Queue extends Command {
     }
   }
 
+  /**
+   * List queue titles
+   * @param {Discord.Message} msg
+   * @param {string[]} args
+   * @param {{name: string}} params
+   */
   async listQueue(msg, args, params) {
     let name = config.default_queue;
     if (params && params.name && params.name.trim() !== '') {
@@ -90,6 +99,19 @@ export default class Queue extends Command {
     }
 
     return;
+  }
+
+  async listQueues(msg) {
+    const queues = queueHandler.getQueues(msg.guild.id);
+    let description;
+    for (const queue of queues) {
+      description += '- '+queue+'\n';
+    }
+    msgHandler.sendRichTextDefault({
+      msg: msg,
+      title: language.commands.queue.labels.queues,
+      description: description,
+    });
   }
 
   queueUp(msg, args, params) {
