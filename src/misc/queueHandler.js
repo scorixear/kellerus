@@ -44,7 +44,7 @@ async function addOrGetQueue(serverid, name) {
   let queue = undefined;
   try {
     conn = await sqlHandler.pool.getConnection();
-    let rows = await conn.query(`SELECT ID, queue_name FROM \`QueueList_${serverid}\` WHERE queue_name == ${conn.escape(name)}`);
+    let rows = await conn.query(`SELECT ID, queue_name FROM \`QueueList_${serverid}\` WHERE queue_name = ${conn.escape(name)}`);
     if (!rows) {
       await initQueues(serverid, conn);
       rows = [];
@@ -52,7 +52,7 @@ async function addOrGetQueue(serverid, name) {
     queue = [];
     if (rows.length === 0) {
       await conn.query(`INSERT INTO \`QueueList_${serverid}\` (queue_name) VALUES (${conn.escape(name)})`);
-      const id = conn.query(`SELECT ID FROM \`QueueList_${serverid}\` WHERE queue_name == ${conn.escape(name)}`)[0].ID;
+      const id = conn.query(`SELECT ID FROM \`QueueList_${serverid}\` WHERE queue_name = ${conn.escape(name)}`)[0].ID;
       await conn.query(`CREATE TABLE \`Queue_${serverid}_${id}\` (\`ID\` INT UNSIGNED AUTO_INCREMENT, \`url\` VARCHAR(255), \`title\` VARCHAR(255), PRIMARY KEY (\`ID\`))`);
     } else {
       const temp = await conn.query(`SELECT title, url FROM \`Queue_${serverid}_${rows[0].ID}\``);
@@ -86,7 +86,7 @@ async function addTitle(name, title, url, serverid) {
   await addOrGetQueue(serverid, name);
   try {
     conn = await sqlHandler.pool.getConnection();
-    const id = await conn.query(`SELECT ID FROM \`QueueList_${serverid}\` WHERE queue_name  == \`name\``)[0].ID;
+    const id = await conn.query(`SELECT ID FROM \`QueueList_${serverid}\` WHERE queue_name  = \`name\``)[0].ID;
     await conn.query(`INSERT INTO \`Queue_${serverid}_${id}\` (title, url) VALUES (${conn.escape(title)},${conn.escape(url)})`);
     success = true;
   } catch (err) {
@@ -110,7 +110,7 @@ async function clearQueue(serverid, name) {
   await addOrGetQueue(serverid, name);
   try {
     conn = await sqlHandler.pool.getConnection();
-    const id = await conn.query(`SELECT ID FROM \`QueueList_${serverid}\` WHERE queue_name  == \`name\``)[0].ID;
+    const id = await conn.query(`SELECT ID FROM \`QueueList_${serverid}\` WHERE queue_name  = \`name\``)[0].ID;
     await conn.query(`DELETE FROM \`Queue_${serverid}_${id}\``);
     success = true;
   } catch (err) {
