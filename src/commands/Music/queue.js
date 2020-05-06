@@ -79,8 +79,9 @@ export default class Queue extends Command {
     } else {
       let queuelist = '';
       const server = localStorage.getServer(msg.guild.id);
+      const localQueue = localStorage.getQueue(msg.guild.id, name);
       for (let i = 0; i < queue.length; i++) {
-        if (i === server.queueIndex && server.queueName === name) {
+        if (i === localQueue.queueIndex && server.queueName === name) {
           queuelist += `--> ${i+1}. \`${queue[i].title}\`\n`;
         } else {
           queuelist += `${i+1}. \`${queue[i].title}\`\n`;
@@ -121,7 +122,7 @@ export default class Queue extends Command {
       msgTitle = 'Queue '+name;
     }
     if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
-      musicPlayer.getNameFromUrl(args[0], msg).then((title) => {
+      musicPlayer.getNameFromUrl(args[0]).then((title) => {
         this.addTitleToQueue(name, title, url, msg, msgTitle);
       }).catch((error)=> {
         if (err) {

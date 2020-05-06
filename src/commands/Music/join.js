@@ -1,7 +1,8 @@
 import Command from './../command.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
-import {dic as language} from '../../misc/languageHandler.js';
+import config from '../../config';
+import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
 export default class Join extends Command {
   constructor(category) {
@@ -25,13 +26,19 @@ export default class Join extends Command {
       return;
     }
     if (msg.member.voice.channel) {
+      let queue = config.default_queue;
+      let description = language.commands.join.success_default;
+      if (args && args.length > 0) {
+        queue = args.join(' ');
+        description = replaceArgs(language.commands.join.success, [queue]);
+      }
       msg.member.voice.channel.join().then((connection) => {
-        musicPlayer.play(connection, msg.member.voice.channel, msg.guild.id, msg.channel);
+        musicPlayer.play(connection, msg.member.voice.channel, msg.guild.id, msg.channel, queue);
       });
       msgHandler.sendRichTextDefault({
         msg: msg,
         title: language.commands.join.labels.joined,
-        description: language.commands.join.success,
+        description: description,
       });
     } else {
       msgHandler.sendRichTextDefault({

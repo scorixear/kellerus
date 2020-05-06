@@ -30,8 +30,12 @@ async function setVolume(serverid, volume) {
  * @param {Discord.Message} msg message so send
  */
 function skipQueue(skipNumber, msg) {
-  localStorage.getServer(msg.guild.id).queueIndex += skipNumber - 1;
+  localStorage.getQueue(serverid, localStorage.getServer(serverid).queueName).queueIndex += skipNumber - 1;
   stop(msg);
+}
+
+async function updateQueue(serverid, queueName) {
+  return await queueHandler.addOrGetQueue(serverid, queueName);
 }
 
 /**
@@ -40,18 +44,20 @@ function skipQueue(skipNumber, msg) {
  * @param {Discord.VoiceChannel} voiceChannel
  * @param {string} serverid
  * @param {Discord.Channel} msgChannel
+ * @param {string} queueName
  */
-async function play(connection, voiceChannel, serverid, msgChannel) {
-  const queue = await updateQueue(serverid);
+async function play(connection, voiceChannel, serverid, msgChannel, queueName) {
+  const queue = await updateQueue(serverid, queueName);
   const server = localStorage.getServer(serverid);
-  let index = server.queueIndex;
+  const localQueue = localStorage.getQueue(id, queueName);
+  const index = localQueue.queueIndex;
   if (index >= queue.length) {
     index = index % queue.length;
-    server.queueIndex = index;
+    localQueue.queueIndex = index;
   } else if (index < 0) {
     const minusAmount = (index * -1)%queue.length;
     index = queue.length - minusAmount;
-    server.queueIndex = index;
+    localQueue.queueIndex = index;
   }
 
   if (queue.length > 0) {
@@ -85,7 +91,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
           }]);
     });
     server.dispatcher.on('finish', () => {
-      server.queueIndex++;
+      localQueue.queueIndex++;
       server.dispatcher = null;
       if (voiceChannel.members.size <= 1 && connection) {
         connection.disconnect();
@@ -95,7 +101,7 @@ async function play(connection, voiceChannel, serverid, msgChannel) {
           description: language.handlers.musicPlayer.labels.disconnecting_emptyChannel,
         });
       } else {
-        play(connection, voiceChannel, serverid, msgChannel);
+        play(connection, voiceChannel, serverid, msgChannel, queueName);
       }
     });
     server.dispatcher.on('error', (err) => {
@@ -126,10 +132,9 @@ function stop(msg) {
 /**
  * Requests the Name of an youtube url
  * @param {string} url the url to request the name from
- * @param {Discord.Message} msg
  * @return {Promise<string>}
  */
-function getNameFromUrl(url, msg) {
+function getNameFromUrl(url) {
   if (!url.startsWith(youtubeVideoStart)) {
     throw new Error('Invalid url');
   }

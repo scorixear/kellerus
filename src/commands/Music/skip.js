@@ -7,9 +7,9 @@ export default class Skip extends Command {
   constructor(category) {
     super(category);
     this.usage = 'skip';
-    this.command = 'skip';
+    this.command = 'skip [number]';
     this.description = () => language.commands.skip.description;
-    this.example = 'skip';
+    this.example = 'skip 12\nskip -1\nskip';
     this.permissions = ['MOVE_MEMBERS'];
   }
   /**
