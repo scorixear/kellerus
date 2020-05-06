@@ -140,7 +140,8 @@
         "joined": "Joined"
       },
       "error": "You must be in a voice channel to summon me!",
-      "success": "Successfully Joined!"
+      "success": "Successfully Joined with Queue $0!",
+      "success_default": "Successfully Joined!"
     },
     "leave": {
       "description": "Kicks the bot from the voice channel.",

@@ -30,12 +30,12 @@ async function setVolume(serverid, volume) {
  * @param {Discord.Message} msg message so send
  */
 function skipQueue(skipNumber, msg) {
-  localStorage.getQueue(serverid, localStorage.getServer(serverid).queueName).queueIndex += skipNumber - 1;
+  localStorage.getQueue(msg.guild.id, localStorage.getServer(msg.guild.id).queueName).queueIndex += skipNumber - 1;
   stop(msg);
 }
 
-async function updateQueue(serverid, queueName) {
-  return await queueHandler.addOrGetQueue(serverid, queueName);
+function updateQueue(serverid, queueName) {
+  return queueHandler.addOrGetQueue(serverid, queueName);
 }
 
 /**
@@ -49,8 +49,8 @@ async function updateQueue(serverid, queueName) {
 async function play(connection, voiceChannel, serverid, msgChannel, queueName) {
   const queue = await updateQueue(serverid, queueName);
   const server = localStorage.getServer(serverid);
-  const localQueue = localStorage.getQueue(id, queueName);
-  const index = localQueue.queueIndex;
+  const localQueue = localStorage.getQueue(serverid, queueName);
+  let index = localQueue.queueIndex;
   if (index >= queue.length) {
     index = index % queue.length;
     localQueue.queueIndex = index;

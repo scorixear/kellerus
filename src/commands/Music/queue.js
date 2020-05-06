@@ -11,7 +11,7 @@ import localStorage from '../../misc/localStorage.js';
 export default class Queue extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'queue <clear/list/link/search params>';
+    this.usage = 'queue <clear/list/link/search params> [--name QueueName]';
     this.command = 'queue';
     this.permissions = ['MOVE_MEMBERS'];
     this.description = () => language.commands.queue.description;
@@ -67,7 +67,7 @@ export default class Queue extends Command {
     const queue = await queueHandler.addOrGetQueue(msg.guild.id, name);
 
     if (queue.length === 0) {
-      const description = replaceArgs(language.commands.queue.success.empty_queue, [name]);
+      let description = replaceArgs(language.commands.queue.success.empty_queue, [name]);
       if (name === config.default_queue) {
         description = language.commands.queue.success.empty_queue_default;
       }
@@ -87,7 +87,7 @@ export default class Queue extends Command {
           queuelist += `${i+1}. \`${queue[i].title}\`\n`;
         }
       }
-      const title = replaceArgs(language.commands.queue.labels.list, [name]);
+      let title = replaceArgs(language.commands.queue.labels.list, [name]);
       if (name === config.default_queue) {
         title = language.commands.queue.labels.list_default;
       }
@@ -102,8 +102,8 @@ export default class Queue extends Command {
   }
 
   async listQueues(msg) {
-    const queues = queueHandler.getQueues(msg.guild.id);
-    let description;
+    const queues = await queueHandler.getQueues(msg.guild.id);
+    let description = '';
     for (const queue of queues) {
       description += '- '+queue+'\n';
     }

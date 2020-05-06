@@ -140,7 +140,8 @@
         "joined": "Joined"
       },
       "error": "Du musst in einem Sprach-Kanal sein, um mich einzuladen!",
-      "success": "Erfolgreich Beigetreten!"
+      "success_default": "Erfolgreich Beigetreten!",
+      "success": "Erfolgreich Beigetreten mit Queue $0!"
     },
     "leave": {
       "description": "Bittet den Bot den Sprach-Kanal zu verlassen. Mal sehen, ob er es tut.",
@@ -167,7 +168,7 @@
         "clear_default": "Queue gelöscht",
         "clear": "Queue $0 gelöscht",
         "empty_queue_default": "Leere Queue",
-        "empty_queue": "$0 is leer",
+        "empty_queue": "$0 ist leer",
         "added_default": "Titel `$0` hinzugefügt.",
         "added": "Title `$0` zu $1 hinzugefügt."
       }

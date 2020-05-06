@@ -7,7 +7,7 @@ import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 export default class Join extends Command {
   constructor(category) {
     super(category);
-    this.usage = 'join';
+    this.usage = 'join [QueueName]';
     this.command = 'join';
     this.description = () => language.commands.join.description;
     this.example = 'join';
