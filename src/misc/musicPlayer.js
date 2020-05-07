@@ -2,7 +2,6 @@ import ytdl from 'ytdl-core';
 import config from './../config.js';
 import request from 'superagent';
 import messageHandler from './messageHandler.js';
-import sqlHandler from './sqlHandler.js';
 // eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
 import {dic as language} from './languageHandler';

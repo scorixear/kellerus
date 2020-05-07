@@ -123,8 +123,9 @@ export default class Queue extends Command {
     }
     if (args[0].startsWith('https://www.youtube.com/watch?v=')) {
       musicPlayer.getNameFromUrl(args[0]).then((title) => {
-        this.addTitleToQueue(name, title, url, msg, msgTitle);
-      }).catch((error)=> {
+        this.addTitleToQueue(name, title, args[0], msg, msgTitle);
+      }).catch((err)=> {
+        console.log(err);
         if (err) {
           msgHandler.sendRichTextDefault({
             msg: msg,
