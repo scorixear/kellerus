@@ -104,6 +104,7 @@ export default class Covid19 extends Command {
     if (!this.tempData.lastDate || (now - this.tempData.lastDate ) >= (60*60*1000) || force) {
       const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
       const page = await browser.newPage();
+      await page.setDefaultNavigationTimeout(0);
       await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
 
       const mainTable = await page.$('#main_table_countries_today > tbody:nth-child(2)');
