@@ -27,6 +27,8 @@ export function changeLanguage(lang) {
  * @return {string} the filled string
  */
 export function replaceArgs(input, args) {
+  console.log(input);
+  console.log(args);
   for (let i = 0; i<args.length; i++) {
     input = input.split('$'+i).join(args[i]);
   }

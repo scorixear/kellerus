@@ -23,25 +23,25 @@
   },
   "homepage": "https://github.com/scorixear/kellerus#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.10.1",
-    "@babel/runtime": "^7.10.3",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@discordjs/opus": "^0.1.0",
-    "discord.js": "^12.2.0",
-    "mariadb": "^2.4.0",
+    "discord.js": "^12.4.1",
+    "mariadb": "^2.5.1",
     "puppeteer": "^2.1.1",
-    "superagent": "^5.2.2",
-    "ytdl-core": "^2.1.7"
+    "superagent": "^5.3.1",
+    "ytdl-core": "^4.0.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "@babel/node": "^7.10.3",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-transform-runtime": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
-    "@babel/register": "^7.10.3",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.6",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.6"
   }
 }

@@ -233,6 +233,16 @@
       },
       "success": "Title `$0` removed"
     },
+    "move": {
+      "description": "Moves all Users in the current voice channel\nto the specified voice channel - including you 😉.\nTip: You don't need to write the emoji.",
+      "labels": {
+        "success": "Successfully moved the whole squat to `$0`\n\nThese Users are moved:\n$1"
+      },
+      "error": {
+        "no_channel": "You must be connected to a voice channel to use this command.",
+        "no_move_channel": "Could not find any channel like $0"
+      }
+    },
     "download": {
       "description": "Downloads a file from youtube and posts it here",
       "error": {

@@ -233,6 +233,16 @@
       },
       "success": "Titel `$0` entfernt"
     },
+    "move": {
+      "description": "Verschiebt alle Nutzer im aktuellen Channel in den angegebenen Channel - auch dich 😉\nTipp: Du brauchst das Emoji nicht mit angeben.",
+      "labels": {
+        "success": "Erfolgreich den gesammten Squad nach `$0` verschoben.\n\nDiese Nutzer wurden verschoben:\n$1"
+      },
+      "error": {
+        "no_channel": "Du musst einem Channel sein um diesen Befehl zu benutzen.",
+        "no_move_channel": "Konnte keinen Channel mit den Namen $0 finden"
+      }
+    },
     "download": {
       "description": "Lädt eine Datei von DuRöhre herunter und pfostiert sie in diesem Kanal",
       "error": {

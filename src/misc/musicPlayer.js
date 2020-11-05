@@ -183,6 +183,7 @@ function youtubeSearch(searchKeywords) {
           }
         }
       } else {
+        console.log(error);
         console.log('Unexpected error when searching YouTube');
         // eslint-disable-next-line prefer-promise-reject-errors
         reject(null);

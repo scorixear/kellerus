@@ -154,6 +154,7 @@ export default class Queue extends Command {
             color: 0xCC0000,
           });
         } else {
+          console.log(err);
           msgHandler.sendRichTextDefault({
             msg: msg,
             title: language.general.error,
