@@ -74,6 +74,7 @@ export default class Play extends Command {
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join().then((connection) => {
         const server = localStorage.getServer(msg.guild.id);
+        console.log(path);
         const dispatcher = connection.play(path, {volume: server.volume});
         dispatcher.on('error', (error) => {
           console.log('error voice', error);
