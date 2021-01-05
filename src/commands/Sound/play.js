@@ -7,6 +7,7 @@ import msgHandler from '../../misc/messageHandler';
 import {Message} from 'discord.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 import localStorage from '../../misc/localStorage.js';
+import Discord from 'discord.js';
 
 export default class Play extends Command {
   constructor(category) {
@@ -47,6 +48,7 @@ export default class Play extends Command {
           }
         }
       }
+      console.log(path);
       if (path !== base) {
         this.playFile(path, msg);
         return;
@@ -63,11 +65,19 @@ export default class Play extends Command {
     }
   }
 
+  /**
+   * 
+   * @param {*} path 
+   * @param {Discord.Message} msg 
+   */
   playFile(path, msg) {
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join().then((connection) => {
         const server = localStorage.getServer(msg.guild.id);
         const dispatcher = connection.play(path, {volume: server.volume});
+        dispatcher.on('error', (error) => {
+          console.log('error voice', error);
+        });
         dispatcher.on('finish', ()=> {
           msg.member.voice.channel.leave();
         });

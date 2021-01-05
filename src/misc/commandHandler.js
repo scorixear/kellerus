@@ -14,7 +14,7 @@ commandFiles.forEach((folder) => {
     Fs.readdirSync(`./src/commands/${folder}/`).forEach((file) => {
       if (file.endsWith('.js')) {
         const command = require(`./../commands/${folder}/${file}`);
-        console.log(command);
+        //console.log(command);
         if (command.commands) {
           for (const cmd of command.commands) {
             commands.push(Reflect.construct(cmd, [folder]));
