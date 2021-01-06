@@ -61,11 +61,12 @@ async function play(connection, voiceChannel, serverid, msgChannel, queueName) {
 
   if (queue.length > 0) {
     server.dispatcher = connection.play(
-        ytdl(queue[index].url, {
+        await ytdl(queue[index].url, {
           filter: 'audioonly',
           quality: 'highestaudio',
           format: 'mp3',
           highWaterMark: 1 << 25,
+          type : 'opus'
         }));
     setVolume(serverid, server.volume);
     server.dispatcher.on('start', () => {
