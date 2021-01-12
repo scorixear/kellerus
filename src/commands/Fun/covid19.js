@@ -101,45 +101,77 @@ export default class Covid19 extends Command {
    */
   async crawlPageForData(force) {
     const now = new Date();
-    if (!this.tempData.lastDate || (now - this.tempData.lastDate ) >= (60*60*1000) || force) {
-      const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
+    if (
+      !this.tempData.lastDate ||
+      now - this.tempData.lastDate >= 60 * 60 * 1000 ||
+      force
+    ) {
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: ["--no-sandbox"],
+      });
       const page = await browser.newPage();
       await page.setDefaultNavigationTimeout(0);
-      await page.goto('https://www.worldometers.info/coronavirus/', {waitUntil: 'networkidle0'});
+      await page.goto("https://www.worldometers.info/coronavirus/", {
+        waitUntil: "networkidle0",
+      });
 
-      const mainTable = await page.$('#main_table_countries_today > tbody:nth-child(2)');
-      const totalRows = await mainTable.$('tr:nth-child(1)');
-      const totalNumber = await totalRows.$eval('td:nth-child(2)', (element) => {
-        return element.innerHTML;
-      });
-      const totalDeaths = await totalRows.$eval('td:nth-child(4)', (element) => {
-        return element.innerHTML;
-      });
-      const totalHealed = await totalRows.$eval('td:nth-child(6)', (element) => {
-        return element.innerHTML;
-      });
-      const rows = await mainTable.$$('tr');
+      const mainTable = await page.$(
+        "#main_table_countries_today > tbody:nth-child(2)"
+      );
+      const totalRows = await mainTable.$("tr:nth-child(1)");
+      const totalNumber = await totalRows.$eval(
+        "td:nth-child(3)",
+        (element) => {
+          return element.innerHTML;
+        }
+      );
+      const totalDeaths = await totalRows.$eval(
+        "td:nth-child(5)",
+        (element) => {
+          return element.innerHTML;
+        }
+      );
+      const totalHealed = await totalRows.$eval(
+        "td:nth-child(7)",
+        (element) => {
+          return element.innerHTML;
+        }
+      );
+      const rows = await mainTable.$$("tr");
 
-      let topTenList = '';
+      let topTenList = "";
       let count = 0;
-      for (let i = 1; count <10; i++) {
-        const className = await rows[i].getProperty('className').then((p)=>p.jsonValue());
-        if (className === 'even' || className === 'odd') {
+      for (let i = 1; count < 10; i++) {
+        const className = await rows[i]
+          .getProperty("className")
+          .then((p) => p.jsonValue());
+        if (className === "even" || className === "odd") {
           count++;
-          const country = await rows[i].$eval('td:nth-child(1) > a', (element) => {
+          const country = await rows[i].$eval(
+            "td:nth-child(2) > a",
+            (element) => {
+              return element.innerHTML;
+            }
+          );
+          const number = await rows[i].$eval("td:nth-child(3)", (element) => {
             return element.innerHTML;
           });
-          const number = await rows[i].$eval('td:nth-child(2)', (element) => {
+          const deaths = await rows[i].$eval("td:nth-child(5)", (element) => {
             return element.innerHTML;
           });
-          const deaths = await rows[i].$eval('td:nth-child(4)', (element) => {
+          const healed = await rows[i].$eval("td:nth-child(7)", (element) => {
             return element.innerHTML;
           });
-          const healed = await rows[i].$eval('td:nth-child(6)', (element) => {
-            return element.innerHTML;
-          });
-          topTenList += replaceArgs(language.commands.covid19.success.topTen,
-              [count, country.trim(), number.trim(), deaths.trim(), healed.trim()]) + '\n';
+
+          topTenList +=
+            replaceArgs(language.commands.covid19.success.topTen, [
+              count,
+              country.trim(),
+              number.trim(),
+              deaths.trim(),
+              healed.trim(),
+            ]) + "\n";
         }
       }
       await browser.close();
