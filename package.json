@@ -26,22 +26,22 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/runtime": "^7.12.5",
     "@discordjs/opus": "^0.3.3",
-    "discord.js": "^12.4.1",
-    "mariadb": "^2.5.1",
+    "discord.js": "^12.5.1",
+    "mariadb": "^2.5.2",
     "puppeteer": "^2.1.1",
     "superagent": "^5.3.1",
-    "ytdl-core": "^4.4.0"
+    "ytdl-core": "^4.4.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/node": "^7.12.6",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/register": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.7"
   }
 }
