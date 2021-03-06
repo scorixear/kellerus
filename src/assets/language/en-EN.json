@@ -1,5 +1,31 @@
 {
   "commands": {
+    "addBotChannel": {
+      "description": "Links a Voice-Channel to a Bot-Channel.\nA Bot-Channel creates new Channels to join in.",
+      "error": {
+        "usageTitle": "Wrong Usage",
+        "textTitle": "Textchannel selected",
+        "textDescription": "Text-Channel selected, the channel must be a Voice-Channel",
+        "sqlTitle": "DB Error",
+        "sqlDescription": "Could not save Channel"
+      },
+      "labels": {
+        "success": "Channel configured",
+        "description": "Channel `$0` configured. Following Channels follow the schema `$1`"
+      }
+    },
+    "removeBotChannel": {
+      "description": "Removes the configuration of a Bot-Channel.",
+      "error": {
+        "usageTitle": "Wrong Usage",
+        "sqlTitle": "DB Error",
+        "sqlDescription": "Could not remove Channel"
+      },
+      "labels": {
+        "success": "Channel removed",
+        "description": "Channel `$0` removed."
+      }
+    },
     "covid19": {
       "description": "Returns live statistics about the corona pandemic.",
       "labels": {

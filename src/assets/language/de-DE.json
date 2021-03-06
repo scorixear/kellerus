@@ -1,5 +1,31 @@
 {
   "commands": {
+    "addBotChannel": {
+      "description": "Verlinkt ein Voice-Channel zu einem BotChannel.\nBotChannel erstellen weitere Channel beim Joinen.",
+      "error": {
+        "usageTitle": "Falsche Benutzung",
+        "textTitle": "Textchannel ausgewählt",
+        "textDescription": "Text-Channel ausgewählt, der Kanal muss ein Voice-Channel sein",
+        "sqlTitle": "DB Error",
+        "sqlDescription": "Konnte Channel nicht speichern"
+      },
+      "labels": {
+        "success": "Channel konfiguriert",
+        "description": "Channel `$0` wurde konfiguriert. Weitere Channels folgen dem Schema `$1`"
+      }
+    },
+    "removeBotChannel": {
+      "description": "Entfernt die Konfiguration eines Bot-Channels.",
+      "error": {
+        "usageTitle": "Falsche Benutzung",
+        "sqlTitle": "DB Error",
+        "sqlDescription": "Konnte Channel nicht entfernen"
+      },
+      "labels": {
+        "success": "Channel entfernt",
+        "description": "Channel `$0` wurde entfernt."
+      }
+    },
     "covid19": {
       "description": "Gibt aktuelle Statistiken über die Corona Pandemie zurück.",
       "labels": {
