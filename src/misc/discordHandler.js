@@ -11,6 +11,12 @@ client.on("voiceStateUpdate", async (newVoice, oldVoice) => {
   if(oldUserChannel !== newUserChannel) {
     if(oldUserChannel && tempChannels.includes(oldUserChannel)) {
       if(oldUserChannel.members.array().length === 0) {
+        for(let i = 0; i< tempChannels.length;i++) {
+          if(tempChannels[i] === oldUserChannel) {
+            tempChannels.splice(i, 1);
+            break;
+          }
+        }
         await oldUserChannel.delete();
       }
       
