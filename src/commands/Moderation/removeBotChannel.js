@@ -11,7 +11,7 @@ export default class RemoveBotChannel extends Command {
     this.command = 'removeChannel';
     this.description = () => language.commands.addBotChannel.description;
     this.example = 'removeChannel #general';
-    this.permissions = ["MANAGE_CHANNELS"];
+    this.permissions = ['MANAGE_CHANNELS'];
   }
   /**
    * Executes the command
@@ -26,33 +26,33 @@ export default class RemoveBotChannel extends Command {
       return;
     }
 
-    if(!args || args.length !== 1) {
+    if (!args || args.length !== 1) {
       messageHandler.sendRichTextDefault({
         msg: msg,
         title: language.commands.removeBotChannel.usageTitle,
         description: this.usage,
-        color: 0xcc0000
+        color: 0xcc0000,
       });
       return;
     }
 
     const channel = discordHandler.client.channels.cache.get(args[0]);
-    if(!channel) {
+    if (!channel) {
       messageHandler.sendRichTextDefault({
         msg: msg,
         title: language.commands.removeBotChannel.usageTitle,
         description: this.usage,
-        color: 0xcc0000
+        color: 0xcc0000,
       });
       return;
     }
 
-    if(!await sqlHandler.removeChannel(channel.id)) {
+    if (!await sqlHandler.removeChannel(channel.id)) {
       messageHandler.sendRichTextDefault({
         msg: msg,
         title: language.commands.removeBotChannel.sqlError,
         description: language.commands.removeBotChannel.sqlErrorDescription,
-        color: 0xcc0000
+        color: 0xcc0000,
       });
       return;
     }
@@ -60,15 +60,15 @@ export default class RemoveBotChannel extends Command {
     messageHandler.sendRichTextDefault({
       msg: msg,
       title: language.commands.removeBotChannel.labels.success,
-      description: replaceArgs(language.commands.removeBotChannel.labels.description, [channel.name])
+      description: replaceArgs(language.commands.removeBotChannel.labels.description, [channel.name]),
     });
   }
 
   getChannelFromMention(mention) {
-    if(!mention) return;
-    if(mention.startsWith('<#') && mention.endsWith('>')) {
+    if (!mention) return;
+    if (mention.startsWith('<#') && mention.endsWith('>')) {
       mention = mention.slice(2, -1);
-      if(mention.startsWith('!')) {
+      if (mention.startsWith('!')) {
         mention = mention.slice(1);
       }
       console.log(mention);

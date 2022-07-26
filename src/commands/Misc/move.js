@@ -1,8 +1,6 @@
 import msgHandler from '../../misc/messageHandler.js';
-import config from '../../config.js';
 import Command from './../command.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
-import discord from 'discord.js'
 
 export default class Move extends Command {
   constructor(category) {
@@ -27,18 +25,17 @@ export default class Move extends Command {
     }
     let userstring = '';
     if (msg.member.voice.channel) {
-      if(args.length > 0) {
-        let regex = new RegExp("^[^a-zA-Z0-9]*"+args[0].toLowerCase()+"$");
-        const moveChannel = msg.guild.channels.cache.find(c=> c.type === "voice" && regex.test(c.name.toLowerCase()));
+      if (args.length > 0) {
+        const regex = new RegExp('^[^a-zA-Z0-9]*'+args[0].toLowerCase()+'$');
+        const moveChannel = msg.guild.channels.cache.find((c)=> c.type === 'voice' && regex.test(c.name.toLowerCase()));
         const users = msg.member.voice.channel.members;
-        
-        if(moveChannel) {
-          users.forEach(user => {
+
+        if (moveChannel) {
+          users.forEach((user) => {
             user.voice.setChannel(moveChannel);
             userstring += '<@' + user.id+'>\n';
           });
-        }
-        else {
+        } else {
           msgHandler.sendRichTextDefault({
             msg: msg,
             title: language.general.error,
@@ -49,18 +46,18 @@ export default class Move extends Command {
         }
       }
     } else {
-       msgHandler.sendRichTextDefault({
-            msg: msg,
-            title: language.general.error,
-            description: language.commands.move.error.no_channel,
-            color: 0xcc0000,
-          });
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: language.general.error,
+        description: language.commands.move.error.no_channel,
+        color: 0xcc0000,
+      });
       return;
     }
-    //console.log(userstring);
+    // console.log(userstring);
     msgHandler.sendRichTextDefault({
-      	msg: msg,
-        description: replaceArgs(language.commands.move.labels.success, [args[0], userstring]),
+      msg: msg,
+      description: replaceArgs(language.commands.move.labels.success, [args[0], userstring]),
     });
   }
 }

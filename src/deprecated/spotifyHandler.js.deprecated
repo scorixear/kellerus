@@ -1,0 +1,35 @@
+import {SpotifyPlaybackSDK} from 'spotify-playback-sdk-node';
+
+/** @type {SpotifyPlaybackSDK} */
+let api;
+
+/**
+ * a
+ * @param {string} token a
+ */
+function initSpotify(token) {
+  api = new SpotifyPlaybackSDK();
+  api.init();
+}
+
+/**
+ * a
+ * @param {String} token a
+ * @return {SpotifyPlayer}
+ */
+async function createPlayer(token) {
+  const player = await api.createPlayer({
+    name: 'Web',
+    getOAuthToken() {
+      return token;
+    },
+  });
+  player.on('player_state_changed', console.log);
+  return player;
+}
+
+export default {
+  initSpotify,
+  createPlayer,
+};
+// u5qPNNYIbD0S0o36MrAiFZ56K6qMCrCmYPzZuTnV

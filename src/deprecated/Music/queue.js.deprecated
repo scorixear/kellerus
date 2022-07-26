@@ -3,6 +3,7 @@ import config from '../../config.js';
 import msgHandler from '../../misc/messageHandler.js';
 import musicPlayer from '../../misc/musicPlayer.js';
 import queueHandler from '../../misc/queueHandler';
+import tidalHandler from '../../misc/tidalHandler';
 // eslint-disable-next-line no-unused-vars
 import Discord from 'discord.js';
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
@@ -42,7 +43,7 @@ export default class Queue extends Command {
         await this.listQueues(msg);
         return;
       }
-      this.queueUp(msg, args, params);
+      await this.queueUp(msg, args, params);
       return;
     } else {
       msgHandler.sendRichTextDefault({
@@ -114,7 +115,13 @@ export default class Queue extends Command {
     });
   }
 
-  queueUp(msg, args, params) {
+  /**
+   *
+   * @param {String} msg dd
+   * @param {Array<String>} args dd
+   * @param {*} params dd
+   */
+  async queueUp(msg, args, params) {
     let name = config.default_queue;
     let msgTitle = 'Queue';
     if (params && params.name && params.name.trim() !== '') {
@@ -143,6 +150,15 @@ export default class Queue extends Command {
         }
       });
     } else {
+      const title = args.join(' ');
+      const result = await tidalHandler.searchTracks(title);
+
+      msgHandler.sendRichTextDefault({
+        msg: msg,
+        title: 'Tidal Search Result',
+        description: result,
+      });
+      return;
       musicPlayer.youtubeSearch(args).then(({title: title, url: url}) => {
         this.addTitleToQueue(name, title, url, msg, msgTitle);
       }).catch((err) => {
