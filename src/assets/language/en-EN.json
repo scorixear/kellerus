@@ -11,7 +11,7 @@
       },
       "labels": {
         "success": "Channel configured",
-        "description": "Channel `$0` configured. Following Channels follow the schema `$1`"
+        "description": "Channel <#$0> configured. Following Channels follow the schema `$1`"
       }
     },
     "removeBotChannel": {
@@ -23,7 +23,7 @@
       },
       "labels": {
         "success": "Channel removed",
-        "description": "Channel `$0` removed."
+        "description": "Channel <#$0> removed."
       }
     },
     "covid19": {
