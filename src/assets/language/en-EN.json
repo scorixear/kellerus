@@ -2,6 +2,10 @@
   "commands": {
     "addBotChannel": {
       "description": "Links a Voice-Channel to a Bot-Channel.\nA Bot-Channel creates new Channels to join in.",
+      "options": {
+        "channel": "the channel",
+        "channelTemplate": "The template for new channels"
+      },
       "error": {
         "usageTitle": "Wrong Usage",
         "textTitle": "Textchannel selected",
@@ -47,6 +51,9 @@
     },
     "ehre": {
       "description": "Awards `Ehre` points to users, that did something honorable.",
+      "options": {
+        "user": "The user"
+      },
       "error": {
         "self_award": "You cannot award yourself `Ehre`"
       },
@@ -54,6 +61,9 @@
     },
     "unehre": {
       "description": "Removes `Ehre` points from users.",
+      "options": {
+        "user": "The user"
+      },
       "error": {
         "self_remove": "You cannot remove `Ehre` from yourself. Stay in there buddy."
       },
@@ -61,6 +71,9 @@
     },
     "hi": {
       "description": "Says Hi to the Bot!",
+      "options": {
+        "user": "The user"
+      },
       "responses": ["Hi Friend", "O.O", ":3 hello", "you again 😅", ""]
     },
     "rock_paper_scissor": {
@@ -81,6 +94,9 @@
     },
     "help":{
       "description": "Returns a list of commands, you are able to use or informations about a specific command!",
+      "options": {
+        "command": "The command to get help about"
+      },
       "error": {
         "unknown":"This command is unknown. Use `$0help` for a list of commands."
       },
@@ -101,6 +117,10 @@
     },
     "invite": {
       "description": "Invites a player to join you via a private message.",
+      "options": {
+        "user": "The user to invite",
+        "message": "The message to send"
+      },
       "labels": {
         "success": "Player invited",
         "additional_message": "\nHe/she gave me a message to deliver to you: \"$0\""
@@ -117,6 +137,9 @@
     },
     "lang": {
       "description": "Switches the language of the bot.",
+      "options": {
+        "language": "The language of the bot"
+      },
       "labels": {
         "list": "Available Languages",
         "success": "Language changed"
@@ -131,6 +154,10 @@
     },
     "ban": {
       "description": "Bans a player with an optional reason.",
+      "options": {
+        "user": "The user to ban",
+        "reason": "The reason for the ban"
+      },
       "error":{
         "blocked": "You cannot ban this user!"
       },
@@ -138,6 +165,9 @@
     },
     "clear": {
       "description": "Deletes recent messages from the current channel.",
+      "options": {
+        "amount": "Amount of messages"
+      },
       "labels":{
         "message_amount": "Message Amount"
       },
@@ -145,6 +175,10 @@
     },
     "kick": {
       "description": "Kicks a user from the server with an optional reason.",
+      "options": {
+        "user": "The user to kick",
+        "reason": "The reason for the kick"
+      },
       "error": {
         "blocked": "You cannot kick this user!"
       },
@@ -152,6 +186,11 @@
     },
     "nick": {
       "description": "Nicks a user.",
+      "options": {
+        "user": "the user to nick",
+        "nickname": "the nickname to give",
+        "reason": "the reason for the nickname change"
+      },
       "labels": {
         "nickname": "Nickname"
       },
@@ -215,6 +254,12 @@
     },
     "add": {
       "description":"Stored a SoundFile",
+      "options": {
+        "title": "Sound File Title",
+        "overwrite": "Overwrite existing Sound File",
+        "category": "Sound File Category",
+        "sound": "Sound File"
+      },
       "labels": {
         "append_soundfile": "Appended SoundFile",
         "command_added": "Command Added 🎉🎉"
@@ -243,11 +288,19 @@
       }
     },
     "play": {
+      "options": {
+        "title": "Sound File Title",
+        "category": "Sound File Category"
+      },
       "description":  "Plays a SoundFile",
       "error": "404: Sound Command `$0` not found :/"
     },
     "remove": {
       "description": "Removes a SoundFile",
+      "options": {
+        "title": "Sound File Title",
+        "category": "Sound File Category"
+      },
       "labels": {
         "removed": "Removed 💥"
       },
@@ -261,6 +314,9 @@
     },
     "move": {
       "description": "Moves all Users in the current voice channel\nto the specified voice channel - including you 😉.\nTip: You don't need to write the emoji.",
+      "options":  {
+        "channel": "The voice channel to move to"
+      },
       "labels": {
         "success": "Successfully moved the whole squat to <#$0>\n\nThese Users are moved:\n$1"
       },
@@ -271,6 +327,14 @@
     },
     "download": {
       "description": "Downloads a file from youtube and posts it here",
+      "options": {
+        "url": "The youtube url to download",
+        "type": "[audio (default), video]",
+        "fileName": "The file name to save the file as",
+        "title": "The title of the video",
+        "interpret": "The interpret of the video",
+        "artist": "The artist of the video"
+      },
       "error": {
         "invalid_link": "`Link is invalid`",
         "download_failed": "Download failed",

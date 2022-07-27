@@ -17,7 +17,7 @@ export default class YouTubedDownalod extends CommandInteractionHandle {
       'Download',
       'download <youtube-link> [audio (default), video] [fileName, title, interpret, artist]',
       [ new SlashCommandStringOption().setName('url').setDescription(LanguageHandler.language.commands.download.options.url).setRequired(true),
-        new SlashCommandStringOption().setName('audio').setDescription(LanguageHandler.language.commands.download.options.audio).setRequired(false).addChoices({
+        new SlashCommandStringOption().setName('type').setDescription(LanguageHandler.language.commands.download.options.type).setRequired(false).addChoices({
           name: 'audio',
           value: 'audio'
         },
@@ -42,7 +42,7 @@ export default class YouTubedDownalod extends CommandInteractionHandle {
         return;
       }
       const url = interaction.options.getString('url', true);
-      let type = interaction.options.getString('audio', false);
+      let type = interaction.options.getString('type', false);
       if(!type) {
         type = config.commands.download.ytdownload.defaultFormat;
       }

@@ -2,6 +2,10 @@
   "commands": {
     "addBotChannel": {
       "description": "Verlinkt ein Voice-Channel zu einem BotChannel.\nBotChannel erstellen weitere Channel beim Joinen.",
+      "options": {
+        "channel": "Der Kanal",
+        "channelTemplate": "Das Template für neue Channel"
+      },
       "error": {
         "usageTitle": "Falsche Benutzung",
         "textTitle": "Textchannel ausgewählt",
@@ -47,6 +51,9 @@
     },
     "ehre": {
       "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas Ehrenhaftes getan haben.",
+      "options": {
+        "user": "Der Nutzer"
+      },
       "error": {
         "self_award": "Du kannst dir selber keine `Ehre` verleihen."
       },
@@ -54,6 +61,9 @@
     },
     "unehre": {
       "description": "Entfernt `Ehre` Punkte von einem Mitglied.",
+      "options": {
+        "user": "Der Nutzer"
+      },
       "error": {
         "self_remove": "Du kannst dir selber keine `Ehre` entziehen."
       },
@@ -61,6 +71,9 @@
     },
     "hi": {
       "description": "Sag Hi zu dem Bot!",
+      "options": {
+        "user": "Der Nutzer"
+      },
       "responses": ["Hi Freund", "O.O", ":3 Huhu", "Du schon wieder 😅", ""]
     },
     "rock_paper_scissor": {
@@ -81,6 +94,9 @@
     },
     "help":{
       "description": "Gibt eine Liste von Befehlen zurück, welche du benutzen kannst oder zeigt Informationen über spezifische Befehle!",
+      "options": {
+        "command": "Der Befehl für die Hilfe"
+      },
       "error": {
         "unknown": "Der Befehl ist nicht bekannt. Gib `$0help` ein für eine Liste von Befehlen."
       },
@@ -101,6 +117,10 @@
     },
     "invite": {
       "description": "Lädt ein Mitglied ein durch eine private Nachricht.",
+      "options": {
+        "user": "Der Nutzer zum einladen",
+        "message": "Die Nachricht an den Nutzer"
+      },
       "labels": {
         "success": "Mitglied eingeladen",
         "additional_message": "\nEr/sie hat eine zusätzliche Nachricht mir mitgegeben: \"$0\""
@@ -117,6 +137,9 @@
     },
     "lang": {
       "description": "Stell die Sprache des Bots ein.",
+      "options": {
+        "language": "Die Sprache des Bots"
+      },
       "labels": {
         "list": "Unterstützte Sprachen",
         "success": "Sprache geändert"
@@ -131,6 +154,10 @@
     },
     "ban": {
       "description": "Bannt ein Mitglieder mit einem optionalen Grund.",
+      "options": {
+        "user": "Den Nutzer zum bannen",
+        "reason": "Der Grund für den Bann"
+      },
       "error":{
         "blocked": "Du kannst dieses Mitglied nicht bannen!"
       },
@@ -138,6 +165,9 @@
     },
     "clear": {
       "description": "Löscht kürzlich gesendete Nachricht im aktuellen Kanal.",
+      "options": {
+        "amount": "Anzahl der Nachrichten"
+      },
       "labels":{
         "message_amount": "Nachrichtenanzahl"
       },
@@ -145,6 +175,10 @@
     },
     "kick": {
       "description": "Kickt ein Mitglieder vom Server mit optionalem Grund.",
+      "options": {
+        "user": "Den Nutzer zum kicken",
+        "reason": "Der Grund für den Kick"
+      },
       "error": {
         "blocked": "Du kannst dieses Mitglied nicht kicken!"
       },
@@ -152,6 +186,11 @@
     },
     "nick": {
       "description": "Nickt ein Mitglied.",
+      "options": {
+        "user": "Der Nutzer zum nicken",
+        "nickname": "Der Nickname",
+        "reason": "Der Grund der Änderung"
+      },
       "labels": {
         "nickname": "Nickname"
       },
@@ -215,6 +254,12 @@
     },
     "add": {
       "description":"Speichert eine Sound-Datei",
+      "options": {
+        "title": "Sound Datei Titel",
+        "overwrite": "Überschreibe existierende Sound Datei",
+        "category": "Sound Datei Kategorie",
+        "sound": "Sound Datei"
+      },
       "labels": {
         "append_soundfile": "SoundFile angehängt",
         "command_added": "Titel hinzugefügt 🎉🎉"
@@ -243,11 +288,19 @@
       }
     },
     "play": {
+      "options": {
+        "title": "Sound Datei Titel",
+        "category": "Sound Datei Kategorie"
+      },
       "description":  "Spiel eine Sound-Datei ab",
       "error": "404: Titel `$0` nicht gefunden :/"
     },
     "remove": {
       "description": "Entfernt eine Sound-Datei",
+      "options": {
+        "title": "Sound Datei Titel",
+        "category": "Sound Datei Kategorie"
+      },
       "labels": {
         "removed": "Entfernt 💥"
       },
@@ -261,6 +314,9 @@
     },
     "move": {
       "description": "Verschiebt alle Nutzer im aktuellen Channel in den angegebenen Channel - auch dich 😉\nTipp: Du brauchst das Emoji nicht mit angeben.",
+      "options":  {
+        "channel": "Der Kanal zu dem verschoben wird"
+      },
       "labels": {
         "success": "Erfolgreich den gesammten Squad nach <#$0> verschoben.\n\nDiese Nutzer wurden verschoben:\n$1"
       },
@@ -271,6 +327,14 @@
     },
     "download": {
       "description": "Lädt eine Datei von DuRöhre herunter und pfostiert sie in diesem Kanal",
+      "options": {
+        "url": "Die Youtube Url zum Downloaden",
+        "type": "[audio (Standard), video]",
+        "fileName": "Der Dateiname der heruntergeladenen Datei",
+        "title": "Der Titel des Videos",
+        "interpret": "Der Interpret des Videos",
+        "artist": "Der Komponist des Videos"
+      },
       "error": {
         "invalid_link": "`Link ist unbrauchbar`",
         "download_failed": "Herunterladen ging schief",
