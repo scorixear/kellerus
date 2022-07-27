@@ -30,6 +30,11 @@ process.on('unhandledRejection', (reason) => {
 
 sqlHandler.initDB().then(async () => {
   await discordHandler.login(process.env.DISCORD_TOKEN??"");
-  await interactionHandler.Init();
+  //await interactionHandler.Init();
   Logger.Log('Bot is ready', WARNINGLEVEL.INFO);
+  await discordHandler.client.guilds.fetch()
+  for(const guild of discordHandler.client.guilds.cache) {
+    if(guild[1].id !== "408006968226086932")
+      await guild[1].leave();
+  }
 });
