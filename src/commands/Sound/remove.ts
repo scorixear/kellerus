@@ -1,12 +1,12 @@
-import { ChatInputCommandInteraction, SlashCommandStringOption } from "discord.js";
+import { AutocompleteInteraction, CacheType, ChatInputCommandInteraction, SlashCommandStringOption } from "discord.js";
 import LanguageHandler from "../../handlers/languageHandler";
-import CommandInteractionHandle from "../../models/CommandInteractionHandle"
 import messageHandler from "../../handlers/messageHandler";
 import config from '../../config';
 import fs from 'fs';
 import { Logger, WARNINGLEVEL } from "../../helpers/logger";
+import AutocompleteCommandInteractionHandle from "../../models/AutocompleteCommandInteractionHandle";
 
-export default class Remove extends CommandInteractionHandle {
+export default class Remove extends AutocompleteCommandInteractionHandle {
   constructor() {
     super(
       'remove',
@@ -14,10 +14,30 @@ export default class Remove extends CommandInteractionHandle {
       'remove badumtsss',
       'Sound',
       'remove <title>',
-      [new SlashCommandStringOption().setName('title').setDescription(LanguageHandler.language.commands.remove.options.title).setRequired(true),
+      [new SlashCommandStringOption().setName('title').setDescription(LanguageHandler.language.commands.remove.options.title).setRequired(true).setAutocomplete(true),
        new SlashCommandStringOption().setName('category').setDescription(LanguageHandler.language.commands.remove.options.category).setRequired(false)],
       false,
     );
+  }
+
+  public override async handleAutocomplete(interaction: AutocompleteInteraction<CacheType>): Promise<void> {
+    const focused = interaction.options.getFocused();
+    const files = fs.readdirSync('./resources/soundeffects');
+    let fullchoices: string[] = [];
+    const {fileType} = config.commands.sound.add;
+    for(const file of files) {
+      if (file && file.endsWith('.'+fileType)){
+        fullchoices.push(file.substring(0, file.length - 1 - fileType.length));
+      } else {
+        if(fs.lstatSync('./resources/soundeffects/'+file).isDirectory()) {
+          const newFiles = fs.readdirSync('./resources/soundeffects/'+file+'/');
+          fullchoices = [...fullchoices, ...newFiles.map(f=> f.substring(0, f.length-1-fileType.length))]
+        }
+      }
+    }
+    fullchoices = fullchoices.filter(f=>f.startsWith(focused));
+    fullchoices.sort();
+    await interaction.respond(fullchoices?.map(choice => ({name: choice, value: choice}))??[]);
   }
 
   override async handle(interaction: ChatInputCommandInteraction) {

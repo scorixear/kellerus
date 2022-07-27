@@ -1,14 +1,14 @@
-import { ChatInputCommandInteraction, GuildMember, SlashCommandStringOption } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, SlashCommandStringOption } from "discord.js";
 import LanguageHandler from "../../handlers/languageHandler";
-import CommandInteractionHandle from "../../models/CommandInteractionHandle"
 import messageHandler from "../../handlers/messageHandler";
 import { Logger, WARNINGLEVEL } from "../../helpers/logger";
 import config from "../../config";
 import fs from 'fs';
 import { getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus, entersState, createAudioPlayer, NoSubscriberBehavior, createAudioResource, AudioPlayerStatus } from '@discordjs/voice'
 import TempStorage from "../../handlers/tempStorage";
+import AutocompleteCommandInteractionHandle from "../../models/AutocompleteCommandInteractionHandle";
 
-export default class Play extends CommandInteractionHandle {
+export default class Play extends AutocompleteCommandInteractionHandle {
   constructor() {
     super(
       'play',
@@ -16,10 +16,30 @@ export default class Play extends CommandInteractionHandle {
       'play badumtsss',
       'Sound',
       'play <title> [category]',
-      [new SlashCommandStringOption().setName('title').setDescription(LanguageHandler.language.commands.play.options.title).setRequired(true),
+      [new SlashCommandStringOption().setName('title').setDescription(LanguageHandler.language.commands.play.options.title).setRequired(true).setAutocomplete(true),
       new SlashCommandStringOption().setName('category').setDescription(LanguageHandler.language.commands.play.options.category).setRequired(false)],
       false,
     );
+  }
+
+  override async handleAutocomplete(interaction: AutocompleteInteraction) {
+    const focused = interaction.options.getFocused();
+    const files = fs.readdirSync('./resources/soundeffects');
+    let fullchoices: string[] = [];
+    const {fileType} = config.commands.sound.add;
+    for(const file of files) {
+      if (file && file.endsWith('.'+fileType)){
+        fullchoices.push(file.substring(0, file.length - 1 - fileType.length));
+      } else {
+        if(fs.lstatSync('./resources/soundeffects/'+file).isDirectory()) {
+          const newFiles = fs.readdirSync('./resources/soundeffects/'+file+'/');
+          fullchoices = [...fullchoices, ...newFiles.map(f=> f.substring(0, f.length-1-fileType.length))]
+        }
+      }
+    }
+    fullchoices = fullchoices.filter(f=>f.startsWith(focused));
+    fullchoices.sort();
+    await interaction.respond(fullchoices?.map(choice => ({name: choice, value: choice}))??[]);
   }
 
   override async handle(interaction: ChatInputCommandInteraction) {
