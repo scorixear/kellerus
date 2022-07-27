@@ -37,6 +37,9 @@ export default class Remove extends AutocompleteCommandInteractionHandle {
     }
     fullchoices = fullchoices.filter(f=>f.startsWith(focused));
     fullchoices.sort();
+    if(fullchoices.length > 25) {
+      fullchoices = fullchoices.slice(0, 25);
+    }
     await interaction.respond(fullchoices?.map(choice => ({name: choice, value: choice}))??[]);
   }
 
