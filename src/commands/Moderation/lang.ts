@@ -8,7 +8,7 @@ export default class Lang extends AutocompleteCommandInteractionHandle {
   constructor() {
     super(
       'lang',
-      () => LanguageHandler.language.commands.count.description,
+      () => LanguageHandler.language.commands.lang.description,
       'lang en-EN',
       'Moderation',
       'lang <language>',
@@ -16,7 +16,7 @@ export default class Lang extends AutocompleteCommandInteractionHandle {
       true,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);

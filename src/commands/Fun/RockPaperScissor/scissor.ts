@@ -7,7 +7,7 @@ export default class Scissor extends CommandInteractionHandle {
   constructor() {
     super(
       'scissor',
-      () => LanguageHandler.replaceArgs(LanguageHandler.language.commands.rock_paper_scissor.description, 
+      () => LanguageHandler.replaceArgs(LanguageHandler.language.commands.rock_paper_scissor.description,
         [LanguageHandler.language.commands.rock_paper_scissor.labels.scissor]),
       'scissor',
       'Fun',
@@ -16,7 +16,7 @@ export default class Scissor extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);

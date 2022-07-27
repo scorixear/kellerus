@@ -7,7 +7,7 @@ export default class Kick extends CommandInteractionHandle {
   constructor() {
     super(
       'kick',
-      () => LanguageHandler.language.commands.count.description,
+      () => LanguageHandler.language.commands.kick.description,
       'kick @kellerus\nkick @kellerus reason',
       'Moderation',
       'kick <user> [reason]',
@@ -16,7 +16,7 @@ export default class Kick extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -25,8 +25,8 @@ export default class Kick extends CommandInteractionHandle {
     }
     const user = interaction.options.getUser('user', true);
     const member = await interaction.guild?.members.fetch(user.id);
-    let reason = interaction.options.getString('reason', false);
-    
+    const reason = interaction.options.getString('reason', false);
+
     if ((member && interaction.member && interaction.member instanceof GuildMember && member.roles.highest.position >= interaction.member.roles.highest.position)
     ||  (interaction.guild && interaction.guild.ownerId === user.id)
     || user.bot
@@ -53,8 +53,8 @@ export default class Kick extends CommandInteractionHandle {
     await member?.kick(reason??undefined);
     await messageHandler.replyRichText({
       interaction,
-      title: LanguageHandler.language.commands.kick.success, 
-      categories: categories
+      title: LanguageHandler.language.commands.kick.success,
+      categories
     });
   }
 }

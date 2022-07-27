@@ -6,9 +6,9 @@ import config from '../../config';
 import ytdl from "ytdl-core";
 import fs from 'fs';
 import { Logger, WARNINGLEVEL } from "../../helpers/logger";
-export default class YouTubedDownalod extends CommandInteractionHandle {
+export default class YouTubedDownload extends CommandInteractionHandle {
   constructor() {
-    
+
     super(
       'download',
       () => LanguageHandler.language.commands.download.description,
@@ -25,14 +25,14 @@ export default class YouTubedDownalod extends CommandInteractionHandle {
           name: 'video',
           value: 'video'
         }),
-        new SlashCommandStringOption().setName('fileName').setDescription(LanguageHandler.language.commands.download.options.fileName).setRequired(false),
+        new SlashCommandStringOption().setName('filename').setDescription(LanguageHandler.language.commands.download.options.fileName).setRequired(false),
         new SlashCommandStringOption().setName('title').setDescription(LanguageHandler.language.commands.download.options.title).setRequired(false),
         new SlashCommandStringOption().setName('interpret').setDescription(LanguageHandler.language.commands.download.options.interpret).setRequired(false),
         new SlashCommandStringOption().setName('artist').setDescription(LanguageHandler.language.commands.download.options.artist).setRequired(false),],
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     let path: string = "";
     try {
@@ -46,7 +46,7 @@ export default class YouTubedDownalod extends CommandInteractionHandle {
       if(!type) {
         type = config.commands.download.ytdownload.defaultFormat;
       }
-      let fileName = interaction.options.getString('fileName', false);
+      let fileName = interaction.options.getString('filename', false);
       const dirpath = `./${config.commands.download.ytdownload.path}/`;
       let ytOptions: { options: ytdl.downloadOptions, fileType: string } ;
       // get options for audio or video download
@@ -133,7 +133,7 @@ export default class YouTubedDownalod extends CommandInteractionHandle {
           files: [attachment]
         })
       }
-      
+
       fs.unlinkSync(path);
       return true;
     } catch (err) {
@@ -156,7 +156,7 @@ export default class YouTubedDownalod extends CommandInteractionHandle {
     } catch (err) {
       const message = LanguageHandler.replaceArgs(LanguageHandler.language.commands.download.error.unknown_download_format, [type, config.botPrefix, this.command]);
       await messageHandler.replyRichErrorText({
-        interaction, 
+        interaction,
         title: message
       });
       throw new Error(`No matching download format found for ${type || ''}`);

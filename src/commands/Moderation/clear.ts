@@ -15,7 +15,7 @@ export default class Clear extends CommandInteractionHandle {
       true,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);

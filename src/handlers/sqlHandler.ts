@@ -28,7 +28,7 @@ export default class SqlHandler {
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) await conn.end();
     }
     Logger.Log("Initialized Database", WARNINGLEVEL.INFO);
   }
@@ -111,7 +111,7 @@ export default class SqlHandler {
     let returnValue = true;
     try {
       conn = await this.pool.getConnection();
-      let rows = await conn.query(`SELECT id FROM channels WHERE \`id\` = ${conn.escape(channelId)}`);
+      const rows = await conn.query(`SELECT id FROM channels WHERE \`id\` = ${conn.escape(channelId)}`);
       if(rows && rows[0]) {
         await conn.query(`UPDATE channels SET replacement = ${conn.escape(replacement)} WHERE \`id\` = ${conn.escape(channelId)}`);
       } else {
@@ -142,8 +142,8 @@ export default class SqlHandler {
   }
 
   /**
-   * 
-   * @param {String} channelId 
+   *
+   * @param {String} channelId
    */
   public async findChannel(channelId: string) {
     let conn;

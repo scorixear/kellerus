@@ -7,7 +7,7 @@
         "channelTemplate": "The template for new channels"
       },
       "error": {
-        "usageTitle": "Wrong Usage",
+        "usageTitle": "The \"$\" symbol is missing",
         "textTitle": "Textchannel selected",
         "textDescription": "Text-Channel selected, the channel must be a Voice-Channel",
         "sqlTitle": "DB Error",
@@ -93,7 +93,7 @@
       }
     },
     "help":{
-      "description": "Returns a list of commands, you are able to use or informations about a specific command!",
+      "description": "Help about commands or list of all commands",
       "options": {
         "command": "The command to get help about"
       },
@@ -288,6 +288,7 @@
       }
     },
     "play": {
+      "success":"Playing \"$0\"",
       "options": {
         "title": "Sound File Title",
         "category": "Sound File Category"
@@ -313,7 +314,7 @@
       "success": "Title `$0` removed"
     },
     "move": {
-      "description": "Moves all Users in the current voice channel\nto the specified voice channel - including you 😉.\nTip: You don't need to write the emoji.",
+      "description": "Moves all Users in the current voice channel",
       "options":  {
         "channel": "The voice channel to move to"
       },
@@ -344,6 +345,9 @@
       },
       "download_started": "Download has started! This may take some time 📡⏳",
       "download_completed": "Download has finished! Here's your file 💽"
+    },
+    "count": {
+      "description": "Counts"
     }
   },
   "handlers": {

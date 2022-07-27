@@ -7,7 +7,7 @@ export default class Ban extends CommandInteractionHandle {
   constructor() {
     super(
       'ban',
-      () => LanguageHandler.language.commands.count.description,
+      () => LanguageHandler.language.commands.ban.description,
       'ban @kellerus he is a bot',
       'Moderation',
       'ban <user> [reason]',
@@ -16,7 +16,7 @@ export default class Ban extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -25,8 +25,8 @@ export default class Ban extends CommandInteractionHandle {
     }
     const user = interaction.options.getUser('user', true);
     const member = await interaction.guild?.members.fetch(user.id);
-    let reason = interaction.options.getString('reason', false);
-    
+    const reason = interaction.options.getString('reason', false);
+
     if ((member && interaction.member && interaction.member instanceof GuildMember && member.roles.highest.position >= interaction.member.roles.highest.position)
     ||  (interaction.guild && interaction.guild.ownerId === user.id)
     || user.bot
@@ -55,8 +55,8 @@ export default class Ban extends CommandInteractionHandle {
     });
     await messageHandler.replyRichText({
       interaction,
-      title: LanguageHandler.language.commands.ban.success, 
-      categories: categories
+      title: LanguageHandler.language.commands.ban.success,
+      categories
     });
   }
 }

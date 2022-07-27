@@ -7,7 +7,7 @@ export default class Nick extends CommandInteractionHandle {
   constructor() {
     super(
       'nick',
-      () => LanguageHandler.language.commands.count.description,
+      () => LanguageHandler.language.commands.nick.description,
       'nick @kellerus Bot',
       'Moderation',
       'nick <user> <nickname> [reason]',
@@ -17,7 +17,7 @@ export default class Nick extends CommandInteractionHandle {
       true,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -32,7 +32,7 @@ export default class Nick extends CommandInteractionHandle {
     const oldNickname = member.nickname;
     const categories = [{
       title: LanguageHandler.language.general.user,
-      text: nickname,
+      text: `<@${user.id}>`,
     }, {
       title: LanguageHandler.language.commands.nick.labels.nickname,
       text: `\`${oldNickname || member.displayName}\` > \`${nickname}\``,
@@ -48,8 +48,8 @@ export default class Nick extends CommandInteractionHandle {
       await member.setNickname(nickname, reason??undefined);
       await messageHandler.replyRichText({
         interaction,
-        title: LanguageHandler.language.commands.nick.success, 
-        categories: categories
+        title: LanguageHandler.language.commands.nick.success,
+        categories
       });
     } catch {
       await messageHandler.replyRichErrorText({

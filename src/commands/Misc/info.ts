@@ -16,7 +16,7 @@ export default class Info extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -39,9 +39,9 @@ export default class Info extends CommandInteractionHandle {
       text: 'Paul Keller',
     };
     await messageHandler.replyRichText({
-      interaction, 
-      title: 'Bot Info', 
-      categories, 
+      interaction,
+      title: 'Bot Info',
+      categories,
       color: 0xF1C40F
     });
   }

@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, CommandInteraction, GuildMember, SlashCommandBooleanOption, SlashCommandBuilder, SlashCommandChannelOption, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
+import { ChatInputCommandInteraction, CommandInteraction, GuildMember, SlashCommandAttachmentOption, SlashCommandBooleanOption, SlashCommandBuilder, SlashCommandChannelOption, SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandUserOption } from "discord.js";
 
 export default abstract class CommandInteractionHandle {
   public command: string;
@@ -31,6 +31,8 @@ export default abstract class CommandInteractionHandle {
         this.slashCommandBuilder.addUserOption(option);
       } else if (option instanceof SlashCommandIntegerOption) {
         this.slashCommandBuilder.addIntegerOption(option);
+      } else if (option instanceof SlashCommandAttachmentOption){
+        this.slashCommandBuilder.addAttachmentOption(option);
       } else {
         throw new Error("Not supported SlashCommand Option");
       }

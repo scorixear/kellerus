@@ -21,7 +21,7 @@ export default class Play extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       try {
@@ -35,7 +35,7 @@ export default class Play extends CommandInteractionHandle {
       const category = interaction.options.getString('category', false);
       const base = './resources/soundeffects/';
       let path = base;
-      if (category && category.trim() != '' && fs.existsSync(base + category+'/'+title)) {
+      if (category && category.trim() !== '' && fs.existsSync(base + category+'/'+title)) {
         path += category + '/' + title;
       } else if (fs.existsSync(base + title)) {
         path += title;
@@ -50,6 +50,10 @@ export default class Play extends CommandInteractionHandle {
       }
       if (path !== base) {
         this.playFile(path, interaction);
+        await messageHandler.replyRichText({
+          interaction,
+          title: LanguageHandler.replaceArgs(LanguageHandler.language.commands.play.success, [originalTitle]),
+        })
         return;
       }
       await messageHandler.replyRichErrorText({
@@ -60,11 +64,11 @@ export default class Play extends CommandInteractionHandle {
       return;
     } catch (err) {
       Logger.Error("Play Unexpected Error", err, WARNINGLEVEL.ERROR);
-      if (interaction.member 
-        && interaction.member instanceof GuildMember 
+      if (interaction.member
+        && interaction.member instanceof GuildMember
         && interaction.member.voice.channel
         && interaction.guild) {
-          let connection = getVoiceConnection(interaction.guild.id);
+          const connection = getVoiceConnection(interaction.guild.id);
           if (connection) {
             connection.destroy();
           }
@@ -73,9 +77,9 @@ export default class Play extends CommandInteractionHandle {
   }
 
   /**
-   * 
-   * @param {*} path 
-   * @param {Discord.Message} msg 
+   *
+   * @param {*} path
+   * @param {Discord.Message} msg
    */
    private playFile(path: string, interaction: ChatInputCommandInteraction) {
     // check that member is connected to a voice channel
@@ -101,7 +105,7 @@ export default class Play extends CommandInteractionHandle {
             connection.destroy();
           }
         })
-        
+
         // On Voice Connection Ready
         connection.on(VoiceConnectionStatus.Ready, () => {
           // retrieve current audio player volume
@@ -117,7 +121,7 @@ export default class Play extends CommandInteractionHandle {
           // create audio resource for file
           const resource = createAudioResource(path, {inlineVolume: true});
           resource.volume?.setVolume(server?.volume??1);
-          
+
           // start playing file
           player.play(resource);
           // and subscribe to player

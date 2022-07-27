@@ -7,7 +7,7 @@
         "channelTemplate": "Das Template für neue Channel"
       },
       "error": {
-        "usageTitle": "Falsche Benutzung",
+        "usageTitle": "Es fehlt das \"$\" Zeichen",
         "textTitle": "Textchannel ausgewählt",
         "textDescription": "Text-Channel ausgewählt, der Kanal muss ein Voice-Channel sein",
         "sqlTitle": "DB Error",
@@ -93,7 +93,7 @@
       }
     },
     "help":{
-      "description": "Gibt eine Liste von Befehlen zurück, welche du benutzen kannst oder zeigt Informationen über spezifische Befehle!",
+      "description": "Hilfe über Befehle oder Liste aller Befehle.",
       "options": {
         "command": "Der Befehl für die Hilfe"
       },
@@ -292,6 +292,7 @@
         "title": "Sound Datei Titel",
         "category": "Sound Datei Kategorie"
       },
+      "success": "Spiele \"$0\"",
       "description":  "Spiel eine Sound-Datei ab",
       "error": "404: Titel `$0` nicht gefunden :/"
     },
@@ -313,7 +314,7 @@
       "success": "Titel `$0` entfernt"
     },
     "move": {
-      "description": "Verschiebt alle Nutzer im aktuellen Channel in den angegebenen Channel - auch dich 😉\nTipp: Du brauchst das Emoji nicht mit angeben.",
+      "description": "Verschiebt alle Nutzer im aktuellen Channel.",
       "options":  {
         "channel": "Der Kanal zu dem verschoben wird"
       },
@@ -344,6 +345,9 @@
       },
       "download_started": "Herunterladen gestartet. Dies kann einen Moment dauern 📡⏳",
       "download_completed": "Herunterladen fertig. Hier ist deine Datei 💽"
+    },
+    "count": {
+      "description": "Zählt"
     }
   },
   "handlers": {

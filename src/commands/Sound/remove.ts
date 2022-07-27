@@ -19,7 +19,7 @@ export default class Remove extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       try {

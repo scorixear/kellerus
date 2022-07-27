@@ -37,9 +37,12 @@ export default class DiscordHandler {
               parent: newUserChannel.parent??undefined,
               position: newUserChannel.position + 1,
             });
-            channel.permissionOverwrites.set(newUserChannel.permissionOverwrites.cache);
+            try {
+              await channel.permissionOverwrites.set(newUserChannel.permissionOverwrites.cache);
+            } catch{}
+
             this.tempChannels.push(channel);
-            newVoice.setChannel(channel);
+            await newVoice.setChannel(channel);
           }
         }
       }

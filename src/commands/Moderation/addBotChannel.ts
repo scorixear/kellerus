@@ -7,7 +7,7 @@ export default class AddChannel extends CommandInteractionHandle {
   constructor() {
     super(
       'addchannel',
-      () => LanguageHandler.language.commands.count.description,
+      () => LanguageHandler.language.commands.addBotChannel.description,
       'addchannel @general general-$',
       'Moderation',
       'addchannel <channel> <channel-template>',
@@ -16,7 +16,7 @@ export default class AddChannel extends CommandInteractionHandle {
       true,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -30,7 +30,7 @@ export default class AddChannel extends CommandInteractionHandle {
     if (!channelTemplate.includes("$")) {
       await messageHandler.replyRichErrorText({
         interaction,
-        title: LanguageHandler.language.addBotChannel.error.usageTitle,
+        title: LanguageHandler.language.commands.addBotChannel.error.usageTitle,
         description: this.usage,
       });
       return;
@@ -39,8 +39,8 @@ export default class AddChannel extends CommandInteractionHandle {
     if(!await sqlHandler.saveChannel(channel.id, channelTemplate)) {
       await messageHandler.replyRichErrorText({
         interaction,
-        title: LanguageHandler.language.addBotChannel.error.sqlTitle,
-        description: LanguageHandler.language.addBotChannel.error.sqlDescription,
+        title: LanguageHandler.language.commands.addBotChannel.error.sqlTitle,
+        description: LanguageHandler.language.commands.addBotChannel.error.sqlDescription,
       });
       return;
     }
@@ -49,6 +49,6 @@ export default class AddChannel extends CommandInteractionHandle {
       title: LanguageHandler.language.commands.addBotChannel.labels.success,
       description: LanguageHandler.replaceArgs(LanguageHandler.language.commands.addBotChannel.labels.description, [channel.id, channelTemplate])
     })
-    
+
   }
 }

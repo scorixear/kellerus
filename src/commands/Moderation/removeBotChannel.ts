@@ -7,7 +7,7 @@ export default class RemoveChannel extends CommandInteractionHandle {
   constructor() {
     super(
       'removechannel',
-      () => LanguageHandler.language.commands.count.description,
+      () => LanguageHandler.language.commands.removeBotChannel.description,
       'remove @general',
       'Moderation',
       'remove <channel>',
@@ -15,7 +15,7 @@ export default class RemoveChannel extends CommandInteractionHandle {
       true,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -39,6 +39,6 @@ export default class RemoveChannel extends CommandInteractionHandle {
       title: LanguageHandler.language.commands.removeBotChannel.labels.success,
       description: LanguageHandler.replaceArgs(LanguageHandler.language.commands.removeBotChannel.labels.description, [channel.id])
     })
-    
+
   }
 }

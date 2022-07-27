@@ -11,9 +11,9 @@ export default class Add extends CommandInteractionHandle {
   constructor() {
     const commandOptions: any[] = [
       new SlashCommandStringOption().setName('title').setDescription(LanguageHandler.language.commands.add.options.title).setRequired(true),
+      new SlashCommandAttachmentOption().setName('sound').setDescription(LanguageHandler.language.commands.add.options.sound).setRequired(true),
       new SlashCommandBooleanOption().setName('overwrite').setDescription(LanguageHandler.language.commands.add.options.overwrite).setRequired(false),
       new SlashCommandStringOption().setName('category').setDescription(LanguageHandler.language.commands.add.options.category).setRequired(false),
-      new SlashCommandAttachmentOption().setName('sound').setDescription(LanguageHandler.language.commands.add.options.sound).setRequired(true),
     ];
     super(
       'add',
@@ -119,7 +119,9 @@ export default class Add extends CommandInteractionHandle {
           resolve();
         });
       }).on("error", (err) => {
-        fs.unlink(dest, (err)=> {});
+        fs.unlink(dest, (e)=> {
+          if(e) reject(e);
+        });
         reject(err);
       });
     });

@@ -45,7 +45,7 @@ export default class Help extends AutocompleteCommandInteractionHandle {
         if(member.user.id === process.env.OWNER_ID) {
           found = true;
         }
-        
+
         if(!found) {
           await messageHandler.replyRichErrorText({
             interaction,

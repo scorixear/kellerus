@@ -15,7 +15,7 @@ export default class Move extends CommandInteractionHandle {
       true,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -36,14 +36,14 @@ export default class Move extends CommandInteractionHandle {
       await messageHandler.replyRichErrorText( {
         interaction,
         title: LanguageHandler.language.general.error,
-        description: LanguageHandler.language.commans.move.error.no_channel,
+        description: LanguageHandler.language.commands.move.error.no_channel,
       });
       return;
      }
      await messageHandler.replyRichText({
       interaction,
-      description: LanguageHandler.replaceArgs(LanguageHandler.language.command.move.lables.success, [channel.id, userstring])
+      description: LanguageHandler.replaceArgs(LanguageHandler.language.commands.move.labels.success, [channel.id, userstring])
      });
-    
+
   }
 }

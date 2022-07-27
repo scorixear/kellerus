@@ -15,7 +15,7 @@ export default class Ping extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -24,7 +24,7 @@ export default class Ping extends CommandInteractionHandle {
     }
     await messageHandler.replyRichText({
       interaction,
-      title: "Piong",
+      title: "Pong",
       description: `${discordHandler.client.ws.ping}ms`,
     });
   }

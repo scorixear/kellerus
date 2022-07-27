@@ -133,7 +133,7 @@ export default class MessageHandler {
     }
     let files: AttachmentBuilder[] = [];
     if(image) {
-      files = [new AttachmentBuilder(`../../assets/${image}`)];
+      files = [new AttachmentBuilder(`./src/assets/${image}`)];
       richText.setImage(`attachment://${image}`);
     }
 
@@ -147,9 +147,9 @@ export default class MessageHandler {
       richText.setURL(url);
     }
     if (components) {
-      return channel.send({embeds: [richText], components, files: files});
+      return channel.send({embeds: [richText], components, files});
     }
-    return channel.send({embeds: [richText], files: files});
+    return channel.send({embeds: [richText], files});
   }
 
   public static async getRichTextInteraction(param0: {
@@ -247,7 +247,7 @@ export default class MessageHandler {
     }
     let files: AttachmentBuilder[] = [];
     if(image) {
-      files = [new AttachmentBuilder(`../../assets/${image}`)];
+      files = [new AttachmentBuilder(`./src/assets/${image}`)];
       richText.setImage(`attachment://${image}`);
     }
 
@@ -262,10 +262,10 @@ export default class MessageHandler {
     }
     const eph = ephemeral || false;
 
-    let returnValue: {embeds: EmbedBuilder[], ephemeral: boolean, components?: ActionRowBuilder<ButtonBuilder>[], files: AttachmentBuilder[]} = {embeds: [richText], ephemeral: eph, files: files};
+    let returnValue: {embeds: EmbedBuilder[], ephemeral: boolean, components?: ActionRowBuilder<ButtonBuilder>[], files: AttachmentBuilder[]} = {embeds: [richText], ephemeral: eph, files};
 
     if (components) {
-      returnValue = {embeds: [richText], ephemeral: eph, components, files: files};
+      returnValue = {embeds: [richText], ephemeral: eph, components, files};
     }
     return returnValue;
   }

@@ -18,7 +18,7 @@ export default class ListSounds extends CommandInteractionHandle {
       false,
     );
   }
-  
+
   override async handle(interaction: ChatInputCommandInteraction) {
     try {
       await super.handle(interaction);
@@ -43,8 +43,7 @@ export default class ListSounds extends CommandInteractionHandle {
       let counter = 0;
       const {fileType} = config.commands.sound.add;
       files.sort();
-      for (let i = 0; i < files.length; i += 1) {
-        const f = files[i];
+      for (const f of files) {
         if (f && f.endsWith('.'+fileType)) {
           counter++;
           const theCommand = (f.substring(0, f.length - 1 - fileType.length));
@@ -77,13 +76,13 @@ export default class ListSounds extends CommandInteractionHandle {
         }
       }
       categories.sort((a, b)=>a.title.localeCompare(b.title));
-      if (counter != 0) {
+      if (counter !== 0) {
         categories.unshift(noCategory);
       }
       await messageHandler.replyRichText({
         interaction,
         title: LanguageHandler.language.commands.listSounds.labels.header,
-        categories: categories,
+        categories,
       });
     } catch (err) {
       Logger.Error("ListSounds Unexpected Error", err, WARNINGLEVEL.ERROR);

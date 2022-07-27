@@ -8,8 +8,8 @@ export default class DateHandler {
     return `${date.getFullYear()}/${this.toDoubleDigit(date.getMonth() + 1)}/${this.toDoubleDigit(date.getDate())}, ${this.toDoubleDigit(date.getHours())}:${this.toDoubleDigit(date.getMinutes())}`;
   }
 
-  private static toDoubleDigit(number: number) {
-    return number < 10 ? '0'+number : number;
+  private static toDoubleDigit(n: number) {
+    return n < 10 ? '0'+n : n;
   }
 }
 
