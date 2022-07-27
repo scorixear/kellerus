@@ -30,9 +30,6 @@
         "interpret": "TPE1",
         "artist": "TPE1"
       },
-      "fileTags": {
-        "filename": "filename"
-      },
       "path": "/resources/ytdownload"
     }
   }

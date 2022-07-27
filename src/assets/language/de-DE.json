@@ -2,8 +2,12 @@
   "commands": {
     "addBotChannel": {
       "description": "Verlinkt ein Voice-Channel zu einem BotChannel.\nBotChannel erstellen weitere Channel beim Joinen.",
+      "options": {
+        "channel": "Der Kanal",
+        "channelTemplate": "Das Template für neue Channel"
+      },
       "error": {
-        "usageTitle": "Falsche Benutzung",
+        "usageTitle": "Es fehlt das \"$\" Zeichen",
         "textTitle": "Textchannel ausgewählt",
         "textDescription": "Text-Channel ausgewählt, der Kanal muss ein Voice-Channel sein",
         "sqlTitle": "DB Error",
@@ -11,7 +15,7 @@
       },
       "labels": {
         "success": "Channel konfiguriert",
-        "description": "Channel `$0` wurde konfiguriert. Weitere Channels folgen dem Schema `$1`"
+        "description": "Channel <#$0> wurde konfiguriert. Weitere Channels folgen dem Schema `$1`"
       }
     },
     "removeBotChannel": {
@@ -23,7 +27,7 @@
       },
       "labels": {
         "success": "Channel entfernt",
-        "description": "Channel `$0` wurde entfernt."
+        "description": "Channel <#$0> wurde entfernt."
       }
     },
     "covid19": {
@@ -47,20 +51,29 @@
     },
     "ehre": {
       "description": "Verleiht `Ehre` Punkte an Mitglieder, welche etwas Ehrenhaftes getan haben.",
+      "options": {
+        "user": "Der Nutzer"
+      },
       "error": {
         "self_award": "Du kannst dir selber keine `Ehre` verleihen."
       },
-      "success": "$0 war `$1`-mal ehrenhaft."
+      "success": "<@$0> war `$1`-mal ehrenhaft."
     },
     "unehre": {
       "description": "Entfernt `Ehre` Punkte von einem Mitglied.",
+      "options": {
+        "user": "Der Nutzer"
+      },
       "error": {
         "self_remove": "Du kannst dir selber keine `Ehre` entziehen."
       },
-      "success": "$0 hat noch `$1` Ehre."
+      "success": "<@$0> hat noch `$1` Ehre."
     },
     "hi": {
       "description": "Sag Hi zu dem Bot!",
+      "options": {
+        "user": "Der Nutzer"
+      },
       "responses": ["Hi Freund", "O.O", ":3 Huhu", "Du schon wieder 😅", ""]
     },
     "rock_paper_scissor": {
@@ -80,7 +93,10 @@
       }
     },
     "help":{
-      "description": "Gibt eine Liste von Befehlen zurück, welche du benutzen kannst oder zeigt Informationen über spezifische Befehle!",
+      "description": "Hilfe über Befehle oder Liste aller Befehle.",
+      "options": {
+        "command": "Der Befehl für die Hilfe"
+      },
       "error": {
         "unknown": "Der Befehl ist nicht bekannt. Gib `$0help` ein für eine Liste von Befehlen."
       },
@@ -101,6 +117,10 @@
     },
     "invite": {
       "description": "Lädt ein Mitglied ein durch eine private Nachricht.",
+      "options": {
+        "user": "Der Nutzer zum einladen",
+        "message": "Die Nachricht an den Nutzer"
+      },
       "labels": {
         "success": "Mitglied eingeladen",
         "additional_message": "\nEr/sie hat eine zusätzliche Nachricht mir mitgegeben: \"$0\""
@@ -117,6 +137,9 @@
     },
     "lang": {
       "description": "Stell die Sprache des Bots ein.",
+      "options": {
+        "language": "Die Sprache des Bots"
+      },
       "labels": {
         "list": "Unterstützte Sprachen",
         "success": "Sprache geändert"
@@ -131,6 +154,10 @@
     },
     "ban": {
       "description": "Bannt ein Mitglieder mit einem optionalen Grund.",
+      "options": {
+        "user": "Den Nutzer zum bannen",
+        "reason": "Der Grund für den Bann"
+      },
       "error":{
         "blocked": "Du kannst dieses Mitglied nicht bannen!"
       },
@@ -138,6 +165,9 @@
     },
     "clear": {
       "description": "Löscht kürzlich gesendete Nachricht im aktuellen Kanal.",
+      "options": {
+        "amount": "Anzahl der Nachrichten"
+      },
       "labels":{
         "message_amount": "Nachrichtenanzahl"
       },
@@ -145,6 +175,10 @@
     },
     "kick": {
       "description": "Kickt ein Mitglieder vom Server mit optionalem Grund.",
+      "options": {
+        "user": "Den Nutzer zum kicken",
+        "reason": "Der Grund für den Kick"
+      },
       "error": {
         "blocked": "Du kannst dieses Mitglied nicht kicken!"
       },
@@ -152,6 +186,11 @@
     },
     "nick": {
       "description": "Nickt ein Mitglied.",
+      "options": {
+        "user": "Der Nutzer zum nicken",
+        "nickname": "Der Nickname",
+        "reason": "Der Grund der Änderung"
+      },
       "labels": {
         "nickname": "Nickname"
       },
@@ -215,6 +254,12 @@
     },
     "add": {
       "description":"Speichert eine Sound-Datei",
+      "options": {
+        "title": "Sound Datei Titel",
+        "overwrite": "Überschreibe existierende Sound Datei",
+        "category": "Sound Datei Kategorie",
+        "sound": "Sound Datei"
+      },
       "labels": {
         "append_soundfile": "SoundFile angehängt",
         "command_added": "Titel hinzugefügt 🎉🎉"
@@ -224,7 +269,7 @@
         "no_attachment": "`Kein Anhang gefunden`\nDu bist kein Jedi, Anhänge sind nicht verboten",
         "file_size": "`Dateigröße überschritt das Maximum`\nUm eine berühmte Schauspielerin zu zitieren: \"Es ist zu groß 😲\"",
         "invalid_format": "`Datei ist nicht im MP3-Format`\nMP4 und MP5 sind auch verboten",
-        "already_exists": "`Dieser Titel existiert bereits`\nVersuche es unter einem anderen Namen zu speichern, oder überschreibe den Titel mit dem Befehl `$0 --overwrite`",
+        "already_exists": "`Dieser Titel existiert bereits`\nVersuche es unter einem anderen Namen zu speichern, oder überschreibe den Titel mit dem Befehl `overwrite: true`",
         "file_saving": "Etwas ist schief gelaufen :/",
         "generic_error": "`Unerwarteter Fehler`\nLuca hat jeden möglich Fehler bedacht. Aber du ... du hast es geschafft, noch einen zu finden."
       },
@@ -243,11 +288,20 @@
       }
     },
     "play": {
+      "options": {
+        "title": "Sound Datei Titel",
+        "category": "Sound Datei Kategorie"
+      },
+      "success": "Spiele \"$0\"",
       "description":  "Spiel eine Sound-Datei ab",
       "error": "404: Titel `$0` nicht gefunden :/"
     },
     "remove": {
       "description": "Entfernt eine Sound-Datei",
+      "options": {
+        "title": "Sound Datei Titel",
+        "category": "Sound Datei Kategorie"
+      },
       "labels": {
         "removed": "Entfernt 💥"
       },
@@ -260,9 +314,12 @@
       "success": "Titel `$0` entfernt"
     },
     "move": {
-      "description": "Verschiebt alle Nutzer im aktuellen Channel in den angegebenen Channel - auch dich 😉\nTipp: Du brauchst das Emoji nicht mit angeben.",
+      "description": "Verschiebt alle Nutzer im aktuellen Channel.",
+      "options":  {
+        "channel": "Der Kanal zu dem verschoben wird"
+      },
       "labels": {
-        "success": "Erfolgreich den gesammten Squad nach `$0` verschoben.\n\nDiese Nutzer wurden verschoben:\n$1"
+        "success": "Erfolgreich den gesammten Squad nach <#$0> verschoben.\n\nDiese Nutzer wurden verschoben:\n$1"
       },
       "error": {
         "no_channel": "Du musst einem Channel sein um diesen Befehl zu benutzen.",
@@ -271,6 +328,14 @@
     },
     "download": {
       "description": "Lädt eine Datei von DuRöhre herunter und pfostiert sie in diesem Kanal",
+      "options": {
+        "url": "Die Youtube Url zum Downloaden",
+        "type": "[audio (Standard), video]",
+        "fileName": "Der Dateiname der heruntergeladenen Datei",
+        "title": "Der Titel des Videos",
+        "interpret": "Der Interpret des Videos",
+        "artist": "Der Komponist des Videos"
+      },
       "error": {
         "invalid_link": "`Link ist unbrauchbar`",
         "download_failed": "Herunterladen ging schief",
@@ -280,6 +345,9 @@
       },
       "download_started": "Herunterladen gestartet. Dies kann einen Moment dauern 📡⏳",
       "download_completed": "Herunterladen fertig. Hier ist deine Datei 💽"
+    },
+    "count": {
+      "description": "Zählt"
     }
   },
   "handlers": {

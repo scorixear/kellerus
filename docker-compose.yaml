@@ -1,20 +1,41 @@
-version: '3.3'
+version: "3.8"
+
+volumes:
+  mariadb:
+    driver: local
+
+networks:
+    db:
+        driver: bridge
 
 services:
-  db:
-    image: mysql:5.7
+  mysql:
+    image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'username'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - '3306:3306'
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kellerus
+      MYSQL_USER: kellerus
+      MYSQL_PASSWORD: kellerus
+    command: ['mysqld', '--default-authentication-plugin=mysql_native_password']
     expose:
-      - '3306'
+        - "40000"
+    ports:
+        - "40000:3306"
     volumes:
-      - my-db:/var/lib/mysql
-# Names our volume
-volumes:
-  my-db:
+     - mariadb:/var/lib/mysql
+    networks:
+      db:
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    expose:
+      - "40001"
+    ports:
+      - "40001:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+    networks:
+      db:
