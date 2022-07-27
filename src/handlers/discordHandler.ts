@@ -1,11 +1,11 @@
 import {Client, GatewayIntentBits, Awaitable, VoiceBasedChannel, Partials, ChannelType} from 'discord.js';
 export default class DiscordHandler {
-  private client: Client;
+  public client: Client;
   private tempChannels: VoiceBasedChannel[];
   constructor() {
     this.client = new Client({
       partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.User],
-      intents: [GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent]
+      intents: [GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages]
     });
     this.tempChannels = []
     this.client.on('voiceStateUpdate', async (newVoice, oldVoice) => {

@@ -50,14 +50,14 @@
       "error": {
         "self_award": "Du kannst dir selber keine `Ehre` verleihen."
       },
-      "success": "$0 war `$1`-mal ehrenhaft."
+      "success": "<@$0> war `$1`-mal ehrenhaft."
     },
     "unehre": {
       "description": "Entfernt `Ehre` Punkte von einem Mitglied.",
       "error": {
         "self_remove": "Du kannst dir selber keine `Ehre` entziehen."
       },
-      "success": "$0 hat noch `$1` Ehre."
+      "success": "<@$0> hat noch `$1` Ehre."
     },
     "hi": {
       "description": "Sag Hi zu dem Bot!",
@@ -262,7 +262,7 @@
     "move": {
       "description": "Verschiebt alle Nutzer im aktuellen Channel in den angegebenen Channel - auch dich 😉\nTipp: Du brauchst das Emoji nicht mit angeben.",
       "labels": {
-        "success": "Erfolgreich den gesammten Squad nach `$0` verschoben.\n\nDiese Nutzer wurden verschoben:\n$1"
+        "success": "Erfolgreich den gesammten Squad nach <#$0> verschoben.\n\nDiese Nutzer wurden verschoben:\n$1"
       },
       "error": {
         "no_channel": "Du musst einem Channel sein um diesen Befehl zu benutzen.",

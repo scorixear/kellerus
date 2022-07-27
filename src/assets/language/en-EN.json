@@ -50,14 +50,14 @@
       "error": {
         "self_award": "You cannot award yourself `Ehre`"
       },
-      "success": "$0 was `$1` times honorable."
+      "success": "<@$0> was `$1` times honorable."
     },
     "unehre": {
       "description": "Removes `Ehre` points from users.",
       "error": {
         "self_remove": "You cannot remove `Ehre` from yourself. Stay in there buddy."
       },
-      "success": "$0 still got `$1` Ehre left."
+      "success": "<@$0> still got `$1` Ehre left."
     },
     "hi": {
       "description": "Says Hi to the Bot!",
@@ -262,7 +262,7 @@
     "move": {
       "description": "Moves all Users in the current voice channel\nto the specified voice channel - including you 😉.\nTip: You don't need to write the emoji.",
       "labels": {
-        "success": "Successfully moved the whole squat to `$0`\n\nThese Users are moved:\n$1"
+        "success": "Successfully moved the whole squat to <#$0>\n\nThese Users are moved:\n$1"
       },
       "error": {
         "no_channel": "You must be connected to a voice channel to use this command.",

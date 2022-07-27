@@ -59,12 +59,12 @@ export default class SqlHandler {
    */
   public async addHonorCount(user: User) {
     let conn;
-    let honorCount;
+    let honorCount: number;
     try {
       conn = await this.pool.getConnection();
       let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = ${conn.escape(user.id)}`);
       if (rows && rows[0]) {
-        honorCount = rows[0].val + 1;
+        honorCount = parseInt(rows[0].val, 10) + 1;
         rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`);
       } else {
         honorCount = 1;
