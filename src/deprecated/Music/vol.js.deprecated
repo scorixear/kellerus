@@ -1,6 +1,6 @@
 import Command from './../command.js';
 import musicPlayer from '../../misc/musicPlayer.js';
-import messageHandler from '../../misc/messageHandler.js';
+
 import {dic as language, replaceArgs} from '../../misc/languageHandler.js';
 
 export default class Vol extends Command {

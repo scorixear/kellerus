@@ -1,18 +1,18 @@
 import { User } from 'discord.js';
+import { Logger } from 'discord.ts-architecture';
 import mariadb from 'mariadb';
-import { Logger, WARNINGLEVEL } from '../helpers/logger';
 
-export default class SqlHandler {
+export class SqlHandler {
   private pool: mariadb.Pool;
   constructor() {
     this.pool = mariadb.createPool({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      port: parseInt(process.env.DB_PORT??"3306", 10),
+      port: parseInt(process.env.DB_PORT ?? '3306', 10),
       database: process.env.DB_DATABASE,
       multipleStatements: true,
-      connectionLimit: 5,
+      connectionLimit: 5
     });
   }
 
@@ -23,14 +23,16 @@ export default class SqlHandler {
     let conn;
     try {
       conn = await this.pool.getConnection();
-      await conn.query('CREATE TABLE IF NOT EXISTS `honor` (`user_id` VARCHAR(255), `val` INT, PRIMARY KEY (`user_id`))');
-      await conn.query('CREATE TABLE IF NOT EXISTS `channels` (`id` VARCHAR(255), `replacement` VARCHAR(255), PRIMARY KEY (`id`))');
-    } catch (err) {
-      throw err;
+      await conn.query(
+        'CREATE TABLE IF NOT EXISTS `honor` (`user_id` VARCHAR(255), `val` INT, PRIMARY KEY (`user_id`))'
+      );
+      await conn.query(
+        'CREATE TABLE IF NOT EXISTS `channels` (`id` VARCHAR(255), `replacement` VARCHAR(255), PRIMARY KEY (`id`))'
+      );
     } finally {
       if (conn) await conn.end();
     }
-    Logger.Log("Initialized Database", WARNINGLEVEL.INFO);
+    Logger.info('Initialized Database');
   }
   /**
    * Returns the Honor Count for a given user
@@ -65,7 +67,9 @@ export default class SqlHandler {
       let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = ${conn.escape(user.id)}`);
       if (rows && rows[0]) {
         honorCount = parseInt(rows[0].val, 10) + 1;
-        rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`);
+        rows = await conn.query(
+          `UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`
+        );
       } else {
         honorCount = 1;
         rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES (${conn.escape(user.id)}, 1)`);
@@ -92,7 +96,9 @@ export default class SqlHandler {
       let rows = await conn.query(`SELECT val FROM honor WHERE \`user_id\` = ${conn.escape(user.id)}`);
       if (rows && rows[0]) {
         honorCount = rows[0].val - 1;
-        rows = await conn.query(`UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`);
+        rows = await conn.query(
+          `UPDATE honor SET val = ${conn.escape(honorCount)} WHERE \`user_id\` = ${conn.escape(user.id)}`
+        );
       } else {
         honorCount = -1;
         rows = await conn.query(`INSERT INTO honor (user_id, val) VALUES (${conn.escape(user.id)}, -1)`);
@@ -112,16 +118,20 @@ export default class SqlHandler {
     try {
       conn = await this.pool.getConnection();
       const rows = await conn.query(`SELECT id FROM channels WHERE \`id\` = ${conn.escape(channelId)}`);
-      if(rows && rows[0]) {
-        await conn.query(`UPDATE channels SET replacement = ${conn.escape(replacement)} WHERE \`id\` = ${conn.escape(channelId)}`);
+      if (rows && rows[0]) {
+        await conn.query(
+          `UPDATE channels SET replacement = ${conn.escape(replacement)} WHERE \`id\` = ${conn.escape(channelId)}`
+        );
       } else {
-        await conn.query(`INSERT INTO channels (id, replacement) VALUES (${conn.escape(channelId)}, ${conn.escape(replacement)})`);
+        await conn.query(
+          `INSERT INTO channels (id, replacement) VALUES (${conn.escape(channelId)}, ${conn.escape(replacement)})`
+        );
       }
     } catch (err) {
       returnValue = false;
       console.error(err);
     } finally {
-      if(conn) await conn.end();
+      if (conn) await conn.end();
     }
     return returnValue;
   }
@@ -132,11 +142,11 @@ export default class SqlHandler {
     try {
       conn = await this.pool.getConnection();
       await conn.query(`DELETE FROM channels WHERE id = ${this.pool.escape(channelId)}`);
-    } catch(err) {
+    } catch (err) {
       returnValue = false;
       console.error(err);
     } finally {
-      if(conn) conn.end();
+      if (conn) conn.end();
     }
     return returnValue;
   }
@@ -151,13 +161,11 @@ export default class SqlHandler {
     try {
       conn = await this.pool.getConnection();
       const rows = await conn.query(`SELECT replacement FROM channels WHERE id = ${this.pool.escape(channelId)}`);
-      if(rows && rows[0]) {
+      if (rows && rows[0]) {
         returnValue = rows[0].replacement;
       }
-    } catch (err) {
-      throw err;
     } finally {
-      if(conn) conn.end();
+      if (conn) conn.end();
     }
     return returnValue;
   }

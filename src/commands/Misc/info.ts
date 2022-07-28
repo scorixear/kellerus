@@ -1,20 +1,12 @@
-import { ChatInputCommandInteraction } from "discord.js";
-import LanguageHandler from "../../handlers/languageHandler";
-import CommandInteractionHandle from "../../models/CommandInteractionHandle"
-import messageHandler from "../../handlers/messageHandler";
+import { ChatInputCommandInteraction } from 'discord.js';
+import LanguageHandler from '../../handlers/languageHandler';
+import { CommandInteractionModel, MessageHandler } from 'discord.ts-architecture';
+
 import config from '../../config';
 
-export default class Info extends CommandInteractionHandle {
+export default class Info extends CommandInteractionModel {
   constructor() {
-    super(
-      'info',
-      () => LanguageHandler.language.commands.info.description,
-      'info',
-      'Misc',
-      'info',
-      [],
-      false,
-    );
+    super('info', LanguageHandler.language.commands.info.description, 'info', 'Misc', 'info', []);
   }
 
   override async handle(interaction: ChatInputCommandInteraction) {
@@ -27,22 +19,22 @@ export default class Info extends CommandInteractionHandle {
     categories[0] = {
       title: LanguageHandler.language.commands.info.labels.version,
       text: config.version,
-      inline: true,
+      inline: true
     };
     categories[1] = {
       title: LanguageHandler.language.commands.info.labels.repository,
       text: config.repository,
-      inline: true,
+      inline: true
     };
     categories[2] = {
       title: LanguageHandler.language.commands.info.labels.author,
-      text: 'Paul Keller',
+      text: 'Paul Keller'
     };
-    await messageHandler.replyRichText({
+    await MessageHandler.reply({
       interaction,
       title: 'Bot Info',
       categories,
-      color: 0xF1C40F
+      color: 0xf1c40f
     });
   }
 }

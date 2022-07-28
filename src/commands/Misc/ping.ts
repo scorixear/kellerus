@@ -1,19 +1,10 @@
-import { ChatInputCommandInteraction } from "discord.js";
-import LanguageHandler from "../../handlers/languageHandler";
-import CommandInteractionHandle from "../../models/CommandInteractionHandle"
-import messageHandler from "../../handlers/messageHandler";
+import { ChatInputCommandInteraction } from 'discord.js';
+import LanguageHandler from '../../handlers/languageHandler';
+import { CommandInteractionModel, MessageHandler } from 'discord.ts-architecture';
 
-export default class Ping extends CommandInteractionHandle {
+export default class Ping extends CommandInteractionModel {
   constructor() {
-    super(
-      'ping',
-      () => LanguageHandler.language.commands.ping.description,
-      'ping',
-      'Misc',
-      'ping',
-      [],
-      false,
-    );
+    super('ping', LanguageHandler.language.commands.ping.description, 'ping', 'Misc', 'ping', []);
   }
 
   override async handle(interaction: ChatInputCommandInteraction) {
@@ -22,10 +13,10 @@ export default class Ping extends CommandInteractionHandle {
     } catch (err) {
       return;
     }
-    await messageHandler.replyRichText({
+    await MessageHandler.reply({
       interaction,
-      title: "Pong",
-      description: `${discordHandler.client.ws.ping}ms`,
+      title: 'Pong',
+      description: `${discordHandler.client.ws.ping}ms`
     });
   }
 }
