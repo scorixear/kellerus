@@ -1,16 +1,16 @@
 import { VoiceBasedChannel, ChannelType, VoiceState, GuildBasedChannel } from 'discord.js';
 export class VoiceEventHandler {
-  private static tempChannels: VoiceBasedChannel[];
+  private static tempChannels: VoiceBasedChannel[] = [];
   public static async handleVoiceStateUpdate(newVoice: VoiceState, oldVoice: VoiceState) {
     const newUserChannel = oldVoice.channel;
     const oldUserChannel = newVoice.channel;
 
     if (oldUserChannel !== newUserChannel) {
-      if (oldUserChannel && this.tempChannels.includes(oldUserChannel)) {
+      if (oldUserChannel && VoiceEventHandler.tempChannels.includes(oldUserChannel)) {
         if (oldUserChannel.members.size === 0) {
-          for (let i = 0; i < this.tempChannels.length; i++) {
-            if (this.tempChannels[i] === oldUserChannel) {
-              this.tempChannels.splice(i, 1);
+          for (let i = 0; i < VoiceEventHandler.tempChannels.length; i++) {
+            if (VoiceEventHandler.tempChannels[i] === oldUserChannel) {
+              VoiceEventHandler.tempChannels.splice(i, 1);
               break;
             }
           }
@@ -37,7 +37,7 @@ export class VoiceEventHandler {
             /* eslint-disable-next-line */
           } catch {}
 
-          this.tempChannels.push(channel);
+          VoiceEventHandler.tempChannels.push(channel);
           await newVoice.setChannel(channel);
         }
       }
